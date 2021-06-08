@@ -1,0 +1,138 @@
+<div class="custom-container p-2" *ngIf="!orderDetailLoading;else loading">
+  <div id="invoivePrint">
+    <nz-row nzType="flex" nzAlign="top">
+      <nz-col nzSpan="12">
+        <img [src]="logo" class="logo-img mb-1"/>
+        <p class="font-weight-semibold text-title  text-sm-p5 text-p6 mb-2">DD Routes</p>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">No, 85</span> <br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">Jalan Ipoh</span> <br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">Papan Baru</span> <br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">31550, Pusing</span> <br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">Perak, Malaysia</span> <br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">018-9182033</span>
+      </nz-col>
+      <nz-col nzSpan="12" class="text-right">
+        <p class="font-weight-semibold text-title  text-sm-p3 text-p4">Invoice</p>
+        <ngx-qrcode
+          [elementType]="elementType"
+          [value]="orderInfo.orderNo"
+          cssClass="aclass"
+          errorCorrectionLevel="L">
+        </ngx-qrcode>
+      </nz-col>
+    </nz-row>
+
+    <nz-divider class="my-3"></nz-divider>
+
+    <nz-row nzType="flex" nzAlign="top">
+      <nz-col nzSpan="12" nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+        <p class="font-weight-semibold text-title  text-sm-p5 text-p6">Invoice To</p>
+        <p class="font-weight-semibold text-main  text-sm-p5 text-p6 mb-2">{{orderInfo.senderName}}</p>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.senderAddress}}</span><br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.senderPostcode}}</span><br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.senderCity}}</span><br/>
+        <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.senderState}}</span>
+      </nz-col>
+
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'text-right':!(isMobile$ | async)}">
+        <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                      [ngTemplateOutletContext]="{label:'Order No:',value:orderInfo.orderNo}"></ng-container>
+        <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                      [ngTemplateOutletContext]="{label:'Tracking No:',value:orderInfo.trackingNo}"></ng-container>
+        <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                      [ngTemplateOutletContext]="{label:'Order Date:',value:orderInfo.createdAt | sDate}"></ng-container>
+      </nz-col>
+    </nz-row>
+
+    <nz-divider class="my-3"></nz-divider>
+
+    <nz-table #invoiceTable
+              class="table-anticon text-p5 font-weight-normal text-main mb-3"
+              [nzPageSize]="10"
+              [nzOuterBordered]="true"
+              [nzShowSizeChanger]="true"
+              [nzHideOnSinglePage]="true"
+              [nzTemplateMode]="true"
+              [nzScroll]="{x:(isMobile$ | async) ? '660px' : '100%'}"
+              nzBordered
+    >
+      <thead class="text-sm-p5 text-p6 font-weight-semibold text-title">
+      <tr>
+        <th [nzWidth]="(isMobile$ | async) ? '60px' : '20%'">#</th>
+        <th [nzWidth]="(isMobile$ | async) ? '300px' : '40%'">Receiver</th>
+        <th [nzWidth]="(isMobile$ | async) ? '300px' : '40%'">Item</th>
+      </tr>
+      </thead>
+      <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+      <tr>
+        <td>1</td>
+        <td>
+          <p class="font-weight-semibold text-main text-p5 mb-2">{{orderInfo.recipientName}}</p>
+          <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.recipientAddress}}</span> <br/>
+          <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.recipientPostcode}}</span> <br/>
+          <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.recipientCity}}</span> <br/>
+          <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.recipientState}}</span> <br/>
+          <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{orderInfo.recipientMobileNo}}</span>
+        </td>
+        <td>
+          <nz-row nzType="flex" nzAlign="top">
+            <nz-col nzSpan="10">
+              <p class="font-weight-semibold text-main  text-sm-p5 text-p6">Item Quantity:</p>
+              <p class="font-weight-semibold text-main text-p5">Item Type:</p>
+              <p class="font-weight-semibold text-main text-p5">Item Weight:</p>
+            </nz-col>
+            <nz-col nzSpan="14">
+              <p class="font-weight-semibold text-main  text-sm-p5 text-p6">{{orderInfo.itemQty}}</p>
+              <p class="font-weight-semibold text-main  text-sm-p5 text-p6">{{orderInfo.itemType}}</p>
+              <p class="font-weight-semibold text-main  text-sm-p5 text-p6">{{orderInfo.itemWeight}} kg</p>
+            </nz-col>
+          </nz-row>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-container [ngTemplateOutlet]="customOrderTotalRow"
+                  [ngTemplateOutletContext]="{label:'Sub-total:',value:'RM ' + orderInfo.shippingCost }"></ng-container>
+    <ng-container [ngTemplateOutlet]="customOrderTotalRow"
+                  [ngTemplateOutletContext]="{label:'Discount:',value:'-'}"></ng-container>
+    <ng-container [ngTemplateOutlet]="customOrderTotalRow"
+                  [ngTemplateOutletContext]="{label:'Tax:',value:'-'}"></ng-container>
+
+    <nz-row nzType="flex" nzAlign="top" nzGutter="8" class="border-top border-bottom py-1">
+      <nz-col nzLg="20" nzMd="20" nzSm="12" nzXs="12" [ngClass]="{'text-right':!(isMobile$ | async)}">
+        <span class="text-p4 -text-sm-p3 font-weight-bold text-main">TOTAL:</span>
+      </nz-col>
+      <nz-col nzLg="4" nzMd="4" nzSm="12" nzXs="12" [ngClass]="{'text-right':!(isMobile$ | async)}">
+        <span class="text-p4 -text-sm-p3 font-weight-bold text-main">RM {{orderInfo.shippingCost}}</span>
+      </nz-col>
+    </nz-row>
+  </div>
+</div>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>
+
+<ng-template #customOrderTotalRow let-label="label" let-value="value">
+  <nz-row nzType="flex" nzAlign="top" nzGutter="8" class="mb-2">
+    <nz-col nzLg="20" nzMd="20" nzSm="12" nzXs="12" [ngClass]="{'text-right':!(isMobile$ | async)}">
+      <span class="font-weight-semibold text-main  text-sm-p5 text-p6">{{label}}</span>
+    </nz-col>
+    <nz-col nzLg="4" nzMd="4" nzSm="12" nzXs="12" [ngClass]="{'text-right':!(isMobile$ | async)}">
+      <span class="font-weight-semibold text-main text-sm-p5 text-p6">{{value}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #customOrderNoRow let-label="label" let-value="value">
+  <nz-row nzType="flex" nzAlign="top" nzGutter="8" class="mb-2">
+    <nz-col nzLg="10" nzMd="10" nzSm="24" nzXs="24" class="mb-2">
+      <span class="font-weight-semibold text-main  text-sm-p5 text-p6">{{label}}</span>
+    </nz-col>
+    <nz-col nzLg="14" nzMd="14" nzSm="24" nzXs="24">
+      <span class="font-weight-normal text-main  text-sm-p5 text-p6">{{value}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+

@@ -1,0 +1,99 @@
+<nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
+  <nz-col nzLg="5" nzMd="4" nzSm="24" nzXs="24">
+    <span class="text-title font-weight-semibold">
+       <i nz-icon nzType="reload" nzTheme="outline" class="vertical-align-rem-1 pointer"
+          nzTooltipTitle="Refresh" nzTooltipPlacement="topLeft" nz-tooltip (click)="refreshOrderTable()"></i>
+      Order List
+    </span>
+  </nz-col>
+  <nz-col nzLg="19" nzMd="20" nzSm="24" nzXs="24"
+          [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+    <button nz-button [nzSize]="'small'" nzType="primary" (click)="onAddToRoute()" [disabled]="createRouteDisable"
+            class="font-weight-semibold">Add To Route
+    </button>
+    <button nz-button [nzSize]="'small'" nzType="primary" (click)="createRoute()" [disabled]="createRouteDisable"
+            class="font-weight-semibold ml-2">Create Route
+    </button>
+  </nz-col>
+</nz-row>
+<nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
+  <input [ngClass]="{'w-50':!(isMobile$ |async),'w-100':(isMobile$ |async)}" nz-input nzSize="small"
+         placeholder="Search" (keyup)="search($event)"/>
+</nz-row>
+
+<nz-table #courierOrderTable
+          class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main scrollmenu"
+          [nzLoading]="orderLoading"
+          [nzData]="displayData"
+          [nzPageSize]="50"
+          [nzOuterBordered]="true"
+          [nzShowSizeChanger]="true"
+          [nzShowTotal]="rangeTemplate"
+          [nzHideOnSinglePage]="false"
+          [nzScroll]="{ x:'950px',y:'350px' }"
+          (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+>
+  <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+  <tr>
+    <th nzWidth="30px" [nzChecked]="checked" [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="onAllChecked($event)"></th>
+    <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+        [nzFilters]="header.listOfFilter"
+        [nzFilterFn]="header.filterFn"
+        *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+  </tr>
+  </thead>
+  <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+  <tr *ngFor="let data of courierOrderTable.data;let i=index">
+    <td [nzChecked]="setOfCheckedId.has(data.orderNo)" (nzCheckedChange)="onItemChecked(data, $event)"></td>
+    <td>{{ data.trackingNo}}</td>
+    <td>{{ data.createdAt | sDate }}</td>
+    <td>{{ data.displayOrderType }}</td>
+    <td>{{ data.vehicleType }}</td>
+    <td>{{ data.recipientAddress }}</td>
+    <td>{{ data.recipientPostcode }}</td>
+    <td>{{ data.recipientCity }}</td>
+    <td>{{ data.recipientState }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+
+<app-shared-modal *ngIf="createRouteVisible" [titleText]="'Create Route'" [visible]="createRouteVisible"
+                  [confirmText]="'Submit'" [modalWidth]="'70vw'" [isCenter]="false"
+                  [submitLoading]="submitCreateRouteLoading"
+                  (onClose)="cancelCreateRoute()" (onSubmit)="submitCreateRoute()">
+  <app-create-route-form *ngIf="createRouteVisible" [selectedOrderList]="selectedOrder"
+                         (submitLoadingEvent)="onCreateRoute($event)"
+                         (closeModal)="successSubmitCreate()"></app-create-route-form>
+</app-shared-modal>
+
+<app-shared-modal *ngIf="addToRouteVisible" [titleText]="'Add to Existing Route'" [visible]="addToRouteVisible"
+                  [confirmText]="'Submit'" [modalWidth]="'40vw'"
+                  [submitLoading]="submitAddToRouteLoading"
+                  (onClose)="cancelAddToRoute()" (onSubmit)="submitAddToRoute()">
+  <div class="mb-3">
+    <p class="text-p6 text-main font-weight-normal">
+      <span style="color:red;">*</span> Route displayed is based on the vehicle type.</p>
+    <p class="text-p6 text-main font-weight-normal">
+      <span style="color:red;">*</span> Order Vehicle Type: {{selectedOrder[0].vehicleType}}</p>
+  </div>
+
+  <form nz-form [formGroup]="addToExistingRouteForm" class="w-100 mb-3">
+    <app-form-field [label]="'Route'" [sColLg]="13" [sColMd]="13">
+      <nz-form-item>
+        <nz-form-control nzErrorTip=" Please select the route.">
+          <nz-input-group>
+            <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the route."
+                       [nzLoading]="routeListLoading" [formControl]="routeId">
+              <nz-option *ngFor="let route of routeIdList" [nzValue]="route.routeId"
+                         [nzLabel]="route.routeId"></nz-option>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+  </form>
+</app-shared-modal>

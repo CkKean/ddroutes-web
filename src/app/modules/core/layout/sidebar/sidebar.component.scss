@@ -1,0 +1,52 @@
+.wrapper {
+  width: 270px;
+}
+
+.collapsed {
+  .anticon {
+    margin: 0;
+    font-size: 16px;
+    line-height: 40px;
+    display: inline-block;
+    transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1), margin 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+  }
+
+
+  .anticon + span {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+  }
+
+}
+
+.collapsed-button-padding {
+  padding: 0 calc(43% - 16px / 2);
+}
+
+.uncollapsed {
+
+  opacity: 1;
+  transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+
+  .anticon {
+    min-width: 14px;
+    margin-right: 10px;
+    font-size: 14px;
+    transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1), margin 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+  }
+}
+
+.uncollapsed-button-padding {
+  padding: 0px 16px 0 27px;
+}
+
+.custom-hover div:hover {
+  background-color: #001529 !important;
+}
+
+.custom-hover div {
+  line-height: 40px !important;
+  height: 40px !important;
+}

@@ -1,0 +1,14 @@
+body {
+  color: $black-6 !important;
+  background-color: $bg-body;
+  position: relative;
+  font-size: $font-size-base !important;
+  line-height: $font-line-height-base !important;
+  overflow: auto;
+  height: 100%;
+  min-height: 100%;
+}
+
+.cdk-global-scrollblock {
+  top: unset !important;
+}

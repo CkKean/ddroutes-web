@@ -1,0 +1,107 @@
+<nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
+  <nz-col nzLg="3" nzMd="3" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
+    <span class="text-title font-weight-semibold">
+      Waypoint
+    </span>
+  </nz-col>
+  <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
+    <input nz-input nzSize="small" placeholder="Search" (keyup)="search($event)"/>
+  </nz-col>
+  <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
+    <nz-button-group class="text-main font-weight-normal">
+      <button nz-button nz-dropdown [nzDropdownMenu]="optimizeTypeMenu" nzPlacement="bottomRight">
+        {{optimizeType}} <i class="vertical-align-rem-1" nz-icon nzType="down" nzTheme="outline"></i>
+      </button>
+      <button nz-button
+              [disabled]="displayData.length === 0 || !orderRoute || orderRoute.status !== orderStatusConstant.READY"
+              (click)="optimizeRoute()">Optimize
+      </button>
+    </nz-button-group>
+    <nz-dropdown-menu #optimizeTypeMenu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item (click)="onSelectOptimizeType('Manual')">Manually</li>
+        <li nz-menu-item (click)="onSelectOptimizeType('Automatic')">Automatic</li>
+      </ul>
+    </nz-dropdown-menu>
+  </nz-col>
+  <nz-col nzLg="4" nzMd="4" nzSm="24" nzXs="24"
+          [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+    <label nz-checkbox [disabled]="displayData.length === 0 || !orderRoute" [(ngModel)]="checked"
+           (ngModelChange)="showMap()" class="text-main font-weight-normal">Shows on
+      map</label>
+  </nz-col>
+</nz-row>
+
+<nz-table #wayPointsListTable
+          class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+          [nzLoading]="wayPointsListLoading"
+          [nzData]="displayData"
+          [nzPageSize]="10"
+          [nzOuterBordered]="true"
+          [nzShowSizeChanger]="true"
+          [nzShowTotal]="rangeTemplate"
+          [nzHideOnSinglePage]="false"
+          [nzShowPagination]="false"
+          [nzScroll]="{ x:'850px' }"
+>
+  <thead class="text-sm-p5 text-p6 font-weight-semibold text-title">
+  <tr>
+    <th *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+  </tr>
+  </thead>
+  <tbody class="text-sm-p5 text-p6 font-weight-normal text-main" cdkDropList (cdkDropListDropped)="drop($event)">
+
+  <ng-container *ngIf="displayData.length>0">
+    <tr cdkDropListSortingDisabled>
+      <ng-container *ngTemplateOutlet="startEndPoint;context:{point:'Start'}"></ng-container>
+    </tr>
+
+    <ng-container
+      *ngIf="orderRoute.status === orderStatusConstant.COMPLETED || orderRoute.status === orderStatusConstant.IN_PROGRESS">
+      <tr *ngFor="let data of displayData;let i=index;let last=last">
+        <td>
+          <div>
+            <i class="vertical-align-rem-1" style="font-size: 14px !important;" nz-icon nzType="menu"
+               nzTheme="outline"></i> {{i}}
+          </div>
+        </td>
+        <td>{{data.orderNo }}</td>
+        <td>{{data.trackingNo }}</td>
+        <td>{{getDisplayOrderType(data, orderRoute.routeId)}}</td>
+        <td>{{data.recipientAddress}}</td>
+        <td>{{getOrderStatus(data, orderRoute.routeId)}}</td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="orderRoute.status === orderStatusConstant.READY">
+      <tr cdkDrag cdkDragLockAxis="y" *ngFor="let data of displayData;let i=index;let last=last">
+        <td>
+          <div class="drag-handle" cdkDragHandle>
+            <i class="vertical-align-rem-1" style="font-size: 14px !important;" nz-icon nzType="menu"
+               nzTheme="outline"></i> {{i}}
+          </div>
+        </td>
+        <td>{{data.orderNo }}</td>
+        <td>{{data.trackingNo }}</td>
+        <td>{{getDisplayOrderType(data, orderRoute.routeId)}}</td>
+        <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+        <td>{{getOrderStatus(data, orderRoute.routeId)}}</td>
+      </tr>
+    </ng-container>
+    <tr cdkDropListSortingDisabled *ngIf="displayData&&orderRoute.roundTrip">
+      <ng-container *ngTemplateOutlet="startEndPoint;context:{point:'End'}"></ng-container>
+    </tr>
+  </ng-container>
+  </tbody>
+</nz-table>
+
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+
+<ng-template #startEndPoint let-point="point">
+  <td><span class="font-weight-semibold">{{point}}</span></td>
+  <td colSpan="4">
+    <span
+      class="font-weight-semibold">{{departureAddress.address + ', ' + departureAddress.postcode + ' ' + departureAddress.city + ', ' + departureAddress.state + ', Malaysia' }}</span>
+  </td>
+</ng-template>

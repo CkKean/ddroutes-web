@@ -1,0 +1,519 @@
+<nz-card [nzBorderless]="true">
+  <form nz-form [formGroup]="courierOrderForm" class="w-100">
+
+    <app-form-declaration *ngIf="!overviewVisible"></app-form-declaration>
+    <app-form-declaration *ngIf="overviewVisible" [contentFirst]="'Please check and confirm the input values.'"
+                          [requiredSecondContent]="false"></app-form-declaration>
+
+    <div class="py-3">
+
+      <nz-row nzType="flex" align="top" nzGutter="8">
+        <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+          <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Order Information</p>
+        </nz-col>
+        <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+          <nz-row nzType="flex" align="top" nzGutter="8">
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Order Type'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="orderTypeError">
+                    <nz-input-group>
+                      <nz-select class="w-100" nzPlaceHolder="Select the order type" [formControl]="orderType">
+                        <nz-option [nzLabel]="listOfOrderType[0]" [nzValue]="listOfOrderType[0]"></nz-option>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #orderTypeError>
+                    <ng-container *ngIf="orderType.errors && (orderType.dirty || orderType.touched)">
+                      <span *ngIf="orderType.hasError('required')">Please select the order type.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+              <app-order-form-field [label]="'Vehicle Type'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="'Please select the vehicle type.'">
+                    <nz-input-group>
+                      <nz-select class="w-100" nzPlaceHolder="Select the vehicle type" [formControl]="vehicleType"
+                                 [nzLoading]="vehicleLoading">
+                        <nz-option *ngFor="let item of vehicleTypeList" [nzLabel]="item" [nzValue]="item"></nz-option>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+              <app-order-form-field [label]="'Payment Method'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="'Please select the payment method.'">
+                    <nz-input-group>
+                      <nz-select class="w-100" nzPlaceHolder="Select the payment method" [formControl]="paymentMethod">
+                        <nz-option *ngFor="let item of listOfPaymentMethod" [nzLabel]="item"
+                                   [nzValue]="item"></nz-option>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+          </nz-row>
+        </nz-col>
+      </nz-row>
+
+      <nz-divider class="my-4"></nz-divider>
+
+      <!--------------------------------------------------------------------------------------------------------------->
+      <!---------------------------------------- Sender Form ------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------->
+
+      <nz-row nzType="flex" align="top" nzGutter="8">
+        <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+          <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Sender Information</p>
+        </nz-col>
+        <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+          <nz-row nzType="flex" align="top" nzGutter="8">
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Name'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="senderNameError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="senderName" placeholder="Name"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderNameError>
+                    <ng-container *ngIf="senderName.errors && (senderName.dirty || senderName.touched)">
+                      <span *ngIf="senderName.hasError('required')">Please enter the name.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Mobile Number'">
+                <nz-form-item class="custom-input-prefix">
+                  <nz-form-control [nzErrorTip]="senderMobileNoError">
+                    <nz-input-group [nzPrefix]="'+60'">
+                      <input type="text" nz-input [formControl]="senderMobileNo" placeholder="Mobile Number"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderMobileNoError>
+                    <ng-container *ngIf="senderMobileNo.errors && (senderMobileNo.dirty || senderMobileNo.touched)">
+                      <span *ngIf="senderMobileNo.hasError('required')">Please enter the mobile number.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Email'" [required]="false">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-input-group>
+                      <input type="email" nz-input [formControl]="senderEmail" placeholder="Email"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Address'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="senderAddressError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="senderAddress" placeholder="Address"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderAddressError>
+                    <ng-container *ngIf="senderAddress.errors && (senderAddress.dirty || senderAddress.touched)">
+                      <span *ngIf="senderAddress.hasError('required')">Please enter the address.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'City'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="senderCityError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="senderCity" placeholder="City"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderCityError>
+                    <ng-container *ngIf="senderCity.errors && (senderCity.dirty || senderCity.touched)">
+                      <span *ngIf="senderCity.hasError('required')">Please enter the city.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'State'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="senderStateError">
+                    <nz-input-group>
+                      <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your state" nzShowSearch
+                                 [formControl]="senderState">
+                        <ng-container *ngFor="let state of stateList">
+                          <nz-option [nzLabel]="state.name" [nzValue]="state.name"></nz-option>
+                        </ng-container>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderStateError>
+                    <ng-container *ngIf="senderState.errors && (senderState.dirty || senderState.touched)">
+                      <span *ngIf="senderState.hasError('required')">Please select the state.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+              <app-order-form-field [label]="'Postcode'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="senderPostcodeError">
+                    <nz-input-group>
+                      <input type="number" nz-input [formControl]="senderPostcode" placeholder="Postcode"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #senderPostcodeError>
+                    <ng-container *ngIf="senderPostcode.errors && (senderPostcode.dirty || senderPostcode.touched)">
+                      <span *ngIf="senderPostcode.hasError('required')">Please enter the address.</span>
+                      <span *ngIf="senderPostcode.hasError('invalidPostcode')">Please enter valid postcode.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+
+          </nz-row>
+        </nz-col>
+      </nz-row>
+
+      <nz-divider class="my-4"></nz-divider>
+      <!--------------------------------------------------------------------------------------------------------------->
+      <!---------------------------------------- Recipient Form ------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------->
+
+      <nz-row nzType="flex" align="top" nzGutter="8">
+        <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+          <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Recipient Information</p>
+        </nz-col>
+        <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+          <nz-row nzType="flex" align="top" nzGutter="8">
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Name'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="recipientNameError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="recipientName" placeholder="Name"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientNameError>
+                    <ng-container *ngIf="recipientName.errors && (recipientName.dirty || recipientName.touched)">
+                      <span *ngIf="recipientName.hasError('required')">Please enter the name.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" class="mb-2"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Mobile Number'">
+                <nz-form-item class="custom-input-prefix">
+                  <nz-form-control [nzErrorTip]="recipientMobileNoError">
+                    <nz-input-group [nzPrefix]="'+60'">
+                      <input type="number" nz-input [formControl]="recipientMobileNo" placeholder="Mobile Number"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientMobileNoError>
+                    <ng-container
+                      *ngIf="recipientMobileNo.errors && (recipientMobileNo.dirty || recipientMobileNo.touched)">
+                      <span *ngIf="recipientMobileNo.hasError('required')">Please enter the mobile number.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Email'" [required]="false">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-input-group>
+                      <input type="email" nz-input [formControl]="recipientEmail" placeholder="Email"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Address'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="recipientAddressError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="recipientAddress" placeholder="Address"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientAddressError>
+                    <ng-container
+                      *ngIf="recipientAddress.errors && (recipientAddress.dirty || recipientAddress.touched)">
+                      <span *ngIf="recipientAddress.hasError('required')">Please enter the address.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'City'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="recipientCityError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="recipientCity" placeholder="City"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientCityError>
+                    <ng-container *ngIf="recipientCity.errors && (recipientCity.dirty || recipientCity.touched)">
+                      <span *ngIf="recipientCity.hasError('required')">Please enter the city.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'State'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="recipientStateError">
+                    <nz-input-group>
+                      <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your state" nzShowSearch
+                                 [formControl]="recipientState">
+                        <ng-container *ngFor="let state of stateList">
+                          <nz-option [nzLabel]="state.name" [nzValue]="state.name"></nz-option>
+                        </ng-container>
+                      </nz-select>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientStateError>
+                    <ng-container *ngIf="recipientState.errors && (recipientState.dirty || recipientState.touched)">
+                      <span *ngIf="recipientState.hasError('required')">Please select the state.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+              <app-order-form-field [label]="'Postcode'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="recipientPostcodeError">
+                    <nz-input-group>
+                      <input type="number" nz-input [formControl]="recipientPostcode" placeholder="Postcode"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #recipientPostcodeError>
+                    <ng-container
+                      *ngIf="recipientPostcode.errors && (recipientPostcode.dirty || recipientPostcode.touched)">
+                      <span *ngIf="recipientPostcode.hasError('required')">Please enter the address.</span>
+                      <span *ngIf="recipientPostcode.hasError('invalidPostcode')">Please enter valid postcode.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+
+          </nz-row>
+        </nz-col>
+      </nz-row>
+
+      <nz-divider class="my-4"></nz-divider>
+      <!--------------------------------------------------------------------------------------------------------------->
+      <!---------------------------------------- Item Information Form ------------------------------------------------------->
+      <!--------------------------------------------------------------------------------------------------------------->
+      <nz-row nzType="flex" align="top" nzGutter="8">
+        <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+          <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Item Information</p>
+        </nz-col>
+        <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+          <nz-row nzType="flex" align="top" nzGutter="8">
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Item Weight (kg)'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="itemWeightError">
+                    <nz-input-group>
+                      <input type="number" nz-input [formControl]="itemWeight" placeholder="Weight"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #itemWeightError>
+                    <ng-container *ngIf="itemWeight.errors && (itemWeight.dirty || itemWeight.touched)">
+                      <span *ngIf="itemWeight.hasError('required')">Please enter the item weight.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Item Quantity'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="itemQtyError">
+                    <nz-input-group>
+                      <input type="number" nz-input [formControl]="itemQty" placeholder="Quantity"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #itemQtyError>
+                    <ng-container *ngIf="itemQty.errors && (itemQty.dirty || itemQty.touched)">
+                      <span *ngIf="itemQty.hasError('required')">Please enter the item quantity.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+            <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24"
+                    [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+              <app-order-form-field [label]="'Item Type'">
+                <nz-form-item>
+                  <nz-form-control [nzErrorTip]="itemTypeError">
+                    <nz-input-group>
+                      <input type="text" nz-input [formControl]="itemType" placeholder="Type"/>
+                    </nz-input-group>
+                  </nz-form-control>
+                  <ng-template #itemTypeError>
+                    <ng-container *ngIf="itemType.errors && (itemType.dirty || itemType.touched)">
+                      <span *ngIf="itemType.hasError('required')">Please enter the item type.</span>
+                    </ng-container>
+                  </ng-template>
+                </nz-form-item>
+              </app-order-form-field>
+            </nz-col>
+          </nz-row>
+        </nz-col>
+      </nz-row>
+
+      <div *ngIf="overviewVisible">
+        <nz-divider class="my-4"></nz-divider>
+        <!--------------------------------------------------------------------------------------------------------------->
+        <!---------------------------------------- Item Information Form ------------------------------------------------------->
+        <!--------------------------------------------------------------------------------------------------------------->
+        <nz-row nzType="flex" align="top" nzGutter="8">
+          <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+            <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Shipping Information</p>
+          </nz-col>
+          <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+            <nz-row nzType="flex" align="top" nzGutter="8">
+              <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+                <app-order-form-field [label]="'Total Shipping Cost'" [required]="false">
+                  <nz-form-item class="custom-input-prefix">
+                    <nz-form-control>
+                      <nz-input-group [nzPrefix]="'RM '">
+                        <input class="font-weight-semibold" nz-input [disabled]="true" [value]="shippingCost.value">
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </app-order-form-field>
+              </nz-col>
+              <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+                <app-order-form-field [label]="'Recipient Postcode'" [required]="false">
+                  <nz-form-item>
+                    <nz-form-control>
+                      <nz-input-group>
+                        <input class="font-weight-semibold" nz-input [disabled]="true"
+                               [value]="recipientPostcode.value">
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </app-order-form-field>
+              </nz-col>
+            </nz-row>
+          </nz-col>
+        </nz-row>
+
+
+        <nz-divider class="my-4"></nz-divider>
+        <!--------------------------------------------------------------------------------------------------------------->
+        <!---------------------------------------- Overview ------------------------------------------------------->
+        <!--------------------------------------------------------------------------------------------------------------->
+        <nz-row nzType="flex" align="top" nzGutter="8">
+          <nz-col nzLg="5" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-3':(isMobile$ | async)}">
+            <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Confirm Address</p>
+          </nz-col>
+          <nz-col nzLg="19" nzMd="16" nzSm="24" nzXs="24">
+            <nz-row nzType="flex" align="top" nzGutter="8">
+              <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24" *ngIf="overviewVisible"
+                      [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+                <app-order-form-field [label]="'Confirm Sender Address'">
+                  <nz-form-item>
+                    <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
+                      <nz-input-group>
+                        <input type="text" class="text-title font-weight-semibold" nz-input
+                               [formControl]="fullSenderAddress"/>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </app-order-form-field>
+              </nz-col>
+
+              <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24" *ngIf="overviewVisible">
+                <app-order-form-field [label]="'Confirm Recipient Address'">
+                  <nz-form-item>
+                    <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
+                      <nz-input-group>
+                        <input type="text" class="text-title font-weight-semibold" nz-input
+                               [formControl]="fullRecipientAddress"/>
+                      </nz-input-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </app-order-form-field>
+              </nz-col>
+
+            </nz-row>
+          </nz-col>
+        </nz-row>
+      </div>
+
+    </div>
+  </form>
+</nz-card>
+
+<div class="pb-3">
+  <nz-row nzType="flex" nzAlign="middle" *ngIf="!overviewVisible">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()">Cancel</a>
+    </nz-col>
+
+    <nz-col nzSpan="12" class="text-right" *ngIf="!overviewVisible">
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" [nzLoading]="getShippingCostLoading"
+              (click)="onSubmitForm()">Next
+      </button>
+    </nz-col>
+  </nz-row>
+
+  <nz-row nzType="flex" nzAlign="middle" *ngIf="overviewVisible">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()">Cancel</a>
+    </nz-col>
+    <nz-col nzSpan="12" class="text-right">
+      <button nz-button nzType="outline" class="mx-1 font-weight-semibold" (click)="cancelOverview()">Back
+      </button>
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="submitForm()"
+              [nzLoading]="addFormLoading">Submit
+      </button>
+    </nz-col>
+  </nz-row>
+</div>
+
+
+

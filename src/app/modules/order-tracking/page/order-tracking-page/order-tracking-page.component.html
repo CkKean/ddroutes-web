@@ -1,0 +1,35 @@
+<app-sub-header [title]="'Shipping Order Tracking'"></app-sub-header>
+<div class="container">
+  <nz-card class="above-header" [nzBorderless]="true">
+    <div class="container">
+      <div class="py-3 text-center">
+        <form nz-form [formGroup]="trackingForm" class="w-100">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="'This field is required.'">
+              <nz-input-group nzCompact>
+                <input class="text-left border-right-0 right-border-radius-none" type="text" nz-input
+                       [ngClass]="{'w-40':!(isMobile$ | async), 'w-60':(isMobile$ | async)}"
+                       [formControl]="trackingOrderNo" placeholder="Tracking No. / Order No."/>
+                <button class="left-border-radius-none tracking-btn bg-primary font-weight-semibold w-15 text-white"
+                        nz-button
+                        (click)="submit()" nzType="default" [nzLoading]="orderDetailLoading">
+                  Track
+                </button>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
+      <div class="py-3" *ngIf="trackingDataVisible">
+        <ng-container *ngIf="!orderDetailLoading;else loading">
+          <app-trace-order [trackingOrderNo]="trackingOrderNo" [requiredGet]="false"
+                           [orderDetailLoading]="orderDetailLoading"
+                           [orderStatus]="orderStatus" [step]="step" [errorMessage]="errorMessage"></app-trace-order>
+        </ng-container>
+      </div>
+    </div>
+  </nz-card>
+</div>
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>

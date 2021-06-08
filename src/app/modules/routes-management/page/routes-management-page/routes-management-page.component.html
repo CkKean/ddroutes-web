@@ -1,0 +1,33 @@
+<nz-row nzType="flex" nzAlign="top" nzGutter="8">
+  <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+    <nz-card [nzBordered]="false" [ngClass]="{'custom-height':!(isMobile$ | async),'h-100':(isMobile$ | async)}">
+      <app-route-list-table [routeList]="orderRouteList" [routeListLoading]="orderRouteLoading"
+                            (refreshOrderList)="refreshOrderList()" (refreshTable)="getAllOrderRoute($event)"
+                            (selectedOrderRouteEvent)="getSelectedOrderRoute($event)"
+                            (deleteAndRefreshEvent)="orderListDeleted()"
+      ></app-route-list-table>
+    </nz-card>
+  </nz-col>
+  <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+    <nz-card [nzBordered]="false" [ngClass]="{'custom-height':!(isMobile$ | async),'h-100':(isMobile$ | async)}">
+      <app-order-list-table [orderLoading]="orderLoading" [courierOrderList]="courierOrderList"
+                            (refreshRouteTable)="getAllOrderRoute(this.selectedRouteId)"
+                            (refreshTable)="getAllCourierOrder()">
+      </app-order-list-table>
+    </nz-card>
+  </nz-col>
+  <nz-col nzSpan="24">
+    <nz-card [nzBordered]="false" class="h-100">
+      <app-waypoints-list-table [selectedOrderRoute]="selectedOrderRoute" [checked]="mapVisible"
+                                [routeDeleted]="routeDeleted"
+                                (refreshTable)="getAllOrderRoute($event)"
+                                (showMapEvent)="showMap($event)"></app-waypoints-list-table>
+    </nz-card>
+  </nz-col>
+  <ng-container *ngIf="mapVisible">
+    <app-shared-modal [visible]="mapVisible" [isConfirmVisible]="false" [isCancelVisible]="false" [titleText]="'Routes'"
+                      [modalWidth]="'80vw'" (onClose)="showMap(false)">
+      <app-route-map [selectedOrderRoute]="selectedOrderRoute"></app-route-map>
+    </app-shared-modal>
+  </ng-container>
+</nz-row>

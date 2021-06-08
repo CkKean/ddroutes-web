@@ -1,0 +1,32 @@
+.ant-modal-footer {
+  border: unset !important;
+}
+
+.ant-modal-footer > .ant-btn {
+  min-width: 84px;
+  padding: 0 1.25rem;
+  text-transform: capitalize;
+  height: 42px;
+  font-size: 14px;
+  border-radius: 30px;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition-duration: .4s;
+  font-weight: 400;
+  border: 1px solid $brand-primary;
+  color: $brand-primary;
+}
+
+.ant-modal-footer > .ant-btn-primary {
+  color: white;
+}
+
+.ant-modal-footer > .ant-btn-primary:hover, .ant-btn-primary:focus {
+  background-color: $brand-primary-accent-1;
+  border-color: $brand-primary-accent-1;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 20%);
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid #ddd !important;
+}

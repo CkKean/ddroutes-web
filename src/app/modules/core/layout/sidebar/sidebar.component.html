@@ -1,0 +1,27 @@
+<nav class="side-nav" class="d-flex h-100 wrapper">
+  <ul nz-menu nzMode="inline" class="h-100" [nzInlineCollapsed]="isCollapsed">
+    <li nz-menu-item *ngFor="let item of menuList" nz-tooltip nzTooltipPlacement="right" [nzMatchRouterExact]="true"
+        [nzMatchRouter]="true"
+        [nzTooltipTitle]="isCollapsed ? item.title : ''">
+      <i [class]="(item.icon)"></i>
+      <a class="text-decoration-none" [routerLink]="item.route"><span>{{item.title}}</span></a>
+    </li>
+    <div class="custom-hover">
+      <div (click)="logout()" nz-tooltip nzTooltipPlacement="right"
+           [nzTooltipTitle]="isCollapsed ? 'Sign Out' : ''" class="pointer"
+           [ngClass]="{'uncollapsed uncollapsed-button-padding':!isCollapsed,'collapsed collapsed-button-padding':isCollapsed}">
+        <i class="vertical-align-rem-1" nz-icon [nzType]="'logout'"></i>
+        <span *ngIf="!isCollapsed">Sign Out</span>
+      </div>
+
+      <div (click)="toggleCollapsed()" nz-tooltip nzTooltipPlacement="right"
+           [nzTooltipTitle]="isCollapsed ? 'Expand' : ''" class="pointer"
+           [ngClass]="{'uncollapsed uncollapsed-button-padding':!isCollapsed,'collapsed collapsed-button-padding':isCollapsed}">
+        <i class="vertical-align-rem-1" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        <span *ngIf="!isCollapsed">Collapsed</span>
+      </div>
+    </div>
+
+  </ul>
+
+</nav>

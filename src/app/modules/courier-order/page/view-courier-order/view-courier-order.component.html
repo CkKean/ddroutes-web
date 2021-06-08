@@ -1,0 +1,179 @@
+<div class="mb-3 text-right">
+  <button nz-button nzType="primary" (click)="editOrder()">Edit</button>
+</div>
+
+
+<nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Order Information</p>
+
+  <nz-row nzType="flex" nzAlign="top" [nzGutter]="16">
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Order Number',content:orderInfo.orderNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Tracking Number',content:orderInfo.trackingNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Order Type',content:orderInfo.orderType}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Order Status',content:((orderInfo.orderType === orderTypeConstant?.PICK_UP && !orderInfo.isPickedUp)  ? orderInfo?.pickupOrderStatus :orderInfo.orderStatus)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Shipping Cost',content: ('RM ' + orderInfo.shippingCost)}"></ng-container>
+
+    </nz-col>
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Route ID',content:orderInfo.routeId}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Pick Up Route ID',content:orderInfo.pickupRouteId}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Created By',content:orderInfo.createdBy}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Created At',content:( orderInfo.createdAt | sDate )}"></ng-container>
+    </nz-col>
+  </nz-row>
+</nz-card>
+
+<nz-row nzType="flex" nzAlign="top" [nzGutter]="16">
+  <nz-col nzSpan="12">
+    <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Sender Information</p>
+
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Name',content:orderInfo.senderName}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Mobile No.',content:orderInfo.senderMobileNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Email',content:orderInfo.senderEmail ? orderInfo.senderEmail : '-'}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Address',content:orderInfo.senderAddress}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'City',content:orderInfo.senderCity}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Postcode',content:orderInfo.senderPostcode}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'State',content:orderInfo.senderState}"></ng-container>
+    </nz-card>
+  </nz-col>
+  <nz-col nzSpan="12">
+    <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Recipient Information</p>
+
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Name',content:orderInfo.recipientName}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Mobile No.',content:orderInfo.recipientMobileNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Email',content:orderInfo.recipientEmail ? orderInfo.recipientEmail : '-'}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Address',content:orderInfo.recipientAddress}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'City',content:orderInfo.recipientCity}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Postcode',content:orderInfo.recipientPostcode}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'State',content:orderInfo.recipientState}"></ng-container>
+    </nz-card>
+  </nz-col>
+</nz-row>
+
+<nz-row nzType="flex" nzAlign="top" [nzGutter]="16">
+  <nz-col nzSpan="12">
+    <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Item Information</p>
+
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Weight',content:orderInfo.itemWeight}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Quantity',content:orderInfo.itemQty}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Type',content:orderInfo.itemType}"></ng-container>
+    </nz-card>
+  </nz-col>
+</nz-row>
+
+<nz-row nzType="flex" [nzGutter]="16">
+  <ng-container *ngIf="!orderDetailLoading;else loading">
+    <nz-col nzSpan="12" *ngIf="orderInfo.proofInfo !== null">
+      <nz-card [nzBorderless]="true" class="h-100">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Delivery Information</p>
+
+        <ng-container
+          *ngIf="orderInfo.proofInfo.status !== listOfOrderStatus.NOT_DELIVERED">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Recipient Name',content:orderInfo.proofInfo?.recipientName}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Recipient IC No',content:orderInfo.proofInfo?.recipientIcNo}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.proofInfo?.status )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Received At',content:(orderInfo.proofInfo?.receivedAt | sDate)}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="imageField;context:{label:'Signature',imageLink:(imageApi + orderInfo.proofInfo.signaturePath + '/' + orderInfo.proofInfo.signature) }"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="orderInfo.proofInfo.status === listOfOrderStatus.NOT_DELIVERED">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.proofInfo?.status )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Reason',content:orderInfo.proofInfo?.reason}"></ng-container>
+        </ng-container>
+
+      </nz-card>
+    </nz-col>
+  </ng-container>
+  <ng-container *ngIf="!orderDetailLoading;else loading">
+    <nz-col nzSpan="12" *ngIf="orderInfo.pickupProofInfo">
+      <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Picked up Information</p>
+        <ng-container
+          *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.pickupProofInfo.status )}"></ng-container>
+        <ng-container
+          *ngIf="orderInfo.pickupProofInfo.status !== listOfOrderStatus.NOT_PICK_UP">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Picked At',content:(orderInfo.pickupProofInfo?.pickedAt | sDate )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="imageField;context:{label:'Signature',imageLink:(imageApi + orderInfo.pickupProofInfo.signaturePath + '/' + orderInfo.pickupProofInfo.signature) }"></ng-container>
+
+        </ng-container>
+
+        <ng-container *ngIf="orderInfo.pickupProofInfo.status === listOfOrderStatus.NOT_PICK_UP">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Reason',content:orderInfo.pickupProofInfo?.reason}"></ng-container>
+        </ng-container>
+
+      </nz-card>
+    </nz-col>
+  </ng-container>
+
+</nz-row>
+
+<ng-template #infoField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <span class="text-main">{{content ? content : '-'}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>
+
+<ng-template #imageField let-label='label' let-imageLink='imageLink'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <img
+        class="proof-image"
+        nz-image
+        [nzSrc]="imageLink"
+        alt=""
+      />
+    </nz-col>
+  </nz-row>
+</ng-template>

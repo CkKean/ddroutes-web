@@ -1,0 +1,166 @@
+// Font Size
+$font-line-height-base: 20px;
+$font-line-height-xxl: $font-line-height-base + 12px; //32px
+$font-line-height-xl: $font-line-height-base + 8px; //28px
+$font-line-height-lg: $font-line-height-base + 4px; //24px
+$font-line-height-md: $font-line-height-base + 2px; //22px
+$font-line-height-sm: $font-line-height-base - 2px; //18px
+$font-line-height-xs: $font-line-height-base - 4px; //16px
+$font-line-height-xxs: $font-line-height-base - 6px; //14px
+
+$font-size-base: 16px;
+$font-size-xxl: $font-size-base + 12px; //28px
+$font-size-xl: $font-size-base + 8px; //24px
+$font-size-lg: $font-size-base + 4px; //20px
+$font-size-md: $font-size-base + 2px; //18px
+$font-size-sm: $font-size-base - 2px; //14px
+$font-size-xs: $font-size-base - 4px; //12px
+$font-size-xxs: $font-size-base - 6px; //10px
+
+// Border
+//
+// Define border properties
+$border-color: #ddd;
+$border-radius: 0.25rem;
+$border-radius-lg: 10px;
+$border-radius-sm: 0.2rem;
+$border-radius-xs: 0.125rem;
+$border-radius-circle: 50%;
+$border-width: 1px;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius: 18px;
+$btn-border-radius-lg: 20px;
+$btn-border-radius-sm: $border-radius-sm;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$grid-breakpoints: map-merge(
+    $grid-breakpoints,
+    (
+      xxl: 1600px
+    )
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1160px
+);
+
+$container-max-widths: map-merge(
+    $container-max-widths,
+    (
+      xxl: 1520px
+    )
+);
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+$grid-columns: 12;
+$grid-gutter-width-base: 15px;
+$grid-gutter-widths: (
+  xs: $grid-gutter-width-base,
+  sm: $grid-gutter-width-base,
+  md: $grid-gutter-width-base,
+  lg: $grid-gutter-width-base,
+  xl: $grid-gutter-width-base
+);
+$grid-gutter-widths: map-merge(
+    $grid-gutter-widths,
+    (
+      xxl: $grid-gutter-width-base
+    )
+);
+
+/////////////////////
+//////Brand color////
+/////////////////////
+$brand-theme: #001529; // Primary, Theme
+$brand-primary: #0477C1; // Primary Accent
+$brand-primary-accent-1: #00487c;
+$black: #000;
+$black-7: #424B57; // Title, Header
+$black-6: #646C77; // Main Text, Icon
+$black-5: #8B94A0; // Secondary Text, Hints, Disclaimers
+$black-4: #E5E7E9; // Dividers, Borders
+$black-3: #F3FBFE; // Background
+$black-2: #F3FBFE;
+$black-1: #F3FBFE;
+$black-0: #f5f5f5;
+$black-disabled: rgba(0, 0, 0, 0.25);
+
+$white: #fff;
+$bg-body: #F5F7FA;
+
+/////////////////////
+//////Accent Color////
+/////////////////////
+$brand-success: $brand-primary; //choose from brand-theme or brand-primary only
+$brand-info: #00A3ED; //must be blue
+$brand-alert: #F19E4B; //must be yellow
+$brand-profit: #5CC971;
+$brand-danger: #ff4d4f;
+
+$brand-accent-1: $white;
+$brand-accent-2: $white;
+
+// For backward compatibility (Dont use and manually remove when updated)
+$gray-darkest: $black-7;
+$gray-darker: $black-6;
+$gray-dark: $black-5;
+$gray: $black-4;
+$gray-light: $black-3;
+$gray-lighter: $black-2;
+$gray-lightest: $black-1;
+
+// Disabled Color
+$disabled-color: $black-4;
+$disabled-bg: $black-2;
+
+// Spacing
+$spacer: 1rem;
+$spacers: ();
+$spacers: map-merge(
+    (
+      0: 0,
+      1: (
+        $spacer * 0.25
+      ),
+      2: (
+        $spacer * 0.5
+      ),
+      3: $spacer,
+      4: (
+        $spacer * 1.5
+      ),
+      5: (
+        $spacer * 3
+      ),
+      6: (
+        $spacer * 3.5
+      ),
+      7:(
+        $spacer * 5
+      ),
+      8: (
+        $spacer * 7.5
+      ),
+    ),
+    $spacers
+);

@@ -1,0 +1,119 @@
+<form nz-form [formGroup]="createRouteForm" class="w-100">
+
+  <div class="py-1">
+    <app-form-field [label]="'Departure Point'">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select the departure point.">
+          <nz-input-group>
+            <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the departure point"
+                       [nzLoading]="companyAddressLoading" [formControl]="departurePoint">
+              <ng-container *ngFor="let address of companyAddressList | keyvalue">
+                <nz-option-group [nzLabel]="address.key">
+                  <nz-option *ngFor="let s of address.value" [nzValue]="s.id" [nzLabel]="s.address"></nz-option>
+                </nz-option-group>
+              </ng-container>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <label nz-checkbox [formControl]="roundTrip">
+        Round Trip
+        <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip
+           nzTooltipTitle="Starting at the company and ending at the compnay."></i>
+      </label>
+    </app-form-field>
+
+    <app-form-field [label]="'Departure Date'">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select the departure date.">
+          <nz-input-group>
+            <nz-date-picker class="w-100" [formControl]="departureDate" [nzDisabledDate]="disabledDate"
+                            [nzPlaceHolder]="'Departure date'" [nzFormat]="dateFormat" [nzAllowClear]="true">
+            </nz-date-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Departure Time'">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select the departure time.">
+          <nz-input-group>
+            <nz-time-picker class="w-100" [formControl]="departureTime"
+                            [nzDefaultOpenValue]="defaultOpenValue"></nz-time-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Personnel'">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select the personnel.">
+          <nz-input-group>
+            <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the personnel"
+                       [nzLoading]="staffListLoading" [formControl]="personnel">
+              <ng-container *ngFor="let staff of staffList | keyvalue">
+                <nz-option-group [nzLabel]="staff.key">
+                  <nz-option *ngFor="let s of staff.value" [nzValue]="s.userId" [nzLabel]="s.fullName"></nz-option>
+                </nz-option-group>
+              </ng-container>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Vehicle'">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select the vehicle.">
+          <nz-input-group>
+            <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle"
+                       [nzLoading]="vehicleListLoading" [formControl]="vehicle">
+              <ng-container *ngFor="let vehicle of vehicleList | keyvalue">
+                <nz-option-group [nzLabel]="(vehicle.key).toUpperCase()">
+                  <nz-option *ngFor="let v of vehicle.value" [nzValue]="v.vehicleId"
+                             [nzLabel]="(v.owner + ' ' + v.plateNo )"></nz-option>
+                </nz-option-group>
+              </ng-container>
+            </nz-select>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <div class="mt-3 mb-2">
+      <p class="text-p5 text-main font-weight-semibold mb-2">Selected Orders: {{displayData.length}}</p>
+      <nz-table #courierOrderTable
+                class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main h-100"
+                [nzLoading]="orderLoading"
+                [nzData]="displayData"
+                [nzOuterBordered]="true"
+                [nzShowPagination]="false"
+                [nzShowTotal]="rangeTemplate"
+                [nzScroll]="{x:'100%'}"
+      >
+        <thead nzSingleSort (nzSortOrderChange)="sort($event)"
+               class="text-sm-p5 text-p6 font-weight-semibold text-title">
+        <tr>
+          <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+              *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+        </tr>
+        </thead>
+        <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+        <tr *ngFor="let data of courierOrderTable.data;let i=index">
+          <td>{{ data.orderNo }}</td>
+          <td>{{ data.trackingNo }}</td>
+          <td>{{ data.createdAt | sDate }}</td>
+          <td>{{ data.displayOrderType }}</td>
+          <td>{{ data.orderStatus }}</td>
+          <td>{{ data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia' }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</form>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+

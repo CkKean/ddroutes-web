@@ -1,0 +1,9 @@
+<nz-row class="pb-3 border-bottom">
+  <nz-col nzLg="20" nzMd="20" nzSm="24" nzXs="24">
+    <span class="text-main font-weight-normal text-p6 text-sm-p5">{{contentFirst}}</span>
+  </nz-col>
+  <nz-col nzLg="4" nzMd="4" nzSm="24" nzXs="24" [ngClass]="{'text-right':!(isMobile$ | async)}"
+          *ngIf="requiredSecondContent">
+    <span class="text-p6 text-danger">* </span> <span class="text-secondary text-p6">{{contentSecond}}</span>
+  </nz-col>
+</nz-row>

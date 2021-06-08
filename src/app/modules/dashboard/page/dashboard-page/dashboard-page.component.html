@@ -1,0 +1,161 @@
+<div *ngIf="!dataLoading;else loading">
+  <nz-row nzType="flex" nzAlign="top" nzGutter="16" class="mb-2">
+    <nz-col nzLg="6" nzMd="6" nzSm="12" nzXs="12" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <nz-card [nzBorderless]="true" class="padding-none"
+               [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
+
+        <nz-row nzType="flex" nzAlign="middle">
+          <nz-col nzSpan="6" class="bg-light"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="18" class="text-center">
+            <span class="text-sm-p5 text-p6 font-weight-normal text-main">Today Total Orders</span><br/>
+            <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalOrder}}</span>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="12" nzXs="12" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <nz-card [nzBorderless]="true" class="padding-none"
+               [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
+        <nz-row nzType="flex" nzAlign="middle">
+          <nz-col nzSpan="6" class="bg-info"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="18" class="text-center">
+            <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Branches</span><br/>
+            <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalBranch}}</span>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="12" nzXs="12" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <nz-card [nzBorderless]="true" class="padding-none"
+               [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
+        <nz-row nzType="flex" nzAlign="middle">
+          <nz-col nzSpan="6" class="bg-profit"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="18" class="text-center">
+            <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Registered Users</span><br/>
+            <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalUser}}</span>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="12" nzXs="12" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <nz-card [nzBorderless]="true" class="padding-none"
+               [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
+        <nz-row nzType="flex" nzAlign="middle">
+          <nz-col nzSpan="6" class="bg-primary"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="18" class="text-center">
+            <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Courier Personnel</span><br/>
+            <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalPersonnel}}</span>
+          </nz-col>
+        </nz-row>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+
+  <nz-row nzType="flex" nzAlign="top" nzGutter="16">
+    <nz-col nzLg="12" nzMd="24" nzSm="24" nzXs="24">
+      <ng-container *ngTemplateOutlet="orderList"></ng-container>
+    </nz-col>
+    <nz-col nzLg="12" nzMd="24" nzSm="24" nzXs="24">
+      <ng-container *ngTemplateOutlet="companyAddress"></ng-container>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #orderList>
+  <nz-card [nzBorderless]="true" class="h-100">
+    <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between" nzGutter="16" class="mb-2">
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ | async)}">
+        <span class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Pending Orders</span>
+      </nz-col>
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'text-right':!(isMobile$ | async)}">
+        <button class="font-weight-semibold" nz-button nzType="primary" nzSize="small"
+                (click)="navigateTo(routeConstant.ROUTES_MANAGEMENT)">Manage Orders
+        </button>
+      </nz-col>
+    </nz-row>
+    <nz-table #courierOrderTable
+              class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main scrollmenu"
+              [nzLoading]="dataLoading"
+              [nzData]="displayOrderData"
+              [nzPageSize]="50"
+              [nzOuterBordered]="true"
+              [nzShowSizeChanger]="true"
+              [nzShowTotal]="rangeTemplate"
+              [nzHideOnSinglePage]="false"
+              [nzScroll]="{ x:'100%',y:'350px' }"
+    >
+      <thead nzSingleSort (nzSortOrderChange)="sortOrderList($event)"
+             class="text-sm-p5 text-p6 font-weight-semibold text-title">
+      <tr>
+        <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+            *ngFor="let header of orderTableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+      </tr>
+      </thead>
+      <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+      <tr *ngFor="let data of courierOrderTable.data;let i=index">
+        <td>{{ data.orderNo }}</td>
+        <td>{{ data.createdAt | sDate }}</td>
+        <td>{{ data.displayOrderType }}</td>
+        <td>{{ data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</ng-template>
+
+<ng-template #companyAddress>
+  <nz-card [nzBorderless]="true" class="h-100">
+
+    <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between" nzGutter="16" class="mb-2">
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ | async)}">
+        <span class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Company Addresses</span>
+      </nz-col>
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'text-right':!(isMobile$ | async)}">
+        <button class="font-weight-semibold" nz-button nzType="primary" nzSize="small"
+                (click)="navigateTo(routeConstant.COMPANY_ADDRESS_MANAGEMENT)">Manage Company Addresses
+        </button>
+      </nz-col>
+    </nz-row>
+    <nz-table #companyAddress
+              class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+              [nzLoading]="dataLoading"
+              [nzData]="displayCompanyAddressData"
+              [nzPageSize]="10"
+              [nzOuterBordered]="true"
+              [nzShowSizeChanger]="true"
+              [nzShowTotal]="rangeTemplate"
+              [nzHideOnSinglePage]="false"
+              [nzScroll]="{ x:'780px' }"
+    >
+      <thead nzSingleSort (nzSortOrderChange)="sortCompanyList($event)"
+             class="text-sm-p5 text-p6 font-weight-semibold text-title">
+      <tr>
+        <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+            *ngFor="let header of addressTableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+      </tr>
+      </thead>
+      <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+      <tr *ngFor="let data of companyAddress.data">
+        <td class="font-weight-semibold">{{data.id }}</td>
+        <td>{{ data.address }}</td>
+        <td>{{ data.postcode }}</td>
+        <td>{{ data.city }}</td>
+        <td>{{ data.state }}</td>
+        <td>{{ data.latitude }}</td>
+        <td>{{ data.longitude }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>

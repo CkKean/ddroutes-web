@@ -1,0 +1,219 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <div class="py-3" *ngIf="!personnelDetailLoading;else loading">
+    <app-form-declaration></app-form-declaration>
+
+    <form nz-form [formGroup]="personnelForm" class="w-100">
+      <!-- Acount Information -->
+      <div class="py-3">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Account Information</p>
+
+        <app-form-field [label]="'Username'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{personnelDetail.username}}</span>
+        </app-form-field>
+        <app-form-field [label]="'Email'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{personnelDetail.email}}</span>
+        </app-form-field>
+      </div>
+      <!-- Personal Information -->
+      <div class="py-3">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Personal Information</p>
+        <app-form-field [label]="'Full Name'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{personnelDetail.fullName}}</span>
+        </app-form-field>
+        <app-form-field [label]="'Gender'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{personnelDetail.gender === 'F' ? 'Female' : 'Male'}}</span>
+        </app-form-field>
+        <app-form-field [label]="'Date of Birth'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{(personnelDetail.dob | sDate)}}</span>
+        </app-form-field>
+
+
+        <app-form-field [label]="'Mobile Number'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="phoneNoError">
+              <nz-input-group>
+                <input type="number" class="text-sm-p5 text-p6" nz-input [formControl]="mobileNo"
+                       placeholder="Mobile Number"/>
+              </nz-input-group>
+            </nz-form-control>
+            <ng-template #phoneNoError>
+              <ng-container *ngIf="mobileNo.errors && (mobileNo.dirty || mobileNo.touched)">
+                <span *ngIf="mobileNo.hasError('required')">Please enter the mobile number.</span>
+                <span *ngIf="mobileNo.hasError('whitespace')"> Please make sure no white space before or after
+                            the input.</span>
+              </ng-container>
+            </ng-template>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'Race'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{(personnelDetail.race)}}</span>
+        </app-form-field>
+        <app-form-field [label]="'Religion'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{(personnelDetail.religion)}}</span>
+        </app-form-field>
+
+
+        <app-form-field [label]="'Address'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="addressError">
+              <nz-input-group>
+                <input type="text'" class="text-sm-p5 text-p6" nz-input [formControl]="address"
+                       placeholder="Address"/>
+              </nz-input-group>
+            </nz-form-control>
+
+            <ng-template #addressError>
+              <ng-container *ngIf="address.errors && (address.dirty || address.touched)">
+                <span *ngIf="address.hasError('required')">Please enter the address.</span>
+                <span
+                  *ngIf="mobileNo.hasError('whitespace')"> Please make sure no white space before or after the input.</span>
+              </ng-container>
+            </ng-template>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'City'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="'Please enter your city.'">
+              <nz-input-group>
+                <input type="text" class="text-sm-p5 text-p6" nz-input [formControl]="city" placeholder="City"/>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'Postcode'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="postcodeError">
+              <nz-input-group>
+                <input type="number" class="text-sm-p5 text-p6" nz-input [formControl]="postcode"
+                       placeholder="Postcode"/>
+              </nz-input-group>
+            </nz-form-control>
+            <ng-template #postcodeError>
+              <ng-container *ngIf="postcode.errors && (postcode.dirty || postcode.touched)">
+                <span *ngIf="postcode.hasError('required')">Please enter your postcode.</span>
+                <span *ngIf="postcode.hasError('invalidPostcode')">Please enter valid postcode.</span>
+              </ng-container>
+            </ng-template>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'State'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="'Please select your state.'">
+              <nz-input-group>
+                <nz-select class="w-100 text-sm-p5 text-p6" nzAllowClear nzPlaceHolder="Select your state"
+                           [formControl]="state">
+                  <ng-container *ngFor="let stateType of stateList">
+                    <nz-option [nzLabel]="stateType.name" [nzValue]="stateType.name"></nz-option>
+                  </ng-container>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'Country'" [required]="false">
+          <span class="text-sm-p5 text-p6 text-main">{{personnelDetail.country}}</span>
+        </app-form-field>
+      </div>
+      <!-- Job Information -->
+      <div class="py-3">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Job Details</p>
+
+        <app-form-field [label]="'Position'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="'Please select the position.'">
+              <nz-input-group>
+                <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select the position" [formControl]="position">
+                  <nz-option [nzLabel]="employeePositionType[1]" [nzValue]="employeePositionType[1]"></nz-option>
+                  <nz-option [nzLabel]="employeePositionType[2]" [nzValue]="employeePositionType[2]"></nz-option>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'Start Date'">
+          <nz-form-item>
+            <nz-form-control [nzErrorTip]="startDateError">
+              <nz-input-group>
+                <nz-date-picker class="w-100" [formControl]="startDate" [nzDisabledDate]="disabledDate"
+                                [nzPlaceHolder]="'Select date'"
+                                [nzFormat]="dateFormat" [nzAllowClear]="true">
+                </nz-date-picker>
+              </nz-input-group>
+            </nz-form-control>
+            <ng-template #startDateError>
+              <ng-container *ngIf="startDate.errors && (startDate.dirty || startDate.touched)">
+                <span *ngIf="startDate.hasError('required')">Please select the start date.</span>
+              </ng-container>
+            </ng-template>
+          </nz-form-item>
+        </app-form-field>
+
+        <app-form-field [label]="'Employee Photo'" [required]="false">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-input-group>
+                <div class="file-container">
+                  <div class="mb-2 box-border">
+                    <div *ngIf="!imageSrc" class="py-2"
+                         (click)="hiddenfileinput.click()">
+                      <div class="h-100 text-center pointer">
+                        <i class="vertical-align-rem-1" nz-icon nzType="plus" nzTheme="outline"></i> Upload
+                        <input type='file' (change)="fileChange($event);"
+                               style="display:none;" #hiddenfileinput/>
+                      </div>
+                    </div>
+                    <img *ngIf="imageSrc && uploadedFileValid"
+                         nz-image
+                         width="100%" height="250x"
+                         [nzSrc]="imageSrc"
+                    />
+                  </div>
+                  <div *ngIf="uploadedFileValid && imageSrc">
+                    <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between">
+                      <nz-col nzSpan="12">
+                        <i nz-icon class="vertical-align-rem-1" nzType="file" nzTheme="outline"></i>
+                        {{uploadedFileName}}
+                      </nz-col>
+                      <nz-col nzSpan="12" class="text-right">
+                        <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer"
+                           (click)="removeFile()"></i>
+                      </nz-col>
+                    </nz-row>
+                  </div>
+                  <p *ngIf="!uploadedFileValid" class="text-danger">
+                    <i nz-icon nzType="delete" nzTheme="outline"
+                       class="text-danger pointer vertical-align-rem-1" (click)="removeFile()"></i>
+                    {{uploadedFileErrorMsg}}
+                  </p>
+                </div>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </app-form-field>
+      </div>
+    </form>
+  </div>
+</nz-card>
+
+<div class="pb-3">
+  <nz-row nzType="flex" nzAlign="middle">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()" *ngIf="!submitDisabled">Cancel</a>
+    </nz-col>
+    <nz-col nzSpan="12" class="text-right">
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="submitForm()"
+              [nzLoading]="submitLoading" [disabled]="submitDisabled">Submit
+      </button>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

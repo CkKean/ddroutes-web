@@ -1,0 +1,77 @@
+<div *ngIf="!orderDetailLoading;else loading">
+  <ng-container *ngIf="!orderDetailLoading && !errorMessage;else noResult">
+    <div class="py-3">
+      <nz-steps [nzCurrent]="orderStatus.step" [nzDirection]="(isMobile$ | async) ? 'vertical' : 'horizontal'">
+        <nz-step nzTitle="Placed"
+                 [nzDescription]="(orderStatus?.orderPlacedAt) ? (orderStatus?.orderPlacedAt | sDate) : ''"></nz-step>
+        <nz-step nzTitle="Paid"
+                 [nzDescription]="(orderStatus?.orderPlacedAt) ? (orderStatus?.orderPlacedAt | sDate) : ''"></nz-step>
+        <nz-step nzTitle="On The Way" *ngIf="orderStatus?.orderType === orderTypeConstant.PICK_UP"
+                 [nzDescription]="(orderStatus?.orderComingAt ) ? (orderStatus?.orderComingAt | sDate) : ''"></nz-step>
+        <nz-step nzTitle="Picked Up" *ngIf="orderStatus?.orderType === orderTypeConstant.PICK_UP"
+                 [nzDescription]="(orderStatus?.orderPickedAt) ? (orderStatus?.orderPickedAt | sDate) : (orderStatus?.pickupReason) ? 'Failed' : ''"></nz-step>
+        <nz-step nzTitle="Shipped Out"
+                 [nzDescription]="(orderStatus?.orderShippedAt ) ? (orderStatus?.orderShippedAt | sDate) : ''"></nz-step>
+        <nz-step nzTitle="Collected"
+                 [nzDescription]="(orderStatus?.orderReceivedAt) ? (orderStatus?.orderReceivedAt | sDate) :(orderStatus?.deliveryReason)  ? 'Failed':''"></nz-step>
+        <nz-step nzTitle="Completed"
+                 [nzDescription]="(orderStatus?.orderCompletedAt) ? (orderStatus?.orderCompletedAt | sDate) : ''"></nz-step>
+      </nz-steps>
+    </div>
+
+    <div class="pt-5" [ngClass]="{'pt-5':!(isMobile$ | async),'pt-3' :(isMobile$ |async)}">
+      <p class="text-main font-weight-semibold text-sm-p5 text-p6">Order No. {{orderStatus?.orderNo}}</p>
+      <p class="text-main font-weight-semibold text-sm-p5 text-p6">Tracking No. {{orderStatus?.trackingNo}}</p>
+
+      <div class="pt-3 px-3">
+        <nz-timeline class="text-sm-p6 text-p7 text-main font-weight-normal">
+          <nz-timeline-item *ngIf="(orderStatus?.orderCompletedAt )" nzColor="green">
+            {{orderStatus?.orderCompletedAt | sDate}} - Order completed.
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderReceivedAt || (orderStatus?.deliveryReason))"
+                            [nzColor]="(orderStatus?.orderReceivedAt) ? 'green' : 'red'">
+            <ng-container *ngIf="orderStatus?.orderReceivedAt">
+              {{orderStatus?.orderReceivedAt | sDate}} - Parcel has been successfully received.
+            </ng-container>
+            <ng-container *ngIf="orderStatus?.deliveryReason">
+              <span
+                style="color:red;">{{('Failed (' + (orderStatus?.deliveryReason) + '). Please contact us 05-2881234.')}}</span>
+            </ng-container>
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderShippedAt)"
+                            [nzColor]="(orderStatus?.orderShippedAt) ? 'green' : 'red'">
+            {{orderStatus?.orderShippedAt | sDate}} - Order dispatched.
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderPickedAt) || (orderStatus?.pickupReason)"
+                            [nzColor]="(orderStatus?.orderPickedAt) ? 'green' : 'red'">
+            <ng-container *ngIf="orderStatus?.orderPickedAt">
+              {{orderStatus?.orderPickedAt | sDate}} - Picked Up by courier.
+            </ng-container>
+            <ng-container *ngIf="orderStatus?.pickupReason">
+              <span
+                style="color:red;">{{('Unsuccessful Pick Up Attempt (' + (orderStatus?.pickupReason) + '). Please contact us 05-2881234.')}}</span>
+            </ng-container>
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderComingAt )"
+                            [nzColor]="(orderStatus?.orderComingAt) ? 'green' :'red'">
+            {{orderStatus?.orderComingAt | sDate}} - Courier dispatched.
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderPlacedAt )" [nzColor]="'green'">
+            {{orderStatus?.orderPlacedAt | sDate}} - Order have been paid (tracking no. : {{orderStatus?.trackingNo}})
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="(orderStatus?.orderPlacedAt )" nzColor="green">
+            {{orderStatus?.orderPlacedAt | sDate}} - Order details have been submitted successfully.
+          </nz-timeline-item>
+        </nz-timeline>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-result nzStatus="warning" [nzTitle]="errorMessage"></nz-result>
+</ng-template>

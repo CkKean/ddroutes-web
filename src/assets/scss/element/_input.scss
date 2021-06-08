@@ -1,0 +1,96 @@
+.ant-input, .ant-time-picker-input {
+  box-shadow: none;
+  padding: 8px 16px;
+  line-height: 1.5;
+  color: $black-6;
+  height: 42px;
+  border-radius: .25rem !important;
+  border: 1px solid #ddd;
+}
+
+.ant-input-sm{
+  box-shadow: none;
+  padding: 8px 16px;
+  line-height: 1.5;
+  color: $black-6;
+  height: 35px;
+  border-radius: .25rem !important;
+  border: 1px solid #ddd;
+}
+
+.ant-input-group-addon {
+  background-color: transparent;
+}
+
+.ant-input:disabled.disabled-no-border {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: $gray-dark;
+  cursor: auto;
+  padding-left: 0;
+  padding-right: 0;
+
+  &:hover {
+    border: 1px solid transparent;
+  }
+}
+
+.ant-select-disabled .ant-select-selection {
+  background-color: $disabled-bg;
+}
+
+.ant-input-affix-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, .65);
+  text-align: start;
+  line-height: 1.5;
+  list-style: none;
+  border-radius: .25rem !important;
+}
+
+.ant-input-affix-wrapper > input.ant-input {
+  padding: 8px 16px;
+}
+
+.ant-input-affix-wrapper .ant-input-prefix, .ant-input-affix-wrapper .ant-input-suffix {
+  z-index: 990;
+  color: #8b94a0;
+  position: absolute;
+  top: 50%;
+  line-height: 0;
+  transform: translateY(-50%);
+}
+
+.ant-input-affix-wrapper .ant-input-prefix {
+  left: 12px;
+}
+
+.ant-input-affix-wrapper .ant-input-suffix {
+  right: 12px;
+}
+
+.ant-input-affix-wrapper .ant-input:not(:last-child) {
+  padding-right: 2rem;
+}
+
+.ant-input-affix-wrapper .ant-input:not(:first-child) {
+  padding-left: 2rem;
+}
+
+.ant-input-affix-wrapper:hover .ant-input:not(:disabled) {
+  border-color: #0167b1;
+}
+
+.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled) {
+  border-color: $brand-primary-accent-1;
+  border-right-width: 1px !important;
+}
+
+.ant-input-affix-wrapper > input.ant-input:focus {
+  outline: 0;
+  border-color: $brand-primary-accent-1;
+  border-right-width: 1px !important;
+}
+

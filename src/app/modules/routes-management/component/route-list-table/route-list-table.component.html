@@ -1,0 +1,68 @@
+<nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
+  <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+    <span class="text-title font-weight-semibold">
+         <i nz-icon nzType="reload" nzTheme="outline" class="vertical-align-rem-1 pointer" (click)="refreshRouteTable()"
+            nzTooltipTitle="Refresh" nzTooltipPlacement="topLeft" nz-tooltip></i>
+      Route List
+    </span>
+  </nz-col>
+  <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+    <input nz-input nzSize="small" placeholder="Search" (keyup)="search($event)"/>
+  </nz-col>
+  <nz-col nzLg="10" nzMd="10" nzSm="24" nzXs="24"
+          [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+    <button nz-button [nzSize]="'small'" nzType="outline" class="font-weight-semibold" (click)="editOrderRoute()"
+            [disabled]="editDisable">Edit
+    </button>
+    <button nz-button [nzSize]="'small'" nzType="default" class="font-weight-semibold ml-2" (click)="onDeleteOrder()"
+            [disabled]="deleteDisable" nzDanger>Delete
+    </button>
+  </nz-col>
+</nz-row>
+
+<nz-table #orderListTable
+          class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main h-100"
+          [nzLoading]="routeListLoading"
+          [nzData]="displayData"
+          [nzPageSize]="50"
+          [nzOuterBordered]="true"
+          [nzShowSizeChanger]="true"
+          [nzShowTotal]="rangeTemplate"
+          [nzHideOnSinglePage]="false"
+          [nzScroll]="{ x:'920px',y:'350px' }"
+>
+  <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+  <tr>
+    <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+        *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+  </tr>
+  </thead>
+  <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+  <tr class="pointer" [ngClass]="{'bg-black-4':(selectedRouteId === data.routeId)}"
+      *ngFor="let data of orderListTable.data;let i=index" (click)="selectedRoute(data)">
+    <td>{{i + 1 }}</td>
+    <td>{{data.routeId}}</td>
+    <td>{{data.departureDate | date }}</td>
+    <td>{{data.personnelInfo ? data.personnelInfo.fullName : '-'  }}</td>
+    <td><span nz-tooltip
+              [nzTooltipTitle]="data.vehicleInfo?.plateNo">{{data.vehicleInfo ? data.vehicleInfo.type : '-'  }}</span>
+      <!--      <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip style="font-size: 12px;"-->
+      <!--         [nzTooltipTitle]="data.vehicleInfo?.plateNo"></i>-->
+    </td>
+    <td>{{data.totalDistance }}</td>
+    <td>{{data.timeNeeded | number:'2.0-0' }}</td>
+    <td>{{data.completed + ' / ' + (data.orderList.length)}}</td>
+    <td>{{data.status }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+
+<app-shared-modal *ngIf="editVisible" [titleText]="'Edit Route'" [visible]="editVisible"
+                  [confirmText]="'Save'" [modalWidth]="'70vw'" [isCenter]="false"
+                  (onClose)="cancelEdit()" (onSubmit)="submitOrderRouteForm()">
+  <app-edit-route-form [selectedOrderRoute]="selectedOrderRoute" (deleteOrder)="deleteOrder($event)"
+                       (closeModal)="successUpdate()"></app-edit-route-form>
+</app-shared-modal>

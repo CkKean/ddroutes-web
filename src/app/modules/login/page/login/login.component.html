@@ -1,0 +1,21 @@
+<div class="main-content clearfix"
+     [style.backgroundImage]="'url('+ loginPageBg +')'"
+     [style.background-repeat]="'no-repeat'"
+     [style.background-position]="'right'"
+     [style.background-size]="'cover'"
+     style="height: 100%">
+  <div class="h-100 d-flex mb-4 py-md-6 px-md-4 px-lg-5 py-lg-0 align-items-center">
+    <nz-row nzType="flex" class="w-100 mx-2" nzAlign="top" nzJustify="start">
+      <nz-col [nzXXl]="7" [nzXl]="9" [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24">
+        <div class="upper-container bg-theme">
+          <img height="100px" width="280px" src="./assets/img/brand/logo4.png" alt="DD-Routes" class="ml-2 pointer" (click)="navigateMainPage()">
+        </div>
+        <div class="lower-container p-3 mb-2 p-lg-4">
+          <app-login-form></app-login-form>
+        </div>
+      </nz-col>
+    </nz-row>
+  </div>
+</div>
+
+

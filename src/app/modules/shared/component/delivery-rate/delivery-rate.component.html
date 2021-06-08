@@ -1,0 +1,49 @@
+<nz-card [nzBorderless]="true" class="h-100" *ngIf="!pricePlanDataLoading;else loading">
+
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase mt-5">Price Plan Overview</p>
+  <nz-table nzBordered nzTemplateMode [nzScroll]="{x:'620px'}">
+    <thead>
+    <tr>
+      <th nzWidth="120px"></th>
+      <th nzWidth="175px">Weight</th>
+      <th nzWidth="175px">Distance</th>
+      <th nzWidth="150px">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let data of pricePlanData;let i=index">
+      <tr>
+        <td><b>{{data.vehicleType}}</b></td>
+        <td>
+          {{data.defaultWeightPrefix === 'N/A' ? null : data.defaultWeightPrefix}}
+          {{data.defaultWeight}}
+          {{data.defaultWeightUnit}}
+        </td>
+        <td>{{data.defaultDistancePrefix === 'N/A' ? null : data.defaultDistancePrefix }}
+          {{data.defaultDistance}} {{data.defaultDistanceUnit}}</td>
+        <td>RM {{data.defaultPricing}}</td>
+      </tr>
+
+      <tr *ngIf="data.subWeight">
+        <td></td>
+        <td>Subsequent {{data.subWeight}} {{data.subWeightUnit}}</td>
+        <td>-</td>
+        <td>Add RM {{data.subWeightPricing}} </td>
+      </tr>
+
+      <tr *ngIf="data.subDistance">
+        <td></td>
+        <td>-</td>
+        <td>Subsequent {{data.subDistance}} {{data.subDistanceUnit}}</td>
+        <td>Add RM {{data.subDistancePricing}} </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </nz-table>
+
+
+</nz-card>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>

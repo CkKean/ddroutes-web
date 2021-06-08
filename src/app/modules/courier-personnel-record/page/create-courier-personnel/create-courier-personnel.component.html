@@ -1,0 +1,187 @@
+<nz-card [nzBorderless]="true">
+  <form nz-form [formGroup]="courierPersonnelForm" class="w-100">
+
+    <app-form-declaration></app-form-declaration>
+    <div class="py-3">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Identity Verification</p>
+      <app-form-field [label]="'Username'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="usernameError">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="username" placeholder="Username"
+                     (blur)="onBlurUsername($event)"/>
+            </nz-input-group>
+          </nz-form-control>
+
+          <ng-template #usernameError>
+            <ng-container *ngIf="username.errors && (username.dirty || username.touched)">
+              <span *ngIf="username.hasError('required')">Please enter the username.</span>
+              <span *ngIf="username.hasError('existed')">Username is existed. Please try again.</span>
+              <span *ngIf="username.hasError('whitespace')"> Please make sure no white space before or after the
+              input.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Email Address'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="emailError">
+            <nz-input-group>
+              <input type="email" nz-input formControlName="email" placeholder="Email" (blur)="onBlurEmail($event)"/>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #emailError>
+            <ng-container *ngIf="email.errors && (email.dirty || email.touched)">
+              <span *ngIf="email.hasError('invalidEmail')">Please enter a valid email. e.g. ddroutes@hotmail.com</span>
+              <span *ngIf="email.hasError('existed')">Email is existed. Please try again.</span>
+              <span *ngIf="email.hasError('required')">Please enter the email.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Password'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="passwordError">
+            <nz-input-group [nzSuffix]="passwordVisible">
+              <input [type]="passVisible? 'text': 'password'" nz-input formControlName="password"
+                     placeholder="Password"/>
+            </nz-input-group>
+          </nz-form-control>
+
+          <ng-template #passwordError>
+            <ng-container *ngIf="password.errors && (password.dirty || password.touched)">
+            <span *ngIf="password.hasError('invalid')">Must be alphanumeric, with at least one upper and one lower case
+              character.</span>
+              <span *ngIf="password.hasError('required')">Please enter the password</span>
+              <span *ngIf="password.hasError('minlength')">Must be 8 characters and above.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Confirm Password'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="confirmPasswordError">
+            <nz-input-group [nzSuffix]="cPasswordVisible">
+              <input [type]="cpassVisible? 'text': 'password'" nz-input formControlName="confirmPassword"
+                     placeholder="Confirm Password"/>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #confirmPasswordError>
+            <ng-container *ngIf="confirmPassword.errors && (confirmPassword.dirty || confirmPassword.touched)">
+            <span *ngIf="confirmPassword.hasError('invalid')">Must be alphanumeric, with at least one upper and one
+              lower case character.</span>
+              <span *ngIf="confirmPassword.hasError('confirmedValidator')">The confirm password does not match.</span>
+              <span *ngIf="confirmPassword.hasError('required')">Please enter the confirm password.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+    </div>
+
+    <div class="py-3">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Personal Information</p>
+      <app-personal-information-form [formDisable]="formDisable"></app-personal-information-form>
+    </div>
+
+    <div class="py-3">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Job Details</p>
+
+      <app-form-field [label]="'Position'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the position.'">
+            <nz-input-group>
+              <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select the position" [formControl]="position">
+                <nz-option [nzLabel]="employeePositionType[1]" [nzValue]="employeePositionType[1]"></nz-option>
+                <nz-option [nzLabel]="employeePositionType[2]" [nzValue]="employeePositionType[2]"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Start Date'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the start date.'">
+            <nz-input-group>
+              <nz-date-picker class="w-100" [formControl]="startDate" [nzDisabledDate]="disabledDate"
+                              [nzPlaceHolder]="'Select date'"
+                              [nzFormat]="dateFormat" [nzAllowClear]="true">
+              </nz-date-picker>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Employee Photo'" [required]="false">
+        <nz-form-item>
+          <nz-form-control [ngClass]="{'not-allowed':(formDisable)}">
+            <nz-input-group>
+              <div class="file-container">
+                <div class="mb-2"
+                     [ngClass]="{'box-border':!formDisable,'border not-allowed bg-disable text-disable':formDisable}">
+                  <div *ngIf="!imageSrc" class="py-2"
+                       (click)="hiddenfileinput.click()">
+                    <div class="h-100 text-center "
+                         [ngClass]="{'not-allowed':(formDisable),'pointer':!(formDisable)}">
+                      <i class="vertical-align-rem-1" nz-icon nzType="plus" nzTheme="outline"></i> Upload
+                      <input type='file' [disabled]="formDisable" (change)="fileChange($event);"
+                             style="display:none;"
+                             #hiddenfileinput/>
+                    </div>
+                  </div>
+                  <img *ngIf="imageSrc && uploadedFileValid"
+                       nz-image
+                       width="100%" height="250x"
+                       [nzSrc]="imageSrc"
+                  />
+                </div>
+                <div *ngIf="uploadedFileValid && imageSrc">
+                  <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between">
+                    <nz-col nzSpan="12">
+                      <i nz-icon class="vertical-align-rem-1" nzType="file" nzTheme="outline"></i>
+                      {{uploadedFileName}}
+                    </nz-col>
+                    <nz-col nzSpan="12" class="text-right">
+                      <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer"
+                         (click)="removeFile()"></i>
+                    </nz-col>
+                  </nz-row>
+                </div>
+                <p *ngIf="!uploadedFileValid" class="text-danger">
+                  <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer vertical-align-rem-1"
+                     (click)="removeFile()"></i> {{uploadedFileErrorMsg}}</p>
+              </div>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+
+    </div>
+  </form>
+</nz-card>
+
+<div class="pb-3">
+  <nz-row nzType="flex" nzAlign="middle">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()" *ngIf="!formDisable">Cancel</a>
+    </nz-col>
+    <nz-col nzSpan="12" class="text-right">
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="submitForm()"
+              [nzLoading]="submitLoading"
+              [disabled]="formDisable">Submit
+      </button>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #passwordVisible>
+  <i nz-icon [nzType]="passVisible ?'eye-invisible' :'eye'" (click)="passwordToggle()"></i>
+</ng-template>
+
+<ng-template #cPasswordVisible>
+  <i nz-icon [nzType]="cpassVisible ?'eye-invisible' :'eye'" (click)="confirmPasswordToggle()"></i>
+</ng-template>

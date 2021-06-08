@@ -1,0 +1,40 @@
+<app-sub-header [title]="'Shipping Order Summary'"></app-sub-header>
+<div class="container">
+  <nz-card class="above-header" [nzBorderless]="true">
+    <ng-container *ngIf="!orderDetailLoading;else loading">
+
+      <nz-collapse>
+        <nz-collapse-panel [nzHeader]="invoiceLabel" [nzActive]="true" [nzExtra]="downloadInvoiceIcon">
+          <app-invoice [orderNo]="orderNo" [orderInfo]="orderInfo" [orderDetailLoading]="orderDetailLoading"
+                       [requiredGetInfo]="false">
+          </app-invoice>
+        </nz-collapse-panel>
+        <nz-collapse-panel [nzHeader]="shipmentLabel" [nzExtra]="downloadShipmentIcon">
+          <app-shipment-label [orderNo]="orderNo" [orderInfo]="orderInfo" [orderDetailLoading]="orderDetailLoading"
+                              [requiredGetInfo]="false"></app-shipment-label>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+    </ng-container>
+  </nz-card>
+</div>
+
+<ng-template #invoiceLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Invoice</span>
+</ng-template>
+
+<ng-template #shipmentLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Shipment Label</span>
+</ng-template>
+
+<ng-template #downloadInvoiceIcon>
+  <i nz-icon class="text-p4" nzType="download" nzTheme="outline" (click)="downloadInvoice($event)"></i>
+</ng-template>
+
+<ng-template #downloadShipmentIcon>
+  <i nz-icon class="text-p4" nzType="download" nzTheme="outline" (click)="downloadShipment($event)"></i>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>

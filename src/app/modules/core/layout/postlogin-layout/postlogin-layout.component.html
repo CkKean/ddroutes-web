@@ -1,0 +1,19 @@
+<nz-layout>
+  <app-header></app-header>
+  <nz-layout>
+    <div class="d-flex" id="main-content">
+      <div class="side-nav h-100" *ngIf="!(isMobile$ | async)">
+        <app-sidebar (collapsedEvent)="getCollapsedEvent($event)"></app-sidebar>
+      </div>
+      <div class=" w-100 d-flex flex-column h-100"
+           [ngClass]="{'content-on-collapsed':(!(isMobile$ | async) && isCollapsed),'content-on-right':(!(isMobile$ | async) && !isCollapsed),'content':(isMobile$ | async)}">
+        <nz-content>
+          <div class="router-container">
+            <nz-breadcrumb class="mb-3" [nzAutoGenerate]="true"></nz-breadcrumb>
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </div>
+    </div>
+  </nz-layout>
+</nz-layout>

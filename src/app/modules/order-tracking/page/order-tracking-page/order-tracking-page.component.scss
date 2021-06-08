@@ -1,0 +1,23 @@
+.right-border-radius-none {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.left-border-radius-none{
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.tracking-btn{
+  height: 42px;
+  font-size: 14px;
+  border-radius: 30px;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition-duration: .4s;
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  background-color: #0477C1;
+  border: 1px solid #0477C1;
+  font-weight: 400;
+}

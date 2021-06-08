@@ -1,0 +1,225 @@
+<nz-card [nzBorderless]="true" *ngIf="!pricePlanDataLoading;else loading">
+  <form nz-form [formGroup]="pricePlanForm" class="w-100">
+
+    <app-form-declaration></app-form-declaration>
+
+    <div class="py-3">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Price Plan Information</p>
+
+      <app-form-field [label]="'Vehicle Type'" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="vehicleTypeError">
+            <nz-input-group>
+              <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle type"
+                         (nzOpenChange)="vehicleTypeSelect($event)"
+                         [formControl]="vehicleType" [nzDropdownRender]="vehicleTypeRender">
+                <nz-option *ngFor="let item of listOfVehicle" [nzLabel]="item" [nzValue]="item"></nz-option>
+              </nz-select>
+              <ng-template #vehicleTypeRender>
+                <div class="container mt-1">
+                  <nz-input-group [nzSuffix]="vehicleTypeSuffix">
+                    <input type="text" nz-input [formControl]="newVehicleType"/>
+                  </nz-input-group>
+                  <ng-template #vehicleTypeSuffix>
+                    <span class="text-danger" *ngIf="vehicleTypeExisted">Existed</span>
+                  </ng-template>
+                  <a class="add-item" (click)="addNewVehicleType()"><i nz-icon nzType="plus"></i> New Type</a>
+                </div>
+              </ng-template>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #vehicleTypeError>
+            <ng-container *ngIf="vehicleType.errors && (vehicleType.dirty || vehicleType.touched)">
+              <span *ngIf="vehicleType.hasError('required')">Please select the vehicle type.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Weight'" [required]="false" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="defaultWeightError">
+            <nz-input-group nzCompact>
+              <input ónz-input [formControl]="defaultWeight" hidden/>
+
+              <nz-select class="w-30 overwrite-right-border-radius"
+                         [formControl]="defaultWeightPrefix" (nzOpenChange)="weightPrefixSelect($event)"
+                         nzPlaceHolder="Prefix" [nzDropdownRender]="weightPrefixRender">
+                <nz-option *ngFor="let item of listOfWeightPrefix" [nzLabel]="item" [nzValue]="item"></nz-option>
+              </nz-select>
+
+              <ng-template #weightPrefixRender>
+                <div class="container mt-1">
+                  <nz-input-group [nzSuffix]="weightPrefixSuffix">
+                    <input type="text" nz-input [formControl]="newDefaultWeightPrefix"/>
+                  </nz-input-group>
+                  <ng-template #weightPrefixSuffix>
+                    <span class="text-danger" *ngIf="weightPrefixExisted">Existed</span>
+                  </ng-template>
+                  <a class="add-item" (click)="addNewWeightPrefix()"><i nz-icon nzType="plus"></i> New Prefix</a>
+                </div>
+              </ng-template>
+
+              <input class="w-30 right-border-radius-none left-border-radius-none" type="text" nz-input
+                     placeholder="Weight" [formControl]="defaultWeight"/>
+
+              <nz-select class="overwrite-left-border-radius border-left-0 w-40" [formControl]="defaultWeightUnit"
+                         nzPlaceHolder="Unit">
+                <nz-option *ngFor="let item of listOfWeightUnit" [nzLabel]="item.label"
+                           [nzValue]="item.value"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #defaultWeightError>
+            <ng-container *ngIf="defaultWeight.errors && (defaultWeight.dirty || defaultWeight.touched)">
+              <span *ngIf="defaultWeight.hasError('required')">Please enter the weight.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Distance'" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="defaultDistanceError">
+            <nz-input-group nzCompact>
+              <input [formControl]="defaultDistance" hidden/>
+
+              <nz-select class="w-30 overwrite-right-border-radius" [formControl]="defaultDistancePrefix"
+                         nzPlaceHolder="Prefix">
+                <nz-option *ngFor="let item of listOfDistancePrefix" [nzLabel]="item" [nzValue]="item"></nz-option>
+              </nz-select>
+
+              <input class="w-30 left-border-radius-none right-border-radius-none" type="number" nz-input
+                     placeholder="Distance" [formControl]="defaultDistance"/>
+
+              <nz-select class="w-40 overwrite-left-border-radius border-left-0" [formControl]="defaultDistanceUnit"
+                         nzPlaceHolder="Unit">
+                <nz-option *ngFor="let item of listOfDistanceUnit" [nzLabel]="item.label"
+                           [nzValue]="item.value"></nz-option>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #defaultDistanceError>
+            <ng-container *ngIf="defaultDistance.errors && (defaultDistance.dirty || defaultDistance.touched)">
+              <span *ngIf="defaultDistance.hasError('required')">Please enter the distance.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Price'" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="priceError">
+            <nz-input-group [nzAddOnBefore]="'RM'">
+              <input class="left-border-radius-none" type="number" nz-input [formControl]="defaultPricing"
+                     placeholder="Price"/>
+            </nz-input-group>
+          </nz-form-control>
+
+          <ng-template #priceError>
+            <ng-container *ngIf="defaultPricing.errors && (defaultPricing.dirty || defaultPricing.touched)">
+              <span *ngIf="defaultPricing.hasError('required')">Please enter the price.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Subsequent Weight'" [required]="false" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-input-group nzCompact>
+
+            <nz-form-control [nzErrorTip]="subWeightPricingError" class="w-50">
+              <nz-input-group [nzAddOnBefore]="'RM'" [nzAddOnAfter]="'/'">
+                <input type="number" class="right-border-radius-none left-border-radius-none" nz-input
+                       [formControl]="subWeightPricing" placeholder="Price"/>
+              </nz-input-group>
+              <ng-template #subWeightPricingError>
+                <ng-container *ngIf="subWeightPricing.errors && (subWeightPricing.dirty || subWeightPricing.touched)">
+                  <span *ngIf="subWeightPricing.hasError('required')">Please enter the price.</span>
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+
+            <nz-form-control [nzErrorTip]="subWeightError" class="w-50">
+              <nz-input-group nzCompact>
+                <input class="w-50 right-border-radius-none left-border-radius-none" type="number" nz-input
+                       placeholder="Weight" [formControl]="subWeight"/>
+
+                <nz-select class="w-50 custom-border-radius border-left-0" [formControl]="subWeightUnit"
+                           nzPlaceHolder="Unit">
+                  <nz-option *ngFor="let item of listOfWeightUnit" [nzLabel]="item.label"
+                             [nzValue]="item.value"></nz-option>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-control>
+
+            <ng-template #subWeightError>
+              <ng-container *ngIf="subWeight.errors && (subWeight.dirty || subWeight.touched)">
+                <span *ngIf="subWeight.hasError('required')">Please enter the weight.</span>
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-item>
+        <label nz-checkbox [formControl]="subWeightEnable">Enable Subsequent Weight</label>
+      </app-form-field>
+
+      <app-form-field [label]="'Subsequent Distance'" [required]="false" [sColLg]="11" [sColMd]="11">
+        <nz-form-item>
+          <nz-input-group nzCompact>
+            <nz-form-control [nzErrorTip]="subDistancePricingError" class="w-50">
+              <nz-input-group [nzAddOnBefore]="'RM'" [nzAddOnAfter]="'/'">
+                <input type="number" class="right-border-radius-none left-border-radius-none" nz-input
+                       [formControl]="subDistancePricing" placeholder="Price"/>
+              </nz-input-group>
+              <ng-template #subDistancePricingError>
+                <ng-container
+                  *ngIf="subDistancePricing.errors && (subDistancePricing.dirty || subDistancePricing.touched)">
+                  <span *ngIf="subDistancePricing.hasError('required')">Please enter the price.</span>
+                </ng-container>
+              </ng-template>
+            </nz-form-control>
+
+            <nz-form-control [nzErrorTip]="subDistanceError" class="w-50  border-right-none">
+              <nz-input-group nzCompact class="">
+                <input class="w-50 right-border-radius-none left-border-radius-none" type="number" nz-input
+                       placeholder="Distance" [formControl]="subDistance"/>
+
+                <nz-select class="w-50 custom-border-radius border-left-0" [formControl]="subDistanceUnit"
+                           nzPlaceHolder="Unit">
+                  <nz-option *ngFor="let item of listOfDistanceUnit" [nzLabel]="item.label"
+                             [nzValue]="item.value"></nz-option>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-control>
+
+            <ng-template #subDistanceError>
+              <ng-container *ngIf="subDistance.errors && (subDistance.dirty || subDistance.touched)">
+                <span *ngIf="subDistance.hasError('required')">Please enter the distance.</span>
+              </ng-container>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-item>
+        <label nz-checkbox [formControl]="subDistanceEnable">Enable Subsequent Distance</label>
+      </app-form-field>
+    </div>
+  </form>
+</nz-card>
+
+<div class="pb-3">
+  <nz-row nzType="flex" nzAlign="middle">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()" *ngIf="!submitDisabled">Cancel</a>
+    </nz-col>
+    <nz-col nzSpan="12" class="text-right">
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="submitForm()"
+              [disabled]="submitDisabled"
+              [nzLoading]="updateFormLoading">Submit
+      </button>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>
+

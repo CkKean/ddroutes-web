@@ -1,0 +1,15 @@
+.ant-radio-inner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid #ddd;
+  background-color: transparent;
+}
+
+.ant-radio-inner::after {
+  height: .875rem;
+  width: .875rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) !important;
+  background-color: $brand-primary;
+}

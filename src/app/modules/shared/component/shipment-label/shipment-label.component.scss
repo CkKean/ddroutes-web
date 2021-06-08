@@ -1,0 +1,34 @@
+.custom-container {
+  border: 1px solid #424B57;
+}
+
+.custom-border {
+  border: 2px solid #8B94A0;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.logo-img {
+  width: 140px;
+  height: 60px;
+}
+
+.custom-border-left {
+  border-left: 1px solid #424B57;
+}
+@media print {
+  pre, blockquote {page-break-inside: avoid;}
+}
+
+.bshadow {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(5px 5px 5px #222222);
+  opacity: .5;
+
+}

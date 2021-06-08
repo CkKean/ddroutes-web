@@ -1,0 +1,77 @@
+<form nz-form [formGroup]="companyAddressForm" class="w-100">
+
+  <app-form-declaration></app-form-declaration>
+
+  <div class="py-3">
+
+    <div [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+      <app-order-form-field [label]="'Address'">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter the address.">
+            <nz-input-group>
+              <input type="text" nz-input [formControl]="address" placeholder="Address" (blur)="getFullAddress()"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-order-form-field>
+    </div>
+    <div [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+      <app-order-form-field [label]="'Postcode'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="recipientPostcodeError">
+            <nz-input-group>
+              <input type="number" nz-input [formControl]="postcode" placeholder="Postcode" (blur)="getFullAddress()"/>
+            </nz-input-group>
+          </nz-form-control>
+          <ng-template #recipientPostcodeError>
+            <ng-container
+              *ngIf="postcode.errors && (postcode.dirty || postcode.touched)">
+              <span *ngIf="postcode.hasError('required')">Please enter the address.</span>
+              <span *ngIf="postcode.hasError('invalidPostcode')">Please enter valid postcode.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-order-form-field>
+    </div>
+    <div [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+      <app-order-form-field [label]="'City'">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please enter the city.">
+            <nz-input-group>
+              <input type="text" nz-input [formControl]="city" placeholder="City" (blur)="getFullAddress()"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-order-form-field>
+    </div>
+    <div [ngClass]="{'mb-3':(isMobile$ | async),'mb-2':!(isMobile$ | async)}">
+      <app-order-form-field [label]="'State'">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please select the state.">
+            <nz-input-group>
+              <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your state" nzShowSearch
+                         [formControl]="state">
+                <ng-container *ngFor="let state of stateList">
+                  <nz-option [nzLabel]="state.name" [nzValue]="state.name"></nz-option>
+                </ng-container>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-order-form-field>
+    </div>
+    <app-order-form-field [label]="'Completed Address'">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <input class="font-weight-bold" nz-input [formControl]="fullAddress"/>
+          </nz-input-group>
+        </nz-form-control>
+
+      </nz-form-item>
+    </app-order-form-field>
+
+  </div>
+</form>
+
+

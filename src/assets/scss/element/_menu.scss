@@ -1,0 +1,63 @@
+.ant-menu-item a {
+  color: white;
+}
+
+.ant-menu-item-selected a, .ant-menu-item-selected a:hover {
+  color: $brand-primary;
+}
+
+.ant-menu {
+  background-image: linear-gradient(to bottom, #0477C1, #001529);
+  color: white;
+}
+
+.ant-menu-inline-collapsed > .ant-menu-item {
+  padding: 0 calc(40% - 16px / 2);
+}
+
+.ant-menu-inline-collapsed > i {
+  margin: 0;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.ant-menu-item i {
+  min-width: 14px;
+  transition: font-size 0.15s cubic-bezier(0.215, 0.61, 0.355, 1), margin 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+}
+
+.ant-menu-inline-collapsed > .ant-menu-item i + a {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+}
+
+.ant-menu-item i + span {
+  transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.3s;
+}
+
+.ant-menu-item:hover {
+  background-color: $brand-theme !important;
+
+  i {
+    color: white;
+  }
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: rgb(0, 21, 41, 0.5) !important;
+
+  i {
+    color: white;
+  }
+}
+
+.ant-menu-item:active, .ant-menu-submenu-title:active {
+  background-color: $brand-theme !important;
+
+  i {
+    color: white;
+  }
+}
+
+

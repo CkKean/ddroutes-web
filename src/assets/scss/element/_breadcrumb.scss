@@ -1,0 +1,22 @@
+.ant-breadcrumb {
+  text-transform: capitalize;
+  font-size: $font-size-md;
+  line-height: $font-line-height-md;
+  font-weight: 660;
+}
+
+.ant-breadcrumb a {
+  color: $black-7;
+}
+
+.ant-breadcrumb {
+  :hover {
+    color: $brand-primary;
+  }
+}
+
+.ant-breadcrumb > nz-breadcrumb-item:last-child a {
+  text-decoration: none;
+  cursor: unset;
+  color: $brand-primary;
+}

@@ -1,0 +1,85 @@
+<app-sub-header [title]="'My Shipping Order'"></app-sub-header>
+<div class="container">
+  <nz-card class="above-header" [nzBorderless]="true">
+    <nz-table #courierOrderTable
+              class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+              [nzLoading]="dataLoading"
+              [nzData]="displayData"
+              [nzPageSize]="10"
+              [nzOuterBordered]="true"
+              [nzShowSizeChanger]="true"
+              [nzShowTotal]="rangeTemplate"
+              [nzHideOnSinglePage]="false"
+              [nzScroll]="{ x:'1160px' }"
+    >
+      <thead nzSingleSort (nzSortOrderChange)="sort($event)"
+             class="text-sm-p5 text-p6 font-weight-semibold text-title">
+      <tr>
+        <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
+            *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+      </tr>
+      </thead>
+      <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+      <tr *ngFor="let data of courierOrderTable.data;let i=index">
+        <td class="font-weight-semibold">{{i + 1 }}</td>
+        <td>{{ data.orderNo }}</td>
+        <td>{{ data.trackingNo }}</td>
+        <td>
+          <app-label-tag
+            [tagType]="(data.isPickedUp) ? data.orderStatus: data.pickupOrderStatus "></app-label-tag>
+        </td>
+        <td>{{ data.recipientName }}</td>
+        <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+        <td>{{ data.itemWeight }} kg</td>
+        <td>{{ data.createdAt | sDate }}</td>
+        <td nzRight>
+          <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer" (click)="onClickView(data)"></i>
+          <i nz-icon nzType="environment" nzTheme="outline" class="text-info pointer mr-2"
+             (click)="onClickTrace(data)"></i>
+          <i nz-icon nzType="download" nzTheme="outline" class="text-info pointer mr-2" nz-dropdown
+             nzPlacement="bottomRight" [nzTrigger]="'click'" [nzVisible]="false" [nzClickHide]="true"
+             [nzDropdownMenu]="menu">
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu nzSelectable>
+                <li nz-menu-item (click)="onClickInvoice(data.orderNo)">Invoice</li>
+                <li nz-menu-item (click)="onClickShippingLabel(data.orderNo)">Shipping Label</li>
+              </ul>
+            </nz-dropdown-menu>
+          </i>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+    </ng-template>
+
+    <app-shared-modal *ngIf="traceOrderVisible" [visible]="traceOrderVisible" (onSubmit)="closeTraceOrder()"
+                      (onClose)="closeTraceOrder()" [titleText]="'Order Tracing'" [isCancelVisible]="false"
+                      [confirmText]="'Close'">
+      <app-trace-order [trackingOrderNo]="selectedOrderNo"></app-trace-order>
+    </app-shared-modal>
+
+    <app-shared-modal *ngIf="orderInvoiceVisible" [visible]="orderInvoiceVisible" (onSubmit)="downloadInvoice()"
+                      (onClose)="closeInvoice()" [titleText]="'Order Invoice'" [cancelText]="'Close'"
+                      [confirmText]="'Download'">
+      <app-invoice [orderNo]="selectedOrderNo"></app-invoice>
+    </app-shared-modal>
+
+    <app-shared-modal *ngIf="orderShippingLabelVisible" [visible]="orderShippingLabelVisible"
+                      (onSubmit)="printShippingLabel()" (onClose)="closeShippingLabel()" [titleText]="'Shipment Label'"
+                      [cancelText]="'Close'"
+                      [confirmText]="'Print'">
+      <app-shipment-label [orderNo]="selectedOrderNo"></app-shipment-label>
+    </app-shared-modal>
+
+    <app-shared-modal *ngIf="orderDetailVisible" [visible]="orderDetailVisible"
+                      (onSubmit)="closeView()" (onClose)="closeView()" [titleText]="'Shipping Order Details'"
+                      [cancelText]="'Close'" [isConfirmVisible]="false">
+      <app-shipping-order-detail [order]="selectedOrder"></app-shipping-order-detail>
+    </app-shared-modal>
+
+  </nz-card>
+</div>
+
+

@@ -1,0 +1,50 @@
+<app-sub-header [title]="'Create Shipping Order'"></app-sub-header>
+<div class="container">
+  <nz-card class="above-header" [nzBorderless]="true">
+    <div class="py-3">
+      <nz-steps [nzCurrent]="step" [nzDirection]="(isMobile$ | async) ? 'vertical' : 'horizontal'"
+                (nzIndexChange)="onIndexChange($event)">
+        <nz-step [nzDisabled]="!(pageValid$ | async).deliveryRatePageValid" [nzTitle]="'Delivery Rate'"></nz-step>
+        <nz-step [nzDisabled]="!(pageValid$ | async).orderPageValid" [nzTitle]="'Order Information'"></nz-step>
+        <nz-step [nzDisabled]="!(pageValid$ | async).summaryPageValid" [nzTitle]="'Summary'"></nz-step>
+        <nz-step [nzDisabled]="!(pageValid$ | async).paymentPageValid" [nzTitle]="'Payment'"></nz-step>
+      </nz-steps>
+    </div>
+
+    <ng-container *ngIf="step === 0">
+      <app-delivery-rate-table></app-delivery-rate-table>
+    </ng-container>
+    <ng-container *ngIf="step === 1">
+      <app-shipping-order-form [orderData]="orderData"></app-shipping-order-form>
+    </ng-container>
+    <ng-container *ngIf="step === 2">
+      <app-shipping-order-overview></app-shipping-order-overview>
+    </ng-container>
+    <ng-container *ngIf="step === 3">
+      <app-payment [paymentMethod]="paymentMethod"></app-payment>
+    </ng-container>
+  </nz-card>
+
+  <div class="pb-3">
+    <nz-row nzType="flex" nzAlign="middle">
+      <nz-col nzSpan="12">
+        <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()">Cancel</a>
+      </nz-col>
+      <nz-col nzSpan="12" class="text-right">
+        <button *ngIf="step<4 && step>0" nz-button nzType="outline" class="mx-1 font-weight-semibold"
+                (click)="back()">Back
+        </button>
+        <button *ngIf="step < 3" nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="next()">Next
+        </button>
+        <button *ngIf="step === 3" [nzLoading]="submitLoading" nz-button nzType="primary"
+                class="mx-1 font-weight-semibold" (click)="next()">
+          Submit
+        </button>
+      </nz-col>
+    </nz-row>
+  </div>
+
+</div>
+
+
+

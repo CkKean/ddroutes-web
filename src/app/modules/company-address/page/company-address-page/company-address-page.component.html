@@ -1,0 +1,67 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <nz-row nzType="felx" nzJustify="space-between" nzAlign="middle" class="pb-3">
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <input nz-input placeholder="Search" [ngClass]="{'w-70':!(isMobile$ |async),'w-100':(isMobile$ |async)}"
+             (keyup)="search($event)"/>
+    </nz-col>
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24"
+            [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+      <button nz-button [nzSize]="(isMobile$ |async) ? 'small' : 'default'" nzType="primary" (click)="onClickAdd()"
+              class="font-weight-semibold">Add New Company
+      </button>
+    </nz-col>
+  </nz-row>
+
+  <nz-table #companyAddress
+            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            [nzLoading]="companyAddressLoading"
+            [nzData]="displayData"
+            [nzPageSize]="10"
+            [nzOuterBordered]="true"
+            [nzShowSizeChanger]="true"
+            [nzShowTotal]="rangeTemplate"
+            [nzHideOnSinglePage]="false"
+            [nzScroll]="{ x:'780px' }"
+  >
+    <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+    <tr>
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+          *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+    </tr>
+    </thead>
+    <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+    <tr *ngFor="let data of companyAddress.data">
+      <td class="font-weight-semibold">{{data.id }}</td>
+      <td>{{ data.address }}</td>
+      <td>{{ data.postcode }}</td>
+      <td>{{ data.city }}</td>
+      <td>{{ data.state }}</td>
+      <td>{{ data.latitude }}</td>
+      <td>{{ data.longitude }}</td>
+      <td>
+        <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-1 pointer" (click)="onClickEdit(data)"></i>
+        <i nz-icon nzType="delete" nzTheme="fill" class="text-danger pointer"
+           (click)="onClickDelete(data)"></i>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<app-shared-modal *ngIf="isAddVisible" [titleText]="'Add Company Address'" [modalWidth]="'55vw'" [visible]="isAddVisible"
+                  [submitLoading]="formLoading"
+                  (onClose)="onCancelAdd()" (onSubmit)="submitAdd()">
+  <app-company-address-form #addForm (refreshTable)="afterSubmitSuccess()"></app-company-address-form>
+</app-shared-modal>
+
+<app-shared-modal *ngIf="isEditVisible" [titleText]="'Edit Company Address'" [modalWidth]="'50vw'"
+                  [visible]="isEditVisible"
+                  [submitLoading]="formLoading"
+                  (onClose)="onCancelEdit()" (onSubmit)="submitEdit()">
+  <app-company-address-form #editForm (refreshTable)="afterSubmitSuccess()"
+                            [companyAddressData]="companyAddressData"></app-company-address-form>
+</app-shared-modal>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+

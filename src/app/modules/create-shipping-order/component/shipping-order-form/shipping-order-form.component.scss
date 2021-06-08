@@ -1,0 +1,9 @@
+.custom-input-prefix {
+  ::ng-deep .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 2.5rem !important;
+  }
+
+  ::ng-deep .ant-input-affix-wrapper .ant-input-prefix {
+    top: 52% !important;
+  }
+}

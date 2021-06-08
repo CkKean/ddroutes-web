@@ -1,0 +1,28 @@
+<div class="py-3">
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Payment Method</p>
+  <p class="text-main text-sm-p4 text-p5 font-weight-normal">Select one of the payment method for your order.</p>
+
+  <nz-row nzType="flex" nzAlign="middle" nzGutter="16" nzJustify="space-between">
+    <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+      <ng-container *ngTemplateOutlet="paymentMethodButton;context:{method:paymentMethodList.CASH}"></ng-container>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+      <ng-container
+        *ngTemplateOutlet="paymentMethodButton;context:{method:paymentMethodList.CREDIT_DEBIT}"></ng-container>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+      <ng-container *ngTemplateOutlet="paymentMethodButton;context:{method:paymentMethodList.E_WALLET}"></ng-container>
+    </nz-col>
+    <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+      <ng-container
+        *ngTemplateOutlet="paymentMethodButton;context:{method:paymentMethodList.ONLINE_BANK}"></ng-container>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #paymentMethodButton let-method="method">
+  <button [ngClass]="{'custom-border':paymentMethod===method}" nz-button
+          class="w-70 h-100 py-5 text-center" (click)="selectMethod(method)">
+    <span class="text-p5 font-weight-semibold text-main">{{method}}</span>
+  </button>
+</ng-template>

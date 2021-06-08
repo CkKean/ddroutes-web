@@ -1,0 +1,17 @@
+.ant-picker{
+  height: 42px;
+  border-radius: .25rem !important;
+  border: 1px solid #ddd;
+}
+
+.ant-picker-input > input{
+  line-height: 1.5;
+  color: $black-6;
+  padding: 5px 5px;
+}
+
+.ant-calendar-picker-icon{
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1;
+}

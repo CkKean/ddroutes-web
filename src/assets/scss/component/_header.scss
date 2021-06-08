@@ -1,0 +1,11 @@
+.subheader {
+  min-height: 130px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.fixed-top {
+  z-index: 999 !important;
+}

@@ -1,0 +1,90 @@
+<app-shared-modal [titleText]="'Edit Route Report'" [confirmText]="'Submit'" [visible]="visible"
+                  [modalWidth]="!(isMobile$ |async) ?'50vw' : '80vw'"
+                  (onSubmit)="updateRouteReport()" (onClose)="cancel()"
+>
+  <form nz-form [formGroup]="routeReportForm">
+    <app-form-field [label]="'Report ID'" [required]="false">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <input type="text" nz-input disabled="true" [value]="routeReportData.routeReportId"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Date'" [required]="false">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <nz-date-picker class="w-100" [formControl]="date" nzDisabled [nzFormat]="dateFormat">
+            </nz-date-picker>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Actual Petrol Cost'">
+      <nz-form-item class="custom-input-prefix">
+        <nz-form-control [nzErrorTip]="'Please enter the cost.'">
+          <nz-input-group nzPrefix="RM">
+            <input type="number" nz-input [formControl]="actualPetrolFees" placeholder="Cost"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Latest Petrol Price'">
+      <nz-form-item class="custom-input-prefix">
+        <nz-form-control [nzErrorTip]="'Please enter the latest petrol price.'">
+          <nz-input-group nzPrefix="RM">
+            <input type="number" nz-input [formControl]="latestPetrolPrice" placeholder="Latest Petrol Price"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+    <app-form-field [label]="'Proof'" [required]="false">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group>
+            <div class="file-container">
+              <div class="mb-2 box-border">
+                <div *ngIf="!imageSrc" class="py-2" (click)="hiddenfileinput.click()">
+                  <div class="h-100 text-center pointer">
+                    <i class="vertical-align-rem-1" nz-icon nzType="plus" nzTheme="outline"></i> Upload
+                    <input type='file' (change)="fileChange($event);"
+                           style="display:none;" #hiddenfileinput/>
+                  </div>
+                </div>
+                <img *ngIf="imageSrc && uploadedFileValid"
+                     nz-image
+                     width="100%" height="250x"
+                     [nzSrc]="imageSrc"
+                />
+              </div>
+              <div *ngIf="uploadedFileValid && imageSrc">
+                <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between">
+                  <nz-col nzSpan="12">
+                    <i nz-icon class="vertical-align-rem-1" nzType="file" nzTheme="outline"></i>
+                    {{uploadedFileName}}
+                  </nz-col>
+                  <nz-col nzSpan="12" class="text-right">
+                    <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer"
+                       (click)="removeFile()"></i>
+                  </nz-col>
+                </nz-row>
+              </div>
+              <p *ngIf="!uploadedFileValid" class="text-danger">
+                <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer vertical-align-rem-1"
+                   (click)="removeFile()"></i> {{uploadedFileErrorMsg}}</p>
+            </div>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </app-form-field>
+
+
+
+  </form>
+</app-shared-modal>

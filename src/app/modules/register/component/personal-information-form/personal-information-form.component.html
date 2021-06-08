@@ -1,0 +1,160 @@
+<form nz-form [formGroup]="personalForm" class="w-100">
+
+
+  <app-form-field [label]="'Full Name (as Per NRIC)'">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="fullNameError">
+        <nz-input-group>
+          <input type="text" nz-input [formControl]="fullName" placeholder="Full Name"/>
+        </nz-input-group>
+      </nz-form-control>
+
+      <ng-template #fullNameError>
+        <ng-container ngif="fullName.errors && (fullName.dirty || fullName.touched)">
+          <span *ngIf="fullName.hasError('required')">Please enter the username.</span>
+          <span *ngIf="fullName.hasError('whitespace')"> Please make sure no white space before or after
+                            the input.</span>
+        </ng-container>
+      </ng-template>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Gender'">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select your gender.">
+        <nz-input-group>
+          <nz-radio-group class="w-100" [formControl]="gender">
+            <label nz-radio nzValue="M" class="text-p5 text-main">Male</label>
+            <label nz-radio nzValue="F" class="text-p5 text-main">Female</label>
+          </nz-radio-group>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Date of Birth'">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select the date of birth.">
+        <nz-input-group>
+          <nz-date-picker class="w-100" [formControl]="dob" [nzDisabledDate]="disabledDate"
+                          [nzPlaceHolder]="'Select date'"
+                          [nzFormat]="dateFormat" [nzAllowClear]="true">
+          </nz-date-picker>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Mobile Number'">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="phoneNoError">
+        <nz-input-group>
+          <input type="number" nz-input [formControl]="mobileNo" placeholder="Mobile Number"/>
+        </nz-input-group>
+      </nz-form-control>
+      <ng-template #phoneNoError>
+        <ng-container *ngIf="mobileNo.errors && (mobileNo.dirty || mobileNo.touched)">
+          <span *ngIf="mobileNo.hasError('required')">Please enter the mobile number.</span>
+          <span *ngIf="mobileNo.hasError('whitespace')"> Please make sure no white space before or after
+                            the input.</span>
+        </ng-container>
+      </ng-template>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Address'">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="addressError">
+        <nz-input-group>
+          <input type="text'" nz-input [formControl]="address" placeholder="Address"/>
+        </nz-input-group>
+      </nz-form-control>
+
+      <ng-template #addressError>
+        <ng-container *ngIf="address.errors && (address.dirty || address.touched)">
+          <span *ngIf="address.hasError('required')">Please enter the address.</span>
+          <span
+            *ngIf="mobileNo.hasError('whitespace')"> Please make sure no white space before or after the input.</span>
+        </ng-container>
+      </ng-template>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Country'">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group>
+          <input type="text" nz-input [formControl]="country" placeholder="Country"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'State'">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select your state.">
+        <nz-input-group>
+          <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your state" [formControl]="state">
+            <ng-container *ngFor="let stateType of utility?.state">
+              <nz-option [nzLabel]="stateType.name" [nzValue]="stateType.name"></nz-option>
+            </ng-container>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'City'">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please enter your city.">
+        <nz-input-group>
+          <input type="text" nz-input [formControl]="city" placeholder="City"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Postcode'">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="postcodeError">
+        <nz-input-group>
+          <input type="number" nz-input [formControl]="postcode" placeholder="Postcode"/>
+        </nz-input-group>
+      </nz-form-control>
+      <ng-template #postcodeError>
+        <ng-container *ngIf="postcode.errors && (postcode.dirty || postcode.touched)">
+          <span *ngIf="postcode.hasError('required')">Please enter your postcode.</span>
+          <span *ngIf="postcode.hasError('invalidPostcode')">Please enter valid postcode.</span>
+        </ng-container>
+      </ng-template>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Race'">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select your race.">
+        <nz-input-group>
+          <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your race" [formControl]="race">
+            <ng-container *ngFor="let raceType of utility?.race">
+              <nz-option [nzLabel]="raceType.name" [nzValue]="raceType.name"></nz-option>
+            </ng-container>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+
+  <app-form-field [label]="'Religion'">
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="'Please select your religion.'">
+        <nz-input-group>
+          <nz-select class="w-100" nzAllowClear nzPlaceHolder="Select your religion" [formControl]="religion">
+            <ng-container *ngFor="let religionType of utility?.religion">
+              <nz-option [nzLabel]="religionType.name" [nzValue]="religionType.name"></nz-option>
+            </ng-container>
+          </nz-select>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </app-form-field>
+</form>

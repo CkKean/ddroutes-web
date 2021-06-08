@@ -1,0 +1,196 @@
+<nz-card [nzBorderless]="true" *ngIf="!vehicleAndBrandLoading;else loading">
+  <form nz-form [formGroup]="vehicleForm" class="w-100">
+
+    <app-form-declaration></app-form-declaration>
+
+    <div class="py-3">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold mb-0">Vehicle Information</p>
+
+      <app-form-field [label]="'Plate Number'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="plateNoError">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="plateNo" placeholder="Plate Number"
+                     oninput="this.value = this.value.toUpperCase()"
+                     (blur)="onBlurPlateNo($event)"/>
+            </nz-input-group>
+          </nz-form-control>
+
+          <ng-template #plateNoError>
+            <ng-container *ngIf="plateNo.errors && (plateNo.dirty || plateNo.touched)">
+              <span *ngIf="plateNo.hasError('required')">Please enter the plate number.</span>
+              <span *ngIf="plateNo.hasError('existed')">Plate number is existed. Please try again.</span>
+              <span *ngIf="plateNo.hasError('whitespace')"> Please make sure no white space before or after the
+              input.</span>
+            </ng-container>
+          </ng-template>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Vehicle Type'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the vehicle type.'">
+            <nz-input-group>
+              <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle type"
+                         [formControl]="type">
+                <ng-container>
+                  <nz-option nzLabel="Car" nzValue="Car"></nz-option>
+                  <nz-option nzLabel="Motorcycle" nzValue="Motorcycle"></nz-option>
+                  <nz-option nzLabel="Truck" nzValue="Truck"></nz-option>
+                </ng-container>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Brand'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the vehicle brand.'">
+            <nz-input-group>
+              <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle brand"
+                         [formControl]="brand">
+                <ng-container *ngFor="let brand of displayBrandList">
+                  <nz-option [nzLabel]="brand.name" [nzValue]="brand.name"></nz-option>
+                </ng-container>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Model'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please enter the vehicle model.'">
+            <nz-input-group>
+              <input type="text" nz-input [formControl]="model"
+                     placeholder="Model"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Color'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the vehicle color.'">
+            <nz-input-group>
+              <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle color"
+                         [formControl]="color">
+                <ng-container *ngFor="let color of colorList">
+                  <nz-option [nzLabel]="color.name" [nzValue]="color.name"></nz-option>
+                </ng-container>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Fuel Efficiency'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="' Please enter the fuel efficiency.'">
+            <nz-input-group nzAddOnAfter="Litre / 100 km">
+              <input type="number" [formControl]="fuelEfficiency" placeholder="Fuel" nz-input
+                     class="right-border-radius-none"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Fuel Tank'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please enter the fuel tank volume.'">
+            <nz-input-group [nzAddOnAfter]="'L'">
+              <input type="number" nz-input [formControl]="fuelTank" class="right-border-radius-none"
+                     placeholder="Fuel Tank"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Owner'">
+        <nz-form-item>
+          <nz-form-control [nzErrorTip]="'Please select the vehicle owner.'">
+            <nz-input-group>
+              <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select the vehicle owner"
+                         [formControl]="owner">
+                <ng-container *ngFor="let staff of vehicleStaff">
+                  <nz-option [nzLabel]="staff.fullName" [nzValue]="staff.userId"></nz-option>
+                </ng-container>
+              </nz-select>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'GPS Tracking No.'" [required]="false">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <input type="text" nz-input [formControl]="gpsTrackNo" placeholder="GPS Tracking No. (If Exist)"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+      <app-form-field [label]="'Vehicle Photo'" [required]="false">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group>
+              <div class="file-container ">
+                <div class="mb-2 box-border">
+                  <div *ngIf="!imageSrc" class="py-2"
+                       (click)="hiddenfileinput.click()">
+                    <div class="h-100 text-center pointer">
+                      <i class="vertical-align-rem-1" nz-icon nzType="plus" nzTheme="outline"></i> Upload
+                      <input type='file' (change)="fileChange($event);"
+                             style="display:none;" #hiddenfileinput/>
+                    </div>
+                  </div>
+                  <img *ngIf="imageSrc && uploadedFileValid"
+                       nz-image
+                       width="100%" height="250x"
+                       [nzSrc]="imageSrc"
+                  />
+                </div>
+                <div *ngIf="uploadedFileValid && imageSrc">
+                  <nz-row nzType="flex" nzAlign="middle" nzJustify="space-between">
+                    <nz-col nzSpan="12">
+                      <i nz-icon class="vertical-align-rem-1" nzType="file" nzTheme="outline"></i>
+                      {{uploadedFileName}}
+                    </nz-col>
+                    <nz-col nzSpan="12" class="text-right">
+                      <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer"
+                         (click)="removeFile()"></i>
+                    </nz-col>
+                  </nz-row>
+                </div>
+                <p *ngIf="!uploadedFileValid" class="text-danger">
+                  <i nz-icon nzType="delete" nzTheme="outline" class="text-danger pointer vertical-align-rem-1"
+                     (click)="removeFile()"></i> {{uploadedFileErrorMsg}}</p>
+              </div>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </app-form-field>
+
+    </div>
+  </form>
+</nz-card>
+
+<div class="pb-3">
+  <nz-row nzType="flex" nzAlign="middle">
+    <nz-col nzSpan="12">
+      <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()" *ngIf="!submitDisabled">Cancel</a>
+    </nz-col>
+    <nz-col nzSpan="12" class="text-right">
+      <button nz-button nzType="primary" class="mx-1 font-weight-semibold" (click)="submitForm()"
+              [nzLoading]="addFormLoading" [disabled]="submitDisabled">Submit
+      </button>
+    </nz-col>
+  </nz-row>
+</div>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

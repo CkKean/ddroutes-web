@@ -1,0 +1,68 @@
+<nz-collapse class="text-p6 text-main text-sm-p5 font-weight-normal">
+  <nz-collapse-panel [nzHeader]="shippingLabel" [nzActive]="true">
+    <app-form-field [label]="'Order Type'" [required]="false">{{order.orderType}}</app-form-field>
+    <app-form-field [label]="'Vehicle Type'" [required]="false">{{order.vehicleType}}</app-form-field>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel [nzHeader]="senderLabel">
+    <app-form-field [label]="'Name'" [required]="false">{{order.senderName}}</app-form-field>
+    <app-form-field [label]="'Mobile Number'" [required]="false">{{order.senderMobileNo}}</app-form-field>
+    <app-form-field [label]="'Email'"
+                    [required]="false">{{order.senderEmail ? order.senderEmail : '-'}}</app-form-field>
+    <app-form-field [label]="'Address'">{{order.senderAddress}}</app-form-field>
+    <app-form-field [label]="'City'" [required]="false">{{order.senderCity}}</app-form-field>
+    <app-form-field [label]="'State'" [required]="false">{{order.senderState}}</app-form-field>
+    <app-form-field [label]="'Postcode'" [required]="false">{{order.senderPostcode}}</app-form-field>
+    <app-form-field [label]="'Full Sender Address'" [required]="false">
+      {{order.senderAddress}}, {{order.senderPostcode}} {{order.senderCity}}, {{order.senderState}}, Malaysia
+    </app-form-field>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel [nzHeader]="recipientLabel">
+    <app-form-field [label]="'Name'" [required]="false">{{order.recipientName}}</app-form-field>
+    <app-form-field [label]="'Mobile Number'" [required]="false">
+      {{order.recipientMobileNo}}
+    </app-form-field>
+    <app-form-field [label]="'Email'"
+                    [required]="false">{{order.recipientEmail ? order.recipientEmail : '-'}}</app-form-field>
+    <app-form-field [label]="'Address'">{{order.recipientAddress}}</app-form-field>
+    <app-form-field [label]="'City'" [required]="false">{{order.recipientCity}}</app-form-field>
+    <app-form-field [label]="'State'" [required]="false">{{order.recipientState}}</app-form-field>
+    <app-form-field [label]="'Postcode'" [required]="false">{{order.recipientPostcode}}</app-form-field>
+    <app-form-field [label]="'Full Recipient Address'" [required]="false">
+      {{order.recipientAddress}}, {{order.recipientPostcode}} {{order.recipientCity}}, {{order.recipientState}},
+      Malaysia
+    </app-form-field>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel [nzHeader]="itemLabel">
+    <app-form-field [label]="'Item Weight (kg)'" [required]="false">{{order.itemWeight}}</app-form-field>
+    <app-form-field [label]="'Item Quantity'" [required]="false">{{order.itemQty}}</app-form-field>
+    <app-form-field [label]="'Item Type'" [required]="false">{{order.itemType}}</app-form-field>
+  </nz-collapse-panel>
+
+  <nz-collapse-panel [nzHeader]="orderLabel">
+    <app-form-field [label]="'Payment Method'" [required]="false">{{order.paymentMethod}}</app-form-field>
+    <app-form-field [label]="'Total Shipping Cost'" [required]="false">RM {{order.shippingCost}}</app-form-field>
+  </nz-collapse-panel>
+</nz-collapse>
+
+<ng-template #shippingLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Shipping Information</span>
+</ng-template>
+
+<ng-template #senderLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Sender Information</span>
+</ng-template>
+
+<ng-template #recipientLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Recipient Information</span>
+</ng-template>
+
+<ng-template #itemLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Item Information</span>
+</ng-template>
+
+<ng-template #orderLabel>
+  <span class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Order Information</span>
+</ng-template>

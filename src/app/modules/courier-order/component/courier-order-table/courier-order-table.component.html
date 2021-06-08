@@ -1,0 +1,88 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <nz-row nzType="felx" nzJustify="space-between" nzAlign="middle" class="pb-3">
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <input nz-input placeholder="Search" [ngClass]="{'w-70':!(isMobile$ |async),'w-100':(isMobile$ |async)}"
+             (keyup)="search($event)"/>
+    </nz-col>
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24"
+            [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+      <button nz-button [nzSize]="(isMobile$ |async) ? 'small' : 'default'" nzType="primary" (click)="navigateCreate()"
+              class="font-weight-semibold">Add New Courier Order
+      </button>
+    </nz-col>
+  </nz-row>
+
+  <nz-table #courierOrderTable
+            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            [nzLoading]="orderLoading"
+            [nzData]="displayData"
+            [nzPageSize]="10"
+            [nzOuterBordered]="true"
+            [nzShowSizeChanger]="true"
+            [nzShowTotal]="rangeTemplate"
+            [nzHideOnSinglePage]="false"
+            (nzPageIndexChange)="pageIndexChange($event)"
+            [nzScroll]="{ x:'840px' }"
+  >
+    <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+    <tr>
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+          *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+    </tr>
+    </thead>
+    <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+    <tr *ngFor="let data of courierOrderTable.data;let i=index">
+      <td class="font-weight-semibold">{{pageIndex > 1 ? ((pageIndex - 1) * 10 + (i + 1)) : i + 1  }}</td>
+      <td>{{ data.orderNo }}</td>
+      <td>{{ data.trackingNo }}</td>
+      <td>{{ data.orderType }}</td>
+      <td>
+        <app-label-tag
+          [tagType]="(data.orderType === orderTypeConstant?.PICK_UP && !data.isPickedUp)  ? data?.pickupOrderStatus :data.orderStatus"></app-label-tag>
+      </td>
+      <td>{{ data.recipientName }}</td>
+      <td>{{ data.itemWeight }}</td>
+      <td>{{ data.createdAt | sDate }}</td>
+      <td>
+        <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer" (click)="navigateView(data)"></i>
+        <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-2 pointer" (click)="navigateEdit(data)"></i>
+        <i nz-icon nzType="delete" nzTheme="fill" class="text-danger pointer mr-2" (click)="onDeleteOrder(data)"></i>
+        <i nz-icon nzType="environment" nzTheme="outline" class="text-info pointer mr-2"
+           (click)="onClickTrace(data)"></i>
+        <i nz-icon nzType="download" nzTheme="outline" class="text-info pointer mr-2" nz-dropdown
+           nzPlacement="bottomRight" [nzTrigger]="'click'" [nzVisible]="false" [nzClickHide]="true"
+           [nzDropdownMenu]="menu">
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item (click)="onClickInvoice(data.orderNo)">Invoice</li>
+              <li nz-menu-item (click)="onClickShippingLabel(data.orderNo)">Shipping Label</li>
+            </ul>
+          </nz-dropdown-menu>
+        </i>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+
+<app-shared-modal *ngIf="traceOrderVisible" [visible]="traceOrderVisible" (onSubmit)="closeTraceOrder()"
+                  (onClose)="closeTraceOrder()" [titleText]="'Order Tracing'" [isCancelVisible]="false"
+                  [confirmText]="'Close'">
+  <app-trace-order [trackingOrderNo]="selectedOrderNo"></app-trace-order>
+</app-shared-modal>
+
+<app-shared-modal *ngIf="orderInvoiceVisible" [visible]="orderInvoiceVisible" (onSubmit)="downloadInvoice()"
+                  (onClose)="closeInvoice()" [titleText]="'Order Invoice'" [cancelText]="'Close'"
+                  [confirmText]="'Download'">
+  <app-invoice [orderNo]="selectedOrderNo"></app-invoice>
+</app-shared-modal>
+
+<app-shared-modal *ngIf="orderShippingLabelVisible" [visible]="orderShippingLabelVisible"
+                  (onSubmit)="printShippingLabel()" (onClose)="closeShippingLabel()" [titleText]="'Shipment Label'"
+                  [cancelText]="'Close'"
+                  [confirmText]="'Print'">
+  <app-shipment-label [orderNo]="selectedOrderNo"></app-shipment-label>
+</app-shared-modal>

@@ -1,0 +1,31 @@
+.ant-select {
+  line-height: 1.5;
+  color: #646C77;
+  border-radius: .25rem !important;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  height: 42px;
+  padding: 5px 16px;
+  border-radius: .25rem !important;
+}
+
+.ant-select-clear {
+  top: 45%;
+}
+
+// Select custom option
+.add-item {
+  flex: 0 0 auto;
+  padding: 8px;
+  display: block;
+}
+
+.add-item .anticon {
+  vertical-align: 2px !important;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-search {
+  padding: 5px 5px;
+}
+

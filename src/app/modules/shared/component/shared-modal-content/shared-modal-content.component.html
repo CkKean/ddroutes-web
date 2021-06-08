@@ -1,0 +1,45 @@
+<div class="d-flex align-items-top mr-4 justify-content-start">
+  <ng-container [ngSwitch]="status">
+    <img *ngSwitchCase="'success'" [src]="iconPath + 'success.svg'" alt="'success'" class="mb-1 mr-1 w-15 top-img"/>
+    <img *ngSwitchCase="'error'" [src]="iconPath + 'error.svg'" alt="'error'" class="mb-1 mr-1 w-15 top-img"/>
+    <img *ngSwitchCase="'warning'" [src]="iconPath + 'warning.svg'" alt="'warning'" class="mb-1 mr-1 w-15 top-img"/>
+    <img *ngSwitchCase="'info'" [src]="iconPath + 'info.svg'" alt="'info'" class="mb-1 mr-1 w-15 top-img"/>
+  </ng-container>
+
+  <div class="ml-2">
+    <p class="text-p3 mb-2 font-weight-semibold text-main">{{title}}</p>
+    <p class="text-p5 mb-1 text-main">
+      {{subtitle}}
+    </p>
+  </div>
+</div>
+
+<nz-row *ngIf="!(isMobile$ | async)" class="mt-3 confirmation-modal-footer" nzType="flex" nzJustify="end"
+        align="middle">
+  <nz-col class="text-right modal-footer-button" *ngIf="nzOnCancel">
+    <ng-container *ngTemplateOutlet="cancelButton"></ng-container>
+  </nz-col>
+  <nz-col class="text-right modal-footer-button">
+    <ng-container *ngTemplateOutlet="confirmButton"></ng-container>
+  </nz-col>
+</nz-row>
+
+<nz-row *ngIf="(isMobile$ | async)" class="mt-3 confirmation-modal-footer" nzType="flex" nzJustify="end" align="middle">
+  <nz-col [nzSm]="24" [nzXs]="24" class="text-right modal-footer-button">
+    <ng-container *ngTemplateOutlet="confirmButton"></ng-container>
+  </nz-col>
+  <nz-col [nzSm]="24" [nzXs]="24" class="text-right modal-footer-button" [ngClass]="{'mt-2':(isMobile$ |async)}"
+          *ngIf="nzOnCancel && (isMobile$ | async)">
+    <ng-container *ngTemplateOutlet="cancelButton"></ng-container>
+  </nz-col>
+</nz-row>
+
+<ng-template #cancelButton>
+  <button [nzBlock]="(isMobile$ |async)" class="mx-1" nz-button nzType="outline"
+          (click)="handleCancel()">{{cancelText}}</button>
+</ng-template>
+
+<ng-template #confirmButton>
+  <button nz-button [nzBlock]="(isMobile$ |async)" nzType="primary" class="mx-1"
+          (click)="handleSubmit()">{{confirmText}}</button>
+</ng-template>

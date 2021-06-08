@@ -1,0 +1,93 @@
+<nz-card [nzBorderless]="true" class="h-100" *ngIf="!pricePlanDataLoading;else loading">
+
+
+  <nz-row nzType="flex" nzAlign="top">
+    <nz-col nzSpan="18">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Price Plan Information</p>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Price Plan ID',content:pricePlanData.pricePlanId}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Vehicle Type',content:pricePlanData.vehicleType}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Weight',content:((pricePlanData.defaultWeightPrefix === 'N/A' ? '' : pricePlanData.defaultWeightPrefix) +' ' + pricePlanData.defaultWeight+ ' ' + pricePlanData.defaultWeightUnit)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Distance',content:((pricePlanData.defaultDistancePrefix === 'N/A' ? '' : pricePlanData.defaultDistancePrefix) + ' ' + pricePlanData.defaultDistance + ' '+ pricePlanData.defaultDistanceUnit)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Price',content:'RM ' + pricePlanData.defaultPricing}"></ng-container>
+
+      <ng-container *ngIf="pricePlanData.subWeightPricing && pricePlanData.subWeight && pricePlanData.subWeightUnit">
+        <ng-container
+          *ngTemplateOutlet="infoField;context:{label:'Weight',content:( '+ ' + pricePlanData.subWeightPricing + ' / ' +  pricePlanData.subWeight + ' '+ pricePlanData.subWeightUnit)}"></ng-container>
+      </ng-container>
+
+      <ng-container
+        *ngIf="pricePlanData.subWeightPricing && pricePlanData.subDistance && pricePlanData.subDistanceUnit">
+        <ng-container
+          *ngTemplateOutlet="infoField;context:{label:'Distance',content:( '+ ' + pricePlanData.subDistancePricing + ' / ' +  pricePlanData.subDistance + ' '+ pricePlanData.subDistanceUnit)}"></ng-container>
+      </ng-container>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+      <div class=" text-right">
+        <button nz-button nzType="primary" (click)="editPricePlan()">Edit</button>
+      </div>
+    </nz-col>
+  </nz-row>
+
+  <div>
+    <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase mt-5">Price Plan Overview</p>
+    <nz-table nzBordered nzTemplateMode [nzScroll]="{x:'620px'}">
+      <thead>
+      <tr>
+        <th nzWidth="120px"></th>
+        <th nzWidth="175px">Weight</th>
+        <th nzWidth="175px">Distance</th>
+        <th nzWidth="150px">Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{pricePlanData.vehicleType}}</td>
+        <td>
+          {{pricePlanData.defaultWeightPrefix === 'N/A' ? null : pricePlanData.defaultWeightPrefix}}
+          {{pricePlanData.defaultWeight}}
+          {{pricePlanData.defaultWeightUnit}}
+        </td>
+        <td>{{pricePlanData.defaultDistancePrefix === 'N/A' ? null : pricePlanData.defaultDistancePrefix }}
+          {{pricePlanData.defaultDistance}} {{pricePlanData.defaultDistanceUnit}}</td>
+        <td>RM {{pricePlanData.defaultPricing}}</td>
+      </tr>
+
+      <tr *ngIf="pricePlanData.subWeight">
+        <td></td>
+        <td>Subsequent {{pricePlanData.subWeight}} {{pricePlanData.subWeightUnit}}</td>
+        <td>-</td>
+        <td>+ RM {{pricePlanData.subWeightPricing}} </td>
+      </tr>
+
+      <tr *ngIf="pricePlanData.subDistance">
+        <td></td>
+        <td>-</td>
+        <td>Subsequent {{pricePlanData.subDistance}} {{pricePlanData.subDistanceUnit}}</td>
+        <td>+ RM {{pricePlanData.subDistancePricing}} </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+  </div>
+
+</nz-card>
+
+<ng-template #infoField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <span class="text-main">{{content ? content : '-'}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

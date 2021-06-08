@@ -1,0 +1,29 @@
+.right-border-radius-none {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.left-border-radius-none {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+
+.overwrite-left-border-radius {
+  ::ng-deep .ant-select-selector {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+  }
+}
+
+.overwrite-right-border-radius {
+  ::ng-deep .ant-select-selector {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+}
+
+.border-right-none{
+  .ant-input-group-addon:last-child{
+    border-right: none !important;
+  }
+}

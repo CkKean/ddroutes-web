@@ -1,0 +1,50 @@
+.map-container {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.map-frame {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  height: 600px;
+  width: 100%;
+
+  ::ng-deep .leaflet-right {
+    width: 20%;
+    height: 100%;
+    word-break: break-all;
+    white-space: break-spaces;
+    overflow: auto;
+    display: none !important;
+  }
+
+  ::ng-deep .leaflet-routing-alt h2 {
+    font-size: 16px !important;
+    line-height: 20px !important;
+    color: #424B57 !important;
+  }
+
+  ::ng-deep .leaflet-routing-alt h3 {
+    font-size: 14px !important;
+    line-height: 18px !important;
+    color: #8B94A0 !important;
+  }
+
+  .path.leaflet-interactive.animate {
+    stroke-dasharray: 1920;
+    stroke-dashoffset: 1920;
+    animation: dash 20s linear 3s forwards;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}

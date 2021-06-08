@@ -1,0 +1,94 @@
+<div *ngIf="!orderDetailLoading;else loading">
+  <div id="shipmentLabel">
+    <div class="custom-container">
+      <nz-row nzType="flex" nzAlign="middle">
+        <ng-container [ngTemplateOutlet]="content"
+                      [ngTemplateOutletContext]="{receiver:false,sideText:'Center Copy'}"></ng-container>
+      </nz-row>
+    </div>
+
+    <div class="custom-container mt-3">
+      <nz-row nzType="flex" nzAlign="middle">
+        <ng-container [ngTemplateOutlet]="content"
+                      [ngTemplateOutletContext]="{receiver:true,sideText:'Receiver Copy'}"></ng-container>
+      </nz-row>
+    </div>
+
+    <ng-template #content let-receiver="receiver" let-sideText="sideText">
+      <nz-col nzSpan="3" class="text-center">
+        <span class="vertical-text text-title text-p4 font-weight-semibold">{{sideText}}</span>
+      </nz-col>
+      <nz-col nzSpan="21" class="p-2 custom-border-left">
+        <nz-row nzType="flex" nzAlign="middle" nzGutter="8" class="mb-2">
+          <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+            <img [src]="logo" class="logo-img mb-3"/>
+            <p style="line-height: 0 !important;"
+               class="text-main text-p4 text-sm-p3 font-weight-bold">{{orderInfo.trackingNo}}</p>
+          </nz-col>
+          <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" [ngClass]="{'text-right':!(isMobile$|async)}">
+            <ngx-qrcode
+              [elementType]="elementType"
+              [value]="orderInfo.orderNo"
+              cssClass="aclass"
+              errorCorrectionLevel="L">
+            </ngx-qrcode>
+          </nz-col>
+        </nz-row>
+
+        <div class="custom-container p-2">
+          <nz-row nzType="flex" nzAlign="top">
+            <nz-col nzSpan="12" class="border-right">
+              <p class="font-weight-semibold text-main text-sm-p5 text-p6">Sender</p>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.senderName}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.senderAddress}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.senderPostcode}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.senderCity}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.senderState}}</span>
+              <br/><br/>
+              <p class="font-weight-semibold text-main text-sm-p5 text-p6">Receiver</p>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.recipientName}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.recipientAddress}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.recipientPostcode}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.recipientCity}}</span><br/>
+              <span class="font-weight-normal text-main text-sm-p5 text-p6">{{orderInfo.recipientState}}</span>
+            </nz-col>
+
+            <nz-col nzSpan="12" class="text-right">
+              <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                            [ngTemplateOutletContext]="{label:'Order Number:',value:orderInfo.orderNo}"></ng-container>
+              <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                            [ngTemplateOutletContext]="{label:'Weight:',value:orderInfo.itemWeight + ' kg'}"></ng-container>
+              <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                            [ngTemplateOutletContext]="{label:'Shipping Cost',value:'RM ' + orderInfo.shippingCost}"></ng-container>
+              <ng-container [ngTemplateOutlet]="customOrderNoRow"
+                            [ngTemplateOutletContext]="{label:'Order Date:',value:orderInfo.createdAt | date}"></ng-container>
+
+              <div *ngIf="receiver">
+                <nz-divider></nz-divider>
+                <span class="font-weight-normal text-main text-sm-p5 text-p6">
+              Any enquiries, please visit <br/>
+              www.ddRoutes.com.my
+            </span>
+              </div>
+            </nz-col>
+          </nz-row>
+        </div>
+      </nz-col>
+    </ng-template>
+
+    <ng-template #customOrderNoRow let-label="label" let-value="value">
+      <nz-row nzType="flex" nzAlign="top" nzGutter="8" class="mb-2">
+        <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24" class="mb-2">
+          <span class="font-weight-semibold text-main text-sm-p5 text-p6">{{label}}</span>
+        </nz-col>
+        <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+          <span class="font-weight-normal text-main text-sm-p5 text-p6">{{value}}</span>
+        </nz-col>
+      </nz-row>
+    </ng-template>
+
+  </div>
+</div>
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

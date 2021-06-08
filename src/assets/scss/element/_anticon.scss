@@ -1,0 +1,27 @@
+.anticon {
+  display: inline-block;
+  font-style: normal;
+  vertical-align: -0.175em;
+  text-align: center;
+  text-transform: none;
+  line-height: inherit;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-vertical-align
+.ant-pagination .anticon,
+.ant-menu-item .anticon,
+.ant-steps-icon .anticon,
+.ant-pagination-item-link .anticon{
+  vertical-align: unset !important;
+}
+
+.vertical-align-rem-1{
+    vertical-align: 0.1rem !important;
+}
+
+.table-anticon td .anticon {
+  font-size: 20px !important;
+}

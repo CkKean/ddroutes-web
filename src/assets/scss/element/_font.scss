@@ -1,0 +1,82 @@
+.h1, h1 {
+  line-height: 76px;
+  font-size: 72px;
+  font-weight: 700;
+
+}
+
+.h2, h2 {
+  line-height: 68px;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.h3, h3 {
+  line-height: 60px;
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.h4, h4 {
+  line-height: 52px;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.h5, h5 {
+  line-height: 40px;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.h6, h6 {
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.text-base{
+  font-size: $font-size-base !important;
+  line-height: $font-line-height-base !important;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .text#{$infix}-p7 {
+      font-size: $font-size-xs !important;
+      line-height: $font-line-height-xs !important;
+    }
+
+    .text#{$infix}-p6 {
+      font-size: $font-size-sm !important;
+      line-height: $font-line-height-sm !important;
+    }
+
+    .text#{$infix}-p5 {
+      font-size: $font-size-base !important;
+      line-height: $font-line-height-base !important;
+    }
+
+    .text#{$infix}-p4 {
+      font-size: $font-size-md !important;
+      line-height: $font-line-height-md !important;
+    }
+
+    .text#{$infix}-p3 {
+      font-size: $font-size-lg !important;
+      line-height: $font-line-height-lg !important;
+    }
+
+    .text#{$infix}-p2 {
+      font-size: $font-size-xl !important;
+      line-height: $font-line-height-xl !important;
+    }
+
+    .text#{$infix}-p1 {
+      font-size: $font-size-xxl !important;
+      line-height: $font-line-height-xxl !important;
+    }
+  }
+}

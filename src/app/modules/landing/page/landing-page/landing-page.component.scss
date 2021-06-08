@@ -1,0 +1,29 @@
+[nz-carousel-content] {
+  //position: relative;
+  //height: 450px;
+
+  text-align: center;
+  height: 450px;
+  overflow: hidden;
+
+}
+
+.banner-image {
+  width: 100%;
+  margin: auto;
+  height: 450px;
+}
+
+.mobile-banner-image {
+  width: 100%;
+  max-width: 1920px;
+  margin: auto;
+  height: 250px;
+}
+
+.custom-height {
+
+  ::ng-deep .slick-list {
+    height: 430px !important;
+  }
+}

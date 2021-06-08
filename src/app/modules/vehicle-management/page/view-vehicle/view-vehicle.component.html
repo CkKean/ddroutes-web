@@ -1,0 +1,57 @@
+<nz-card [nzBorderless]="true" class="h-100">
+
+
+  <nz-row nzType="flex" nzAlign="top" *ngIf="!vehicleLoading;else loading">
+    <nz-col nzLg="14" nzMd="14" nzSm="24" nzXs="24">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Vehicle Information</p>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Vehicle ID',content:vehicleInfo.vehicleId}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Plate Number',content:vehicleInfo.plateNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Type',content:vehicleInfo.type}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Brand',content:vehicleInfo.brand}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Model',content:vehicleInfo.model}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Color',content:vehicleInfo.color}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Fuel Efficiency',content:(vehicleInfo.fuelEfficiency) + ' ' + (vehicleInfo.fuelEfficiencyUnit)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Fuel Tank',content:vehicleInfo.fuelTank + ' L'}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Owner',content:vehicleInfo.owner}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Created At',content:(vehicleInfo.createdAt | sDate)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Updated At',content:(vehicleInfo.updatedAt | sDate)}"></ng-container>
+    </nz-col>
+
+    <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" class="w-100 h-100" [ngClass]="{'mt-2':(isMobile$ | async)}"
+            *ngIf="imageUrl">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Vehicle Photos</p>
+      <img
+        class="profile-img-large"
+        nz-image
+        [nzSrc]="imageUrl"
+        alt=""
+      />
+    </nz-col>
+  </nz-row>
+</nz-card>
+
+<ng-template #infoField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <span class="text-main">{{content ? content : '-'}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

@@ -1,0 +1,50 @@
+<div class="footer w-100 bg-theme pt-4 pb-2">
+  <div class="container">
+    <nz-row nzType="flex" nzGutter="32" nzAlign="top">
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+        <p class="text-primary mb-3 text-p1 font-weight-semibold">DD Express</p>
+        <ng-container
+          *ngTemplateOutlet="iconText;context:{content:'Monday - Friday: 09:30 - 18:30', awesome:false, icon:'clock-circle',align:'middle' }"></ng-container>
+
+        <ng-container
+          *ngTemplateOutlet="iconText;context:{content:'hi@dd.express',
+           awesome:false, icon:'mail', align:'middle' }"></ng-container>
+
+        <ng-container
+          *ngTemplateOutlet="iconText;context:{content:'+601133881307',
+           awesome:false, icon:'phone', align:'middle' }"></ng-container>
+
+        <ng-container
+          *ngTemplateOutlet="iconText;context:{content:'Head Office: 1st Floor, Kompleks Penchala, No. 50, Jalan Penchala, Seksyen 51 Petaling Jaya, Selangor, 46050',
+           awesome:true, icon:'fas fa-map-marker-alt', align:'top' }"></ng-container>
+
+      </nz-col>
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+        <p class="text-primary mb-3 text-p1 font-weight-semibold ">About Us</p>
+        <p class="text-p4 text-base text-white-50 py-2">
+          Reaching Out To Those That Mean Something To You Has Never Been As Easy As With DD Express Today!
+        </p>
+        <p class="text-p4 text-base text-white-50 py-2">
+          DD Express is authorized by South Pacific Logistic Sdn Bhd
+        </p>
+        <i nz-icon nzType="facebook" nzTheme="outline" class="text-p1 mr-2 text-white" ></i>
+        <i nz-icon nzType="instagram" nzTheme="outline" class="text-p1 mr-2 text-white"></i>
+      </nz-col>
+    </nz-row>
+
+    <p class="pt-4 pb-1 text-white-50">Copyright © 2021 DD Routes. All rights reserved.</p>
+  </div>
+</div>
+
+<ng-template #iconText let-icon="icon" let-awesome="awesome" let-content="content" let-align="align">
+  <nz-row nzType="flex" [nzAlign]="align" nzGutter="8" class="py-2">
+    <nz-col nzSpan="3">
+      <i *ngIf="!awesome" nz-icon [nzType]="icon" nzTheme="outline"
+         class="text-p1 vertical-align-rem-1 text-white"></i>
+      <i *ngIf="awesome" [class]="icon" [ngClass]="{'text-white text-p1 vertical-align-rem-1':awesome}"></i>
+    </nz-col>
+    <nz-col nzSpan="21">
+      <span class="text-p4 text-base text-white-50">{{content}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>

@@ -1,0 +1,57 @@
+<div class="w-100">
+  <div class="mt-1">
+    <span class="text-p4 text-sm-p3 text-black-7 font-weight-bold">User Login</span>
+  </div>
+
+  <form nz-form [formGroup]="loginForm">
+    <div class="w-100">
+      <nz-form-item class="mt-2">
+        <nz-form-control nzErrorTip="Please enter your username.">
+          <nz-input-group [nzPrefix]="userIcon">
+            <input type="text" nz-input formControlName="username" placeholder="Username" oninput="this.value = this.value.toUpperCase()"
+                   (keyup.enter)="loginBtnDisable ? $event.preventDefault(): submit()"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="mt-2">
+        <nz-form-control nzErrorTip="Please enter your Password.">
+          <nz-input-group [nzPrefix]="lockIcon" [nzSuffix]="passwordVisible ? invisible : visible">
+            <input [type]="passwordVisible ? 'text':'password'" nz-input formControlName="password"
+                   (keyup.enter)="loginBtnDisable ? $event.preventDefault(): submit()"
+                   placeholder="Password"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+<!--  <div class="w-100 py-2 text-p6">-->
+<!--    Forgot your <span class="text-primary pointer font-weight-semibold">Password?</span>-->
+<!--  </div>-->
+  <div class="w-100 py-2 text-p6">
+    Don't have account? <span class="text-primary pointer font-weight-semibold"
+                              (click)="navigateRegister()">Register</span>
+  </div>
+
+  <div class="float-right">
+    <button [disabled]="loginBtnDisable" [nzLoading]="loginBtnLoading" nz-button nzType="primary" (click)="submit()">
+      Login
+    </button>
+  </div>
+</div>
+
+<ng-template #visible>
+  <i nz-icon nzType="eye" (click)="passwordToggle()"></i>
+</ng-template>
+
+<ng-template #invisible>
+  <i nz-icon nzType="eye-invisible" (click)="passwordToggle()"></i>
+</ng-template>
+
+<ng-template #userIcon>
+  <i nz-icon nzType="user"></i>
+</ng-template>
+
+<ng-template #lockIcon>
+  <i nz-icon nzType="lock" nzTheme="outline"></i>
+</ng-template>

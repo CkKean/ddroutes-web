@@ -1,0 +1,13 @@
+.custom-height {
+  height: 100px !important;
+}
+
+.padding-none {
+  ::ng-deep .ant-card-body {
+    padding: unset !important;
+  }
+}
+
+.custom-color-height {
+  height: 91px !important;
+}

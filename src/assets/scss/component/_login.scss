@@ -1,0 +1,78 @@
+.login-logo {
+  text-align: left;
+  padding: 20px 0;
+
+  @include screen-tablet-above {
+    padding: 0;
+  }
+
+  img {
+    max-width: 345px;
+
+    @include screen-mobile {
+      max-width: 250px;
+    }
+  }
+}
+
+.login {
+  @include screen-tablet {
+    display: block !important;
+  }
+
+  .login-box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-100%, -50%);
+  }
+}
+
+.tranparent-login-box {
+  // background: rgba(255, 255, 255, 0.5);
+  border: none;
+
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  // background: inherit;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: inherit;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+    filter: blur(5px);
+    margin: -20px;
+  }
+}
+
+.main-content {
+  // height = viewport height - footer height - header height
+  min-height: calc(100vh - 38px);
+}
+
+.lower-container {
+  display: flex;
+  flex-direction: column;
+  background-color: hsla(0, 0%, 100%, .8);
+  border-radius: 0 0 8px 8px;
+  justify-content: center;
+  //align-items: center;
+}
+
+.upper-container {
+  display: flex;
+  border-radius: 8px 8px 0 0;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+}

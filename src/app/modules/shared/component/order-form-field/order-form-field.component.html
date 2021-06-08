@@ -1,0 +1,9 @@
+<nz-row nzType="flex" [nzJustify]="justify" [nzAlign]="align">
+  <nz-col [nzLg]="fColLg" [nzMd]="fColMd" nzSm="24" nzXs="24" class="mb-1">
+    <span class="text-p5 text-main font-weight-semibold">{{label}}</span>
+    <span *ngIf="required" class="text-danger text-p5 font-weight-semibold">*</span>
+  </nz-col>
+  <nz-col [nzLg]="sColLg" [nzMd]="sColMd" nzSm="24" nzXs="24">
+    <ng-content></ng-content>
+  </nz-col>
+</nz-row>

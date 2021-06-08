@@ -1,0 +1,185 @@
+<div *ngIf="!routeReportLoading;else loading">
+
+  <div class="mb-3 text-right">
+    <i nz-icon nzType="download" class="text-p2 pointer text-info" nzTheme="outline" (click)="generatePdf()"></i>
+    <i class="ml-2 text-danger text-p2 pointer" nz-icon nzType="delete" nzTheme="outline"
+       (click)="onDeleteRouteReport()"></i>
+  </div>
+
+  <nz-card [nzBorderless]="true" class="h-100">
+    <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Order Route Information</p>
+    <nz-row nzType="flex" nzAlign="top" [nzGutter]="16">
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+        <ng-container *ngTemplateOutlet="orderInfo1"></ng-container>
+      </nz-col>
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+        <ng-container *ngTemplateOutlet="orderInfo2"></ng-container>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+
+  <nz-row nzType="flex" nzAlign="top" [nzGutter]="8">
+    <nz-col nzSpan="8">
+      <nz-card [nzBorderless]="true" class="h-100">
+        <ng-container *ngTemplateOutlet="actualFee"></ng-container>
+      </nz-card>
+    </nz-col>
+    <nz-col nzSpan="8">
+      <nz-card [nzBorderless]="true" class="h-100">
+        <ng-container *ngTemplateOutlet="estimatedFee"></ng-container>
+      </nz-card>
+    </nz-col>
+    <nz-col nzSpan="8">
+      <nz-card [nzBorderless]="true" class="h-100">
+        <ng-container *ngTemplateOutlet="vehicleInfo"></ng-container>
+      </nz-card>
+    </nz-col>
+
+  </nz-row>
+
+  <nz-card [nzBorderless]="true" class="h-100">
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+  </nz-card>
+
+  <div style="overflow: hidden;height: 0" id="content">
+    <ng-container *ngTemplateOutlet="orderInfo1"></ng-container>
+    <ng-container *ngTemplateOutlet="orderInfo2"></ng-container>
+    <ng-container *ngTemplateOutlet="actualFee"></ng-container>
+    <ng-container *ngTemplateOutlet="estimatedFee"></ng-container>
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+  </div>
+</div>
+
+<ng-template #infoField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main text-sm-p5 text-p6 font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <span class="text-main text-sm-p5 text-p6 font-weight-normal">{{content ? content : '-'}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #infoTripleField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="13" nzMd="13" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main text-sm-p5 text-p6 font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="11" nzMd="11" nzSm="24" nzXs="24">
+      <span class="text-main text-sm-p5 text-p6 font-weight-normal">{{content ? content : '-'}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>
+
+<ng-template #orderInfo1>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Report No',content:routeReportData?.routeReportId}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Route Id',content:routeReportData?.orderRoute.routeId}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Status',content:routeReportData?.orderRoute?.status}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Total item(s)',content:routeReportData?.totalItemsQty}"></ng-container>
+</ng-template>
+
+<ng-template #orderInfo2>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Personnel',content:routeReportData?.orderRoute?.personnelInfo.fullName}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Completed At',content: (routeReportData?.orderRoute?.status === 'Completed')  ? routeReportData?.orderRoute?.updatedAt : null }"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Created By',content:routeReportData?.orderRoute?.createdByInfo?.fullName}"></ng-container>
+</ng-template>
+
+<ng-template #vehicleInfo>
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Vehicle Info</p>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Vehicle Type',content:routeReportData?.vehicleInfo.type}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Plate Number',content:(routeReportData?.vehicleInfo?.plateNo)}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Brand',content:routeReportData?.vehicleInfo.brand}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Fuel Efficiency',content:routeReportData?.vehicleInfo.fuelEfficiency + ' ' + routeReportData?.vehicleInfo.fuelEfficiencyUnit}"></ng-container>
+</ng-template>
+
+<ng-template #estimatedFee>
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Estimated</p>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Distance Travel (km)',content:routeReportData?.calculatedDistanceTravel}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Duration (min)',content:routeReportData?.orderRoute?.timeNeeded}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Petrol Cost (RM)',content:routeReportData?.calculatedPetrolFees}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Fuel Usage (L)',content:routeReportData?.calculatedPetrolUsage}"></ng-container>
+</ng-template>
+
+<ng-template #actualFee>
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Actual</p>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Petrol Cost (RM)',content:routeReportData?.actualPetrolFees}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Latest Petrol Price (RM)',content:routeReportData?.latestPetrolPrice}"></ng-container>
+
+  <nz-row nzType="flex" nzAlign="middle" class="my-3" *ngIf="imageUrl">
+    <nz-col nzLg="13" nzMd="13" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main text-sm-p5 text-p6 font-weight-semibold">Statement:</span>
+    </nz-col>
+    <nz-col [nzLg]="imageUrl?24:12" [nzMd]="imageUrl?24:12" nzSm="24" nzXs="24">
+      <span class="text-main text-sm-p5 text-p6 font-weight-normal">
+          <img *ngIf="imageUrl;else noData"
+               class="profile-img-large"
+               nz-image
+               [nzSrc]="imageUrl"
+               [alt]="routeReportData.statement"
+          />
+        <ng-template #noData>
+          <span class="text-main text-sm-p5 text-p6 font-weight-normal">-</span>
+        </ng-template>
+      </span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #orderList>
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Order List</p>
+  <nz-table #courierOrderTable
+            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            [nzLoading]="routeReportLoading"
+            [nzData]="routeReportData.orderList"
+            [nzPageSize]="10"
+            [nzOuterBordered]="true"
+            [nzShowSizeChanger]="true"
+            [nzShowTotal]="rangeTemplate"
+            [nzHideOnSinglePage]="true"
+  >
+    <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+    <tr>
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+          *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+    </tr>
+    </thead>
+    <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+    <tr *ngFor="let data of courierOrderTable.data;let i=index">
+      <td><a target="_blank"
+             [href]="routeConstant.COURIER_ORDER+'/'+ routeConstant.VIEW +'?orderNo=' + data.orderNo">{{ data.orderNo }}</a>
+      </td>
+      <td>{{ data.createdAt | sDate }}</td>
+      <td>{{ data.orderType }}</td>
+      <td>{{ data.displayOrderStatus }}</td>
+      <td>{{ data.recipientName }}</td>
+      <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+  </ng-template>
+</ng-template>
+

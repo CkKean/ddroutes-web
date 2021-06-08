@@ -1,0 +1,70 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <div class="mb-3 text-right">
+    <button nz-button nzType="primary" (click)="editPersonnel()">Edit</button>
+  </div>
+
+  <nz-row nzType="flex" nzAlign="top" *ngIf="!courierPersonnelLoading;else loading">
+    <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" class="w-100 h-100 text-center" *ngIf="imageUrl"
+            [ngClass]="{'mb-3':(isMobile$ | async)}">
+      <img
+        class="profile-img-large"
+        nz-image
+        [nzSrc]="imageUrl"
+        [alt]="courierPersonnelInfo.profileImg"
+      />
+    </nz-col>
+    <nz-col nzLg="14" nzMd="14" nzSm="24" nzXs="24">
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Account Information</p>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Username',content:courierPersonnelInfo.username}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Email',content:courierPersonnelInfo.email}"></ng-container>
+
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase mt-sm-5 mt-3">Personal
+        Information</p>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Full Name',content:courierPersonnelInfo.fullName}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Gender',content:courierPersonnelInfo.gender === 'F' ? 'Female' : 'Male'}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Date of Birth',content:(courierPersonnelInfo.dob | sDate)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Mobile Number',content:courierPersonnelInfo.mobileNo}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Race',content:courierPersonnelInfo.race}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Religion',content:courierPersonnelInfo.religion}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Address',content:courierPersonnelInfo.address}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'City',content:courierPersonnelInfo.city}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Postcode',content:courierPersonnelInfo.postcode}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'State',content:courierPersonnelInfo.state}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Country',content:courierPersonnelInfo.country}"></ng-container>
+
+      <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase mt-sm-5 mt-3">Job Details</p>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Position',content:(courierPersonnelInfo.position)}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Start Date',content:(courierPersonnelInfo.startDate)}"></ng-container>
+    </nz-col>
+  </nz-row>
+</nz-card>
+
+<ng-template #infoField let-label='label' let-content='content'>
+  <nz-row nzType="flex" nzAlign="middle" class="my-3">
+    <nz-col nzLg="6" nzMd="10" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
+      <span class="text-main font-weight-semibold">{{label}}:</span>
+    </nz-col>
+    <nz-col nzLg="15" nzMd="12" nzSm="24" nzXs="24">
+      <span class="text-main">{{content}}</span>
+    </nz-col>
+  </nz-row>
+</ng-template>
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+</ng-template>

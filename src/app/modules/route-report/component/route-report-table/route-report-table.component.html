@@ -1,0 +1,75 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <nz-row nzType="felx" nzJustify="space-between" nzAlign="middle" class="pb-3">
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <input nz-input placeholder="Search" [ngClass]="{'w-70':!(isMobile$ |async),'w-100':(isMobile$ |async)}"
+             (keyup)="search($event)"/>
+    </nz-col>
+  </nz-row>
+
+  <nz-table #orderRouteTable
+            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            [nzLoading]="orderLoading"
+            [nzData]="displayData"
+            [nzPageSize]="10"
+            [nzOuterBordered]="true"
+            [nzShowSizeChanger]="true"
+            [nzShowTotal]="rangeTemplate"
+            [nzHideOnSinglePage]="true"
+            [nzScroll]="{ x:'810px' }"
+  >
+    <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+    <tr>
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+          *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+    </tr>
+    </thead>
+    <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+    <tr *ngFor="let data of orderRouteTable.data;let i=index">
+      <td class="font-weight-semibold">{{i + 1 }}</td>
+      <td>
+        <ng-container *ngTemplateOutlet="content;context:{value:data.routeReportId}"></ng-container>
+      </td>
+      <td>
+        <ng-container *ngTemplateOutlet="content;context:{value:data.orderRoute?.status}"></ng-container>
+      </td>
+      <td>
+        <ng-container
+          *ngTemplateOutlet="content;context:{value:data.orderRoute?.personnelInfo.fullName ? data.orderRoute?.personnelInfo.fullName : '-' }"></ng-container>
+      </td>
+      <td>
+        <ng-container
+          *ngTemplateOutlet="content;context:{value:data.calculatedDistanceTravel ? (data.calculatedDistanceTravel+ ' km'):null }"></ng-container>
+      </td>
+      <td>
+        <ng-container
+          *ngTemplateOutlet="content;context:{value:data.calculatedPetrolFees? ('RM '+ data.calculatedPetrolFees):null }"></ng-container>
+      </td>
+      <td>
+        <ng-container
+          *ngTemplateOutlet="content;context:{value:data.actualPetrolFees ? ('RM '+ data.actualPetrolFees):null }"></ng-container>
+      </td>
+      <td>
+        <ng-container *ngTemplateOutlet="content;context:{value:(data.createdAt | date) }"></ng-container>
+      </td>
+
+      <td>
+        <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer"
+           (click)="navigateView(data.routeReportId)"></i>
+        <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-2 pointer"
+           (click)="navigateEdit(data)"></i>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+
+<app-edit-route-report-page *ngIf="editVisible" [routeReportData]="routeReportData" [visible]="editVisible"
+                            (refreshTable)="refreshTable.emit()"
+                            (onCancel)="cancelEdit()"></app-edit-route-report-page>
+
+<ng-template #content let-value="value">
+  <span class="text-main font-weight-normal">{{value && value !== null ? value : '-'}}</span>
+</ng-template>

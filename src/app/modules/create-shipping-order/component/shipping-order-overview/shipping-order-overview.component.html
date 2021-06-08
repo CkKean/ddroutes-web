@@ -1,0 +1,116 @@
+<div *ngIf="!overViewLoading;else loading">
+  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase mt-5">Overview</p>
+  <div class="py-3">
+
+    <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Order Information</p>
+
+    <app-form-field [label]="'Order Type'" [required]="false">{{order.orderType}}</app-form-field>
+    <app-form-field [label]="'Vehicle Type'" [required]="false">{{order.vehicleType}}</app-form-field>
+
+    <nz-divider class="my-4"></nz-divider>
+
+    <!--------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------- Sender Form ------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------------->
+
+    <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Sender Information</p>
+
+    <app-form-field [label]="'Name'" [required]="false">{{order.senderName}}</app-form-field>
+
+    <app-form-field [label]="'Mobile Number'" [required]="false">{{order.senderMobileNo}}</app-form-field>
+
+    <app-form-field [label]="'Email'"
+                    [required]="false">{{order.senderEmail ? order.senderEmail : '-'}}</app-form-field>
+
+    <app-form-field [label]="'Address'">{{order.senderAddress}}</app-form-field>
+
+    <app-form-field [label]="'City'" [required]="false">{{order.senderCity}}</app-form-field>
+
+    <app-form-field [label]="'State'" [required]="false">{{order.senderState}}</app-form-field>
+
+    <app-form-field [label]="'Postcode'" [required]="false">{{order.senderPostcode}}</app-form-field>
+
+    <nz-divider class="my-4"></nz-divider>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------- Recipient Form ------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------------->
+
+    <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Recipient Information</p>
+
+    <app-form-field [label]="'Name'" [required]="false">{{order.recipientName}}</app-form-field>
+
+    <app-form-field [label]="'Mobile Number'" [required]="false">{{order.recipientMobileNo}}</app-form-field>
+
+    <app-form-field [label]="'Email'"
+                    [required]="false">{{order.recipientEmail ? order.recipientEmail : '-'}}</app-form-field>
+
+    <app-form-field [label]="'Address'">{{order.recipientAddress}}</app-form-field>
+
+    <app-form-field [label]="'City'" [required]="false">{{order.recipientCity}}</app-form-field>
+
+    <app-form-field [label]="'State'" [required]="false">{{order.recipientState}}</app-form-field>
+
+    <app-form-field [label]="'Postcode'" [required]="false">{{order.recipientPostcode}}</app-form-field>
+
+    <nz-divider class="my-4"></nz-divider>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------- Item Information Form ------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------------->
+    <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Item Information</p>
+
+    <app-form-field [label]="'Item Weight (kg)'" [required]="false">{{order.itemWeight}}</app-form-field>
+
+    <app-form-field [label]="'Item Quantity'" [required]="false">{{order.itemQty}}</app-form-field>
+
+    <app-form-field [label]="'Item Type'" [required]="false">{{order.itemType}}</app-form-field>
+
+    <nz-divider class="my-4"></nz-divider>
+    <!--------------------------------------------------------------------------------------------------------------->
+    <!---------------------------------------- Address Confirm Form ------------------------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------------->
+    <p class="text-primary text-sm-p4 text-p5 font-weight-semibold mb-0">Order Information</p>
+
+    <app-form-field [label]="'Total Shipping Cost'" [required]="false"><b>RM {{order.shippingCost}}</b></app-form-field>
+
+    <app-form-field [label]="'Receiver Postcode'" [required]="false"><b>{{order.recipientPostcode}}</b></app-form-field>
+
+    <nz-row nzType="flex" nzJustify="start" nzAlign="middle" class="mt-3">
+      <nz-col [nzLg]="7" [nzMd]="7" nzSm="24" nzXs="24">
+        <span class="text-p5 text-main font-weight-semibold">Full Sender/Pick up Address :</span>
+      </nz-col>
+      <nz-col [nzLg]="17" [nzMd]="17" nzSm="24" nzXs="24">
+        <nz-form-item>
+          <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
+            <nz-input-group>
+              <input type="text" class="text-title font-weight-semibold" nz-input [disabled]="true"
+                     [value]="order.senderAddress + ',' +order.senderPostcode + order.senderCity + ',' + order.senderState + ', Malaysia'"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+
+    <nz-row nzType="flex" nzJustify="start" nzAlign="middle" class="mt-3">
+      <nz-col [nzLg]="7" [nzMd]="7" nzSm="24" nzXs="24">
+        <span class="text-p5 text-main font-weight-semibold">Full Recipient Address :</span>
+      </nz-col>
+      <nz-col [nzLg]="17" [nzMd]="17" nzSm="24" nzXs="24">
+        <nz-form-item>
+          <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
+            <nz-input-group>
+              <input type="text" class="text-title font-weight-semibold" nz-input [disabled]="true"
+                     [value]="order.recipientAddress + ',' +order.recipientPostcode + order.recipientCity + ',' + order.recipientState + ', Malaysia'"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </div>
+</div>
+
+
+<ng-template #loading>
+  <nz-skeleton [nzParagraph]="{ rows: 4 }" [nzActive]="true"></nz-skeleton>
+</ng-template>
+

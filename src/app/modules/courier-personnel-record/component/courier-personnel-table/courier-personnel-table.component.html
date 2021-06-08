@@ -1,0 +1,73 @@
+<nz-card [nzBorderless]="true" class="h-100">
+  <nz-row nzType="felx" nzJustify="space-between" nzAlign="middle" class="pb-3">
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+      <input nz-input placeholder="Search" [ngClass]="{'w-70':!(isMobile$ |async),'w-100':(isMobile$ |async)}"
+             (keyup)="search($event)"/>
+    </nz-col>
+    <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24"
+            [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
+      <button nz-button [nzSize]="(isMobile$ |async) ? 'small' : 'default'" nzType="primary" (click)="navigateCreate()"
+              class="font-weight-semibold">Add New Courier Personnel
+      </button>
+    </nz-col>
+  </nz-row>
+
+  <nz-table #employeeTable
+            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            [nzLoading]="courierPersonnelListLoading"
+            [nzData]="displayData"
+            [nzPageSize]="10"
+            [nzOuterBordered]="true"
+            [nzShowSizeChanger]="true"
+            [nzShowTotal]="rangeTemplate"
+            [nzHideOnSinglePage]="false"
+            [nzScroll]="{ x:'1020px' }"
+  >
+    <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
+    <tr>
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" *ngFor="let header of tableHeader"
+          [nzWidth]="header.nzWidth">{{header.title}}</th>
+    </tr>
+    </thead>
+    <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+    <tr *ngFor="let data of employeeTable.data;let i=index">
+      <td>{{ i + 1 }}</td>
+      <td>
+        <nz-row nzAlign="middle" nzType="flex" [nzGutter]="16">
+          <nz-col nzSpan="6" class="gutter-row">
+            <ng-container *ngIf="data.profileImg && data.profileImgPath;else noImg">
+              <img
+                class="profile-img-small"
+                nz-image
+                [nzSrc]="getProfileImg(data.profileImgPath,data.profileImg)"
+                alt=""
+              />
+            </ng-container>
+            <ng-template #noImg>
+              <nz-avatar [nzSize]="40" nzIcon="user"></nz-avatar>
+            </ng-template>
+          </nz-col>
+          <nz-col nzSpan="18" class="gutter-row">
+            {{ data.fullName }}
+          </nz-col>
+        </nz-row>
+      </td>
+      <td>{{ data.username }}</td>
+      <td>{{ data.mobileNo }}</td>
+      <td>{{ data.position }}</td>
+      <td>{{ data.state }}</td>
+      <td>{{ data.startDate | date }}</td>
+      <td>
+        <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-1 pointer" (click)="navigateView(data)"></i>
+        <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-1 pointer" (click)="navigateEdit(data)"></i>
+        <i nz-icon nzType="delete" nzTheme="fill" class="text-danger pointer"
+           (click)="onDeleteStaff(data.username)"></i>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
+</ng-template>
+

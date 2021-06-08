@@ -1,0 +1,17 @@
+
+.confirmation-modal-footer {
+  margin-right: 2px;
+  margi-left: 2px;
+}
+
+.modal-footer-button {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+
+.unset-padding {
+  ::ng-deep .ant-modal-body {
+    padding: unset !important;
+  }
+}

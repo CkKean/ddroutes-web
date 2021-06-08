@@ -1,0 +1,26 @@
+.ant-table-thead > tr > th {
+  color: $black-7;
+  background: $black-3;
+  font-weight: 700;
+  font-size: $font-size-sm;
+  line-height: $font-line-height-sm;
+}
+
+.ant-table-thead th.ant-table-column-has-sorters:hover {
+  background: $black-4;
+}
+
+.ant-table-tbody > tr > td{
+  font-size: $font-size-sm;
+  line-height: $font-line-height-sm;
+  font-weight: 400;
+  color: $black-6;
+}
+
+.ant-table-column-sorter-full{
+  line-height: $font-line-height-xxs;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td{
+  background: $black-4;
+}
