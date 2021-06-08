@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "/ddroutes-modular",
+  apiUrl: "https://ddroutes-modular.herokuapp.com/ddroutes-modular",
   name: '',
   consoleEnabled: true,
   devMode: true,
@@ -16,6 +16,7 @@ export const environment = {
     accessToken: 'pk.eyJ1IjoiY2hlZWtlYW4xOTk3IiwiYSI6ImNrbXoxa3I4MDA1bTkydmwydWtyMWoxZmgifQ.QiM6rCDgQTh5nNVFUO9CAA'
   }
 };
+// apiUrl: "/ddroutes-modular",
 
 /*
  * For easier debugging in development mode, you can import the following file

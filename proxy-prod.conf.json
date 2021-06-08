@@ -1,0 +1,11 @@
+{
+  "/ddroutes-modular/*": {
+    "target": "https://ddroutes-modular.herokuapp.com",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "cookieDomainRewrite": {
+      "*": "api"
+    }
+  }
+}

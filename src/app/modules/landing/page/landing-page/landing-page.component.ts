@@ -10,9 +10,10 @@ import {Select} from "@ngxs/store";
 export class LandingPageComponent implements OnInit {
 
   @Select(AppState.isMobile) isMobile$: Observable<boolean>;
-  bannerImg: string = './assets/img/banner/banner.png'
+  bannerImg1: string = './assets/img/banner/banner.jpg'
+  bannerImg2: string = './assets/img/landing_1.jpg'
 
-  array = [1, 2];
+  array = [this.bannerImg1, this.bannerImg2];
 
   constructor() {
   }
