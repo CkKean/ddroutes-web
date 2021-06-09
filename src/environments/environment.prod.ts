@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: "/ddroutes-modular",
+  apiUrl: "https://ddroutes-modular.herokuapp.com/ddroutes-modular",
   name: '',
   consoleEnabled: false,
   devMode: false,

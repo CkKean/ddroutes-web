@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --prod --proxy-config proxy-prod.conf.json"
+    "postinstall": "ng build --aot --prod --base-href="
   },
   "private": true,
   "dependencies": {
