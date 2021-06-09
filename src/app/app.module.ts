@@ -43,7 +43,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     CoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-    NgxsLoggerPluginModule.forRoot({logger: console, collapsed: false}),
+    NgxsLoggerPluginModule.forRoot({logger: console, collapsed: false, disabled: environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot({disabled: environment.production}),
     NgxsStoragePluginModule.forRoot({
       storage: StorageOption.SessionStorage,
@@ -60,7 +60,7 @@ registerLocaleData(en);
         developmentMode: !environment.production,
       }
     ),
-    ServiceWorkerModule.register('bo-sw.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('bo-sw.js', {enabled: environment.production}),
     NgxQRCodeModule
   ],
   providers: [

@@ -2,13 +2,11 @@
      xmlns="http://www.w3.org/1999/html">
   <nz-row *ngIf="!(isAuthenticated$ | async)" nzType="flex" nzAlign="middle" class="container">
     <nz-col nzLg="4" nzMd="4" nzSm="4" nzXs="4">
-      <img [src]="logo" class="logo pointer" (click)="navigateToMainPage()"/>
+      <img [src]="logo" class="logo pointer float-left" (click)="navigateToMainPage()"/>
     </nz-col>
     <nz-col nzLg="14" nzMd="14" nzSm="6" nzXs="6" *ngIf="optionDisplay">
       <ul nz-menu nzTheme="dark" nzMode="horizontal" style="font-size: 16px;">
-        <li nz-menu-item (click)="navigateToTrackingPage()">
-          <a class="text-decoration-none" [routerLink]="routesConstant.TRACKING">Tracking</a>
-        </li>
+        <li nz-menu-item (click)="navigateToTrackingPage()">Tracking</li>
       </ul>
     </nz-col>
     <nz-col *ngIf="optionDisplay" nzLg="6" nzMd="6" nzSm="14" nzXs="14">
@@ -54,14 +52,16 @@
     </nz-col>
 
     <nz-col nzLg="4" nzMd="4" nzSm="16" nzXs="16" class="text-center">
-      <img [src]="logo" class="logo pointer" (click)="navigateToMainPage()"/>
+      <img [src]="logo" class="logo pointer float-left"
+           [class]="{'float-right':(isAuthenticated$ | async)  && userType === 2}"
+           (click)="navigateToMainPage()"/>
     </nz-col>
 
     <nz-col nzXl="10" nzLg="10" nzMd="10" nzSm="6" nzXs="6"
             *ngIf="!(isMobile$ | async) && optionDisplay && userType === 2">
       <ul nz-menu nzTheme="dark" nzMode="horizontal" style="font-size: 16px;">
         <li nz-menu-item (click)="navigateToTrackingPage()">Tracking</li>
-        <li nz-menu-item nzMatchRouter *ngFor="let item of normalUserMenuList" (click)="navigatePage(item.route)">
+        <li nz-menu-item *ngFor="let item of normalUserMenuList" (click)="navigatePage(item.route)">
           {{item.title}}
         </li>
       </ul>
@@ -118,25 +118,3 @@
     </nz-col>
   </nz-row>
 </ng-template>
-
-<!--<nz-col nzSpan="10" [nzOffset]="userType === 2 ? 0 : 10" *ngIf="!(isMobile$ | async)" style="font-size: 16px;"-->
-<!--        class="text-right">-->
-<!--  <ng-container *ngIf="(userType === 2) || ((userType !== 2) && isMainPage)">-->
-<!--    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right" style="font-size: 16px;">-->
-<!--      <li>-->
-<!--        <a nz-dropdown [nzDropdownMenu]="menu" [nzClickHide]="false" [nzVisible]="false">-->
-<!--          <span class="text-white">{{username}} </span>-->
-<!--          <i class="mr-2 text-white" style="vertical-align: 0.1rem !important;" nz-icon nzType="down"></i>-->
-<!--          <nz-avatar [nzSrc]="imageUrl"></nz-avatar>-->
-<!--        </a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </ng-container>-->
-<!--  &lt;!&ndash;      <ng-container *ngIf="(userType !== 2) && isMainPage">&ndash;&gt;-->
-<!--  &lt;!&ndash;        <ng-container *ngTemplateOutlet="dropDownHeader"></ng-container>&ndash;&gt;-->
-<!--  &lt;!&ndash;      </ng-container>&ndash;&gt;-->
-<!--  <ng-container *ngIf="(userType !== 2) && !isMainPage">-->
-<!--    <span class="text-white mr-2">Hi, {{username}}</span>-->
-<!--    <nz-avatar [nzSrc]="imageUrl"></nz-avatar>-->
-<!--  </ng-container>-->
-<!--</nz-col>-->

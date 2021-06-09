@@ -8,7 +8,7 @@
         <nz-form-item>
           <nz-form-control [nzErrorTip]="usernameError">
             <nz-input-group>
-              <input type="text" nz-input formControlName="username" placeholder="Username"
+              <input type="text" nz-input formControlName="username" placeholder="Username" oninput="this.value = this.value.toUpperCase()"
                      (blur)="onBlurUsername($event)"/>
             </nz-input-group>
           </nz-form-control>

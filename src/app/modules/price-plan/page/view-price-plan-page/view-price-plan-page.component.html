@@ -17,13 +17,13 @@
 
       <ng-container *ngIf="pricePlanData.subWeightPricing && pricePlanData.subWeight && pricePlanData.subWeightUnit">
         <ng-container
-          *ngTemplateOutlet="infoField;context:{label:'Weight',content:( '+ ' + pricePlanData.subWeightPricing + ' / ' +  pricePlanData.subWeight + ' '+ pricePlanData.subWeightUnit)}"></ng-container>
+          *ngTemplateOutlet="infoField;context:{label:'Weight',content:( 'Add RM' + pricePlanData.subWeightPricing + ' / ' +  pricePlanData.subWeight + ' '+ pricePlanData.subWeightUnit)}"></ng-container>
       </ng-container>
 
       <ng-container
         *ngIf="pricePlanData.subWeightPricing && pricePlanData.subDistance && pricePlanData.subDistanceUnit">
         <ng-container
-          *ngTemplateOutlet="infoField;context:{label:'Distance',content:( '+ ' + pricePlanData.subDistancePricing + ' / ' +  pricePlanData.subDistance + ' '+ pricePlanData.subDistanceUnit)}"></ng-container>
+          *ngTemplateOutlet="infoField;context:{label:'Distance',content:( 'Add RM' + pricePlanData.subDistancePricing + ' / ' +  pricePlanData.subDistance + ' '+ pricePlanData.subDistanceUnit)}"></ng-container>
       </ng-container>
     </nz-col>
     <nz-col [nzSpan]="6">
@@ -38,10 +38,10 @@
     <nz-table nzBordered nzTemplateMode [nzScroll]="{x:'620px'}">
       <thead>
       <tr>
-        <th nzWidth="120px"></th>
-        <th nzWidth="175px">Weight</th>
-        <th nzWidth="175px">Distance</th>
-        <th nzWidth="150px">Price</th>
+        <th nzWidth="120px" class="text-p5 font-weight-normal">Type</th>
+        <th nzWidth="175px" class="text-p5 font-weight-normal">Weight</th>
+        <th nzWidth="175px" class="text-p5 font-weight-normal">Distance</th>
+        <th nzWidth="150px" class="text-p5 font-weight-normal">Price</th>
       </tr>
       </thead>
       <tbody>
@@ -61,14 +61,14 @@
         <td></td>
         <td>Subsequent {{pricePlanData.subWeight}} {{pricePlanData.subWeightUnit}}</td>
         <td>-</td>
-        <td>+ RM {{pricePlanData.subWeightPricing}} </td>
+        <td>Add RM {{pricePlanData.subWeightPricing}} </td>
       </tr>
 
       <tr *ngIf="pricePlanData.subDistance">
         <td></td>
         <td>-</td>
         <td>Subsequent {{pricePlanData.subDistance}} {{pricePlanData.subDistanceUnit}}</td>
-        <td>+ RM {{pricePlanData.subDistancePricing}} </td>
+        <td>Add RM {{pricePlanData.subDistancePricing}} </td>
       </tr>
       </tbody>
     </nz-table>

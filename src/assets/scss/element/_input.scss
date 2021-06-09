@@ -8,7 +8,7 @@
   border: 1px solid #ddd;
 }
 
-.ant-input-sm{
+.ant-input-sm {
   box-shadow: none;
   padding: 8px 16px;
   line-height: 1.5;
@@ -94,3 +94,12 @@
   border-right-width: 1px !important;
 }
 
+.custom-input-prefix {
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 2.5rem !important;
+  }
+
+  .ant-input-affix-wrapper .ant-input-prefix {
+    top: 52% !important;
+  }
+}

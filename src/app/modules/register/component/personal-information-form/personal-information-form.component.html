@@ -46,9 +46,9 @@
   </app-form-field>
 
   <app-form-field [label]="'Mobile Number'">
-    <nz-form-item>
+    <nz-form-item class="custom-input-prefix">
       <nz-form-control [nzErrorTip]="phoneNoError">
-        <nz-input-group>
+        <nz-input-group [nzPrefix]="'+60'">
           <input type="number" nz-input [formControl]="mobileNo" placeholder="Mobile Number"/>
         </nz-input-group>
       </nz-form-control>

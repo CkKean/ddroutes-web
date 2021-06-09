@@ -1,56 +1,86 @@
 <app-sub-header [title]="'My Shipping Order'"></app-sub-header>
 <div class="container">
   <nz-card class="above-header" [nzBorderless]="true">
-    <nz-table #courierOrderTable
-              class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
-              [nzLoading]="dataLoading"
-              [nzData]="displayData"
-              [nzPageSize]="10"
-              [nzOuterBordered]="true"
-              [nzShowSizeChanger]="true"
-              [nzShowTotal]="rangeTemplate"
-              [nzHideOnSinglePage]="false"
-              [nzScroll]="{ x:'1160px' }"
-    >
-      <thead nzSingleSort (nzSortOrderChange)="sort($event)"
-             class="text-sm-p5 text-p6 font-weight-semibold text-title">
-      <tr>
-        <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
-            *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
-      </tr>
-      </thead>
-      <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
-      <tr *ngFor="let data of courierOrderTable.data;let i=index">
-        <td class="font-weight-semibold">{{i + 1 }}</td>
-        <td>{{ data.orderNo }}</td>
-        <td>{{ data.trackingNo }}</td>
-        <td>
-          <app-label-tag
-            [tagType]="(data.isPickedUp) ? data.orderStatus: data.pickupOrderStatus "></app-label-tag>
-        </td>
-        <td>{{ data.recipientName }}</td>
-        <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
-        <td>{{ data.itemWeight }} kg</td>
-        <td>{{ data.createdAt | sDate }}</td>
-        <td nzRight>
-          <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer" (click)="onClickView(data)"></i>
-          <i nz-icon nzType="environment" nzTheme="outline" class="text-info pointer mr-2"
-             (click)="onClickTrace(data)"></i>
-          <i nz-icon nzType="download" nzTheme="outline" class="text-info pointer mr-2" nz-dropdown
-             nzPlacement="bottomRight" [nzTrigger]="'click'" [nzVisible]="false" [nzClickHide]="true"
-             [nzDropdownMenu]="menu">
-            <nz-dropdown-menu #menu="nzDropdownMenu">
-              <ul nz-menu nzSelectable>
-                <li nz-menu-item (click)="onClickInvoice(data.orderNo)">Invoice</li>
-                <li nz-menu-item (click)="onClickShippingLabel(data.orderNo)">Shipping Label</li>
-              </ul>
-            </nz-dropdown-menu>
-          </i>
-        </td>
-      </tr>
-      </tbody>
-    </nz-table>
+    <nz-row nzType="felx" nzJustify="space-between" nzAlign="middle" class="pb-3">
+      <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
+        <input nz-input placeholder="Search" [ngClass]="{'w-70':!(isMobile$ |async),'w-100':(isMobile$ |async)}"
+               (keyup)="search($event)"/>
+      </nz-col>
+    </nz-row>
 
+
+    <nz-tabset (nzSelectChange)="selectTab($event)">
+      <nz-tab [nzTitle]="allOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+      <nz-tab [nzTitle]="pendingOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+      <nz-tab [nzTitle]="inProgressOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+      <nz-tab [nzTitle]="pickedUpOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+      <nz-tab [nzTitle]="completedOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+      <nz-tab [nzTitle]="failedOrderTitle">
+        <ng-container *ngTemplateOutlet="tableData"></ng-container>
+      </nz-tab>
+    </nz-tabset>
+
+    <ng-template #tableData>
+      <nz-table #courierOrderTable
+                class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+                [nzLoading]="dataLoading"
+                [nzData]="displayData"
+                [nzPageSize]="10"
+                [nzOuterBordered]="true"
+                [nzShowSizeChanger]="true"
+                [nzShowTotal]="rangeTemplate"
+                [nzHideOnSinglePage]="false"
+                [nzScroll]="{ x:'1160px' }"
+      >
+        <thead nzSingleSort (nzSortOrderChange)="sort($event)"
+               class="text-sm-p5 text-p6 font-weight-semibold text-title">
+        <tr>
+          <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
+              *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
+        </tr>
+        </thead>
+        <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
+        <tr *ngFor="let data of courierOrderTable.data;let i=index">
+          <td class="font-weight-semibold">{{i + 1 }}</td>
+          <td>{{ data.orderNo }}</td>
+          <td>{{ data.trackingNo }}</td>
+          <td>
+            <app-label-tag
+              [tagType]="(data.isPickedUp) ? data.orderStatus: data.pickupOrderStatus "></app-label-tag>
+          </td>
+          <td>{{ data.recipientName }}</td>
+          <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+          <td>{{ data.itemWeight }} kg</td>
+          <td>{{ data.createdAt | sDate }}</td>
+          <td nzRight>
+            <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer" (click)="onClickView(data)"></i>
+            <i nz-icon nzType="environment" nzTheme="outline" class="text-info pointer mr-2"
+               (click)="onClickTrace(data)"></i>
+            <i nz-icon nzType="download" nzTheme="outline" class="text-info pointer mr-2" nz-dropdown
+               nzPlacement="bottomRight" [nzTrigger]="'click'" [nzVisible]="false" [nzClickHide]="true"
+               [nzDropdownMenu]="menu">
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item (click)="onClickInvoice(data.orderNo)">Invoice</li>
+                  <li nz-menu-item (click)="onClickShippingLabel(data.orderNo)">Shipping Label</li>
+                </ul>
+              </nz-dropdown-menu>
+            </i>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </ng-template>
     <ng-template #rangeTemplate let-range="range" let-total> {{ range[0] }}-{{ range[1] }} of {{ total }}items
     </ng-template>
 
@@ -78,6 +108,26 @@
                       [cancelText]="'Close'" [isConfirmVisible]="false">
       <app-shipping-order-detail [order]="selectedOrder"></app-shipping-order-detail>
     </app-shared-modal>
+
+    <ng-template #allOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 0)}">All</span>
+    </ng-template>
+    <ng-template #pendingOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 1)}">Pending</span>
+    </ng-template>
+    <ng-template #inProgressOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 2)}">In Progress</span>
+    </ng-template>
+    <ng-template #pickedUpOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 3)}">Completed</span>
+    </ng-template>
+    <ng-template #completedOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 4)}">Picked Up</span>
+    </ng-template>
+    <ng-template #failedOrderTitle>
+      <span class="text-p5" [class]="{'font-weight-semibold':(tabCurrentIndex === 5)}">Failed</span>
+    </ng-template>
+
 
   </nz-card>
 </div>

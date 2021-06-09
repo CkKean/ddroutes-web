@@ -37,7 +37,7 @@ export class PricePlanTableComponent implements OnInit {
   displayData: PricePlanModel[] = [];
 
   tableHeader = [
-    {title: 'No.', webWidth: '60px', mobileWidth: '60px', key: 'id', rowSpan: 2},
+    {title: 'No.', webWidth: '30px', mobileWidth: '60px', key: 'id', rowSpan: 2},
     {title: 'Vehicle Type', webWidth: '150px', mobileWidth: '180px', key: 'vehicleType', rowSpan: 2},
     {title: 'Distance', webWidth: '150px', mobileWidth: '120px', key: 'defaultDistance', rowSpan: 2},
     {title: 'Weight', webWidth: '150px', mobileWidth: '120px', key: 'defaultWeight', rowSpan: 2},

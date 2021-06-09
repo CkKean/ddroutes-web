@@ -12,6 +12,7 @@ import {ShippingOrderService} from "../../service/shipping-order.service";
 import {IResponse} from "../../../shared/model/i-response";
 import {tap} from "rxjs/operators";
 import {OrderTypeConstant} from "../../../../constant/courier-order.constant";
+import {ShippingOrderModel} from "../../../shared/model/courier-order/shipping-order-model";
 
 @Component({
   selector: 'app-shipping-order-page',
@@ -26,9 +27,16 @@ export class ShippingOrderPageComponent implements OnInit {
   @ViewChild(ShipmentLabelComponent) shipmentLabelComponent: ShipmentLabelComponent;
   @ViewChild(InvoiceComponent) invoiceComponent: InvoiceComponent;
 
-  oriData: CourierOrderModel[] = [];
-  displayData: CourierOrderModel[] = [];
+  oriData: ShippingOrderModel;
+  displayData: CourierOrderModel[];
+  failedList: CourierOrderModel[];
+  pendingList: CourierOrderModel[];
+  pickedUpList: CourierOrderModel[];
+  inProgressList: CourierOrderModel[];
+  completedList: CourierOrderModel[];
   dataLoading: boolean = false;
+
+  tabCurrentIndex: number = 0;
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px'},
@@ -63,9 +71,14 @@ export class ShippingOrderPageComponent implements OnInit {
     this.dataLoading = true;
     this.subHandlingService.subscribe(
       this.shippingOrderService.findAll().pipe(
-        tap((response: IResponse<CourierOrderModel[]>) => {
-          this.displayData = response.data;
+        tap((response: IResponse<ShippingOrderModel>) => {
           this.oriData = deepCopy(response.data);
+          this.displayData = this.oriData.allOrder;
+          this.pendingList = response.data.pendingList;
+          this.inProgressList = response.data.inProgressList;
+          this.pickedUpList = response.data.pickedUpList;
+          this.completedList = response.data.completedList;
+          this.failedList = response.data.failedList;
           this.dataLoading = false;
         })
       )
@@ -74,10 +87,10 @@ export class ShippingOrderPageComponent implements OnInit {
 
   search(event): void {
     if (event.target.value) {
-      this.displayData = deepCopy(this.oriData);
+      this.getCurrentTabData();
       this.displayData = this.tableService.search(event.target.value, this.displayData);
     } else {
-      this.displayData = deepCopy(this.oriData);
+      this.getCurrentTabData();
     }
   }
 
@@ -127,6 +140,35 @@ export class ShippingOrderPageComponent implements OnInit {
 
   printShippingLabel(): void {
     this.shipmentLabelComponent.openPDF();
+  }
+
+  selectTab(event): void {
+    this.tabCurrentIndex = event.index;
+    this.getCurrentTabData();
+  }
+
+  getCurrentTabData(): void {
+    switch (this.tabCurrentIndex) {
+      case 0:
+        this.displayData = deepCopy(this.oriData.allOrder);
+        break;
+      case 1:
+        this.displayData = deepCopy(this.oriData.pendingList);
+        break;
+      case 2:
+        this.displayData = deepCopy(this.oriData.inProgressList);
+        break;
+      case 3:
+        this.displayData = deepCopy(this.oriData.pickedUpList);
+        break;
+      case 4:
+        this.displayData = deepCopy(this.oriData.completedList);
+        break;
+      case 5:
+        this.displayData = deepCopy(this.oriData.failedList);
+        break;
+    }
+
   }
 
 }

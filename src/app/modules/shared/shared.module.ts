@@ -51,6 +51,7 @@ import {DeliveryRateComponent} from './component/delivery-rate/delivery-rate.com
 import {NzCollapseModule} from "ng-zorro-antd/collapse";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import {NzBackTopModule} from "ng-zorro-antd/back-top";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
 
 const imports = [
   CommonModule,
@@ -101,7 +102,8 @@ const exportsModule = [
   DragDropModule,
   NzResultModule,
   NzCollapseModule,
-  NzBackTopModule
+  NzBackTopModule,
+  NzTabsModule
 ];
 
 const exportsComponent = [
