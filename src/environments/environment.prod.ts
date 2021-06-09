@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: "/api",
+  apiUrl: "/ddroutes-modular",
   name: '',
   consoleEnabled: false,
   devMode: false,
