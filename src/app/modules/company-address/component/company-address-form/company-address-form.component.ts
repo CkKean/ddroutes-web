@@ -104,7 +104,6 @@ export class CompanyAddressFormComponent implements OnInit {
         fullAddress += (', ' + this.state.value);
       }
     }
-    console.log(fullAddress);
     this.fullAddress.patchValue(fullAddress);
   }
 

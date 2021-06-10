@@ -2,7 +2,6 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export function openPDF(data, fileName: string, dimension: { width: number, height: number }): void {
-  console.log(dimension);
   html2canvas(data, {
     width: dimension.width - (dimension.width * (22 / 100)),
   }).then(canvas => {

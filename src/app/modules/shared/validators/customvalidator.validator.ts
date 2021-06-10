@@ -70,7 +70,6 @@ export function noWhitespaceValidator(control: FormControl): ValidationResult {
 
 export function existed(control: FormControl): ValidationResult {
   let isValid: boolean = true;
-  console.log(control);
   // if (!control.value) {
   //   return;
   // }

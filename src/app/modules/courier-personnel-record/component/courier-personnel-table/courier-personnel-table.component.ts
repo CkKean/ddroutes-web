@@ -73,7 +73,6 @@ export class CourierPersonnelTableComponent implements OnInit {
   }
 
   sort(sortAttribute) {
-    console.log(sortAttribute);
     this.displayData = this.tableService.sort(sortAttribute, this.displayData);
   }
 

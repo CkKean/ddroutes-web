@@ -19,7 +19,6 @@ export class HandleUnauthorizedInterceptor implements HttpInterceptor {
             if (err && err.error && err.error.status === 'access.denied') {
               this.store.dispatch(new ShowAccessDeniedModal());
             } else {
-              console.log('jwt expired');
               this.store.dispatch(new ShowSessionTimeoutModal());
             }
             return of();
