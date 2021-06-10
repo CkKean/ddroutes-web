@@ -21,21 +21,21 @@ const routes: Routes = [
         path: RoutesConstant.VIEW,
         component: ViewEmployeeComponent,
         data: {
-          breadcrumb: RoutesConstant.VIEW,
+          breadcrumb: "View Employee Record",
         }
       },
       {
         path: RoutesConstant.CREATE,
         component: AddEmployeeFormComponent,
         data: {
-          breadcrumb: RoutesConstant.CREATE,
+          breadcrumb: "Create Employee Record",
         }
       },
       {
         path: RoutesConstant.UPDATE,
         component: EditEmployeeFormComponent,
         data: {
-          breadcrumb: RoutesConstant.UPDATE,
+          breadcrumb: "Update Employee Record",
         }
       },
     ]

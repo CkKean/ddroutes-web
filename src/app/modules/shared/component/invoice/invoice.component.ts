@@ -4,7 +4,7 @@ import {IResponse} from "../../model/i-response";
 import {CourierOrderModel} from "../../model/courier-order/courier-order.model";
 import {SubHandlingService} from "../../services/subscription-handling.service";
 import {OrderInvoiceModel} from "../../model/courier-order/order-invoice.model";
-import {Select} from "@ngxs/store";
+import {Select, Store} from "@ngxs/store";
 import {AppState} from "../../../core/state/app.state";
 import {Observable} from "rxjs/internal/Observable";
 import {openPDF} from '../../utils/save-open-pdf.util';
@@ -25,11 +25,12 @@ export class InvoiceComponent implements OnInit {
   @Input() orderDetailLoading: boolean = false;
   @Input() requiredGetInfo: boolean = true;
 
+  dimension: { width: number, height: number };
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
   readonly logo: string = './assets/img/brand/logo.png';
 
-  constructor(private subHandlingService: SubHandlingService, private publicApiService: PublicApiService) {
+  constructor(private subHandlingService: SubHandlingService, private publicApiService: PublicApiService, private store: Store) {
   }
 
   ngOnInit(): void {
@@ -54,9 +55,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   savePDF(): void {
+    this.dimension = this.store.selectSnapshot(AppState.getDimension);
+
     let data = document.getElementById('invoivePrint');
-    console.log(data);
-    openPDF(data, 'Invoice_' + this.orderInfo.orderNo);
+    openPDF(data, 'Invoice_' + this.orderInfo.orderNo, this.dimension);
   }
 
 }

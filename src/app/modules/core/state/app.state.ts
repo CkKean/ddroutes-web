@@ -38,6 +38,11 @@ export class AppState {
     return state.isMobile;
   }
 
+  @Selector()
+  static getDimension(state: AppStateModel) {
+    return state.dimensions;
+  }
+
   @Action(SetScreenDimension)
   setScreenDimension(ctx: StateContext<AppStateModel>, action: SetScreenDimension) {
     const state = ctx.getState();

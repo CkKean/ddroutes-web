@@ -106,7 +106,7 @@
       <a class="text-primary text-decoration-none font-weight-semibold" (click)="cancelForm()">Cancel</a>
     </nz-col>
     <nz-col nzSpan="12" class="text-right">
-      <button nz-button [disabled]="buttonDisable" nzType="primary" class="mx-1 font-weight-semibold"
+      <button nz-button [disabled]="buttonDisable" [nzLoading]="submitLoading" nzType="primary" class="mx-1 font-weight-semibold"
               (click)="submitForm()">
         Submit
       </button>

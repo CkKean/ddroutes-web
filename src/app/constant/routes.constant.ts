@@ -1,9 +1,9 @@
 export class RoutesConstant {
 
-  public static VIEW = 'View';
-  public static CREATE = 'Create';
-  public static EDIT = 'Edit';
-  public static UPDATE = 'Update';
+  public static VIEW = 'view';
+  public static CREATE = 'create';
+  public static EDIT = 'edit';
+  public static UPDATE = 'update';
 
   public static LOGIN = 'login';
   public static REGISTER = 'register';

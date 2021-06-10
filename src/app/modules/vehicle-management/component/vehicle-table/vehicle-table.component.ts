@@ -35,8 +35,8 @@ export class VehicleTableComponent implements OnInit {
 
   oriData: VehicleModel[] = [];
   displayData: VehicleModel[] = [];
-
   deleteLoading: boolean = false;
+  pageIndex:number;
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px', key: 'id'},
@@ -124,6 +124,10 @@ export class VehicleTableComponent implements OnInit {
 
   navigateCreate(): void {
     this.router.navigate([RoutesConstant.CREATE], {relativeTo: this.route});
+  }
+
+  pageIndexChange(event): void {
+    this.pageIndex = event;
   }
 
 }

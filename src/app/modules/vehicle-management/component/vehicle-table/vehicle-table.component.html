@@ -20,6 +20,7 @@
             [nzOuterBordered]="true"
             [nzShowSizeChanger]="true"
             [nzShowTotal]="rangeTemplate"
+            (nzPageIndexChange)="pageIndexChange($event)"
             [nzHideOnSinglePage]="false"
             [nzScroll]="{ x:'780px' }"
   >
@@ -31,7 +32,7 @@
     </thead>
     <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
     <tr *ngFor="let data of employeeTable.data;let i=index">
-      <td class="font-weight-semibold">{{data.id }}</td>
+      <td class="font-weight-semibold">{{pageIndex > 1 ? ((pageIndex - 1) * 10 + (i + 1)) : i + 1  }}</td>
       <td>{{ data.plateNo }}</td>
       <td>{{ data.brand }}</td>
       <td>{{ data.model }}</td>

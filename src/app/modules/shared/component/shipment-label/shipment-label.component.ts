@@ -11,6 +11,8 @@ import {openPDF} from '../../utils/save-open-pdf.util';
 import {PublicApiService} from "../../services/public-api.service";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from "@techiediaries/ngx-qrcode";
 
+import {Store} from "@ngxs/store";
+
 @Component({
   selector: 'app-shipment-label',
   templateUrl: './shipment-label.component.html',
@@ -20,6 +22,7 @@ import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from "@techiediar
 export class ShipmentLabelComponent implements OnInit {
 
   @Select(AppState.isMobile) isMobile$: Observable<boolean>;
+
   @Input() orderNo: string;
 
   readonly logo: string = './assets/img/brand/logo.png';
@@ -27,9 +30,11 @@ export class ShipmentLabelComponent implements OnInit {
   @Input() orderDetailLoading: boolean = false;
   @Input() requiredGetInfo: boolean = true;
 
+  dimension: { width: number, height: number };
   elementType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-  constructor(private subHandlingService: SubHandlingService, private publicApiService: PublicApiService) {
+
+  constructor(private subHandlingService: SubHandlingService, private publicApiService: PublicApiService, private store: Store) {
   }
 
   ngOnInit(): void {
@@ -54,8 +59,10 @@ export class ShipmentLabelComponent implements OnInit {
   }
 
   openPDF(): void {
-    let data = document.getElementById('shipmentLabel');
-    openPDF(data, 'Shipping_' + this.orderInfo.orderNo);
+    this.dimension = this.store.selectSnapshot(AppState.getDimension);
+    let
+      data = document.getElementById('shipmentLabel');
+    openPDF(data, 'Shipping_' + this.orderInfo.orderNo, this.dimension);
   }
 
 }

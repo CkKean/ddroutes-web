@@ -19,7 +19,6 @@ import {CompanyAddressModel} from "../../../shared/model/company-address/company
 import {RouteOptimizationRequestModel} from "../../../shared/model/order-route/route-optimization-request.model";
 import {ListOfOrderStatus, OrderTypeConstant} from "../../../../constant/courier-order.constant";
 import {OrderRouteStatusConstant} from "../../../../constant/order-route-status.constant";
-import {getDisplayOrderTypeWithRouteId, getOrderStatusWithRouteId} from "../../helper/order-route-helper";
 
 @Component({
   selector: 'app-waypoints-list-table',
@@ -84,14 +83,6 @@ export class WaypointsListTableComponent implements OnInit {
       this.displayData = [];
       this.departureAddress = null;
     }
-  }
-
-  getDisplayOrderType(order: CourierOrderModel, routeId: String): String {
-    return getDisplayOrderTypeWithRouteId(order, routeId);
-  }
-
-  getOrderStatus(order: CourierOrderModel, routeId: String): String {
-    return getOrderStatusWithRouteId(order, routeId);
   }
 
   drop(event: CdkDragDrop<CourierOrderModel[]>): void {

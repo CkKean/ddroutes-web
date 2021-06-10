@@ -21,21 +21,21 @@ const routes: Routes = [
         path: RoutesConstant.CREATE,
         component: AddVehicleComponent,
         data: {
-          breadcrumb: RoutesConstant.CREATE,
+          breadcrumb: "Create Vehicle Record",
         }
       },
       {
         path: RoutesConstant.VIEW,
         component: ViewVehicleComponent,
         data: {
-          breadcrumb: RoutesConstant.VIEW,
+          breadcrumb: "View Vehicle Record",
         }
       },
       {
         path: RoutesConstant.UPDATE,
         component: UpdateVehicleComponent,
         data: {
-          breadcrumb: RoutesConstant.UPDATE,
+          breadcrumb: "Update Vehicle Record",
         }
       }
     ]

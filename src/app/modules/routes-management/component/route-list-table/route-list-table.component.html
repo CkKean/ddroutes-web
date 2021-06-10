@@ -46,8 +46,6 @@
     <td>{{data.personnelInfo ? data.personnelInfo.fullName : '-'  }}</td>
     <td><span nz-tooltip
               [nzTooltipTitle]="data.vehicleInfo?.plateNo">{{data.vehicleInfo ? data.vehicleInfo.type : '-'  }}</span>
-      <!--      <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip style="font-size: 12px;"-->
-      <!--         [nzTooltipTitle]="data.vehicleInfo?.plateNo"></i>-->
     </td>
     <td>{{data.totalDistance }}</td>
     <td>{{data.timeNeeded | number:'2.0-0' }}</td>

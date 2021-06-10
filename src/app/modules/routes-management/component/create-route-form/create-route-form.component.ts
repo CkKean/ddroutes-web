@@ -80,7 +80,7 @@ export class CreateRouteFormComponent implements OnInit {
   initForm(): void {
     this.createRouteForm = new FormGroup({
       departurePoint: new FormControl(null, [Validators.required]),
-      roundTrip: new FormControl(false),
+      roundTrip: new FormControl(true),
       departureDate: new FormControl(new Date(), [Validators.required]),
       departureTime: new FormControl(null, [Validators.required]),
       personnel: new FormControl(null, [Validators.required]),

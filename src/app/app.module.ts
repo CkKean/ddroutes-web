@@ -60,7 +60,6 @@ registerLocaleData(en);
         developmentMode: !environment.production,
       }
     ),
-    ServiceWorkerModule.register('bo-sw.js', {enabled: environment.production}),
     NgxQRCodeModule
   ],
   providers: [

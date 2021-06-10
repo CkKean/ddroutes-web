@@ -67,9 +67,9 @@
         </td>
         <td>{{data.orderNo }}</td>
         <td>{{data.trackingNo }}</td>
-        <td>{{getDisplayOrderType(data, orderRoute.routeId)}}</td>
-        <td>{{data.recipientAddress}}</td>
-        <td>{{getOrderStatus(data, orderRoute.routeId)}}</td>
+        <td>{{data.displayOrderType}}</td>
+        <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
+        <td>{{data.displayOrderStatus}}</td>
       </tr>
     </ng-container>
     <ng-container *ngIf="orderRoute.status === orderStatusConstant.READY">
@@ -82,9 +82,9 @@
         </td>
         <td>{{data.orderNo }}</td>
         <td>{{data.trackingNo }}</td>
-        <td>{{getDisplayOrderType(data, orderRoute.routeId)}}</td>
+        <td>{{data.displayOrderType}}</td>
         <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
-        <td>{{getOrderStatus(data, orderRoute.routeId)}}</td>
+        <td>{{data.displayOrderStatus}}</td>
       </tr>
     </ng-container>
     <tr cdkDropListSortingDisabled *ngIf="displayData&&orderRoute.roundTrip">
@@ -100,7 +100,7 @@
 
 <ng-template #startEndPoint let-point="point">
   <td><span class="font-weight-semibold">{{point}}</span></td>
-  <td colSpan="4">
+  <td colSpan="5">
     <span
       class="font-weight-semibold">{{departureAddress.address + ', ' + departureAddress.postcode + ' ' + departureAddress.city + ', ' + departureAddress.state + ', Malaysia' }}</span>
   </td>
