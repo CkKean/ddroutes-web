@@ -42,7 +42,9 @@
       *ngFor="let data of orderListTable.data;let i=index" (click)="selectedRoute(data)">
     <td>{{i + 1 }}</td>
     <td>{{data.routeId}}</td>
-    <td>{{data.departureDate | date }}</td>
+    <td><span nz-tooltip
+              [nzTooltipTitle]="'Time: ' + (data.departureTime | date:'shortTime':'+0800')">{{data.departureDate | date }}</span>
+    </td>
     <td>{{data.personnelInfo ? data.personnelInfo.fullName : '-'  }}</td>
     <td><span nz-tooltip
               [nzTooltipTitle]="data.vehicleInfo?.plateNo">{{data.vehicleInfo ? data.vehicleInfo.type : '-'  }}</span>

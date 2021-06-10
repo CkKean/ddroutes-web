@@ -176,18 +176,20 @@ export class RouteMapComponent implements AfterViewInit {
       routeLine: function (route, i) {
         let line = L.polyline(route.coordinates, {
           multiOptions: {},
-          weight: 5,
-          lineCap: 'butt',
-          opacity: 0.75,
-          smoothFactor: 1
+          weight: 7,
+          lineCap: 'round',
+          lineJoin:'round',
+          opacity: 0.5,
+          smoothFactor: 1,
         });
 
         line.on('mouseover', function () {
           this.setText('  ►  ', {
             repeat: true,
             attributes: {
-              fill: 'red'
-            }
+              fill: 'red',
+            },
+            center: true
           });
         });
         line.on('mouseout', function () {

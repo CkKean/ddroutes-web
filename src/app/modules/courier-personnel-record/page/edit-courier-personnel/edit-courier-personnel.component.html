@@ -169,7 +169,7 @@
                       </div>
                     </div>
                     <img *ngIf="imageSrc && uploadedFileValid"
-                         nz-image
+                         nz-image  style="object-fit:contain;"
                          width="100%" height="250x"
                          [nzSrc]="imageSrc"
                     />

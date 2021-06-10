@@ -56,13 +56,14 @@ export class RouteListTableComponent implements OnInit {
 
   selectedRouteId: string;
   selectedOrderRoute: OrderRouteModel;
+  offset: any;
 
   @ViewChild(EditRouteFormComponent) orderRouteFrom: EditRouteFormComponent;
 
   tableHeader = [
     {title: '#', nzWidth: '40px'},
     {title: 'Route ID', nzWidth: '100px'},
-    {title: 'Date', nzWidth: '100px', key: 'departureDate'},
+    {title: 'Departure Date', nzWidth: '100px', key: 'departureDate'},
     {title: 'Personnel', nzWidth: '100px', key: 'personnel'},
     {title: 'Vehicle', nzWidth: '100px', key: 'vehicleInfo'},
     {title: 'Distance, KM', nzWidth: '100px', key: 'totalDistance'},
@@ -82,6 +83,7 @@ export class RouteListTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.offset = new Date().getTimezoneOffset();
   }
 
   search(event): void {

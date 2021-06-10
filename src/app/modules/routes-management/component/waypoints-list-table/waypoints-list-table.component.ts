@@ -151,7 +151,11 @@ export class WaypointsListTableComponent implements OnInit {
   }
 
   showMap(): void {
-    this.showMapEvent.emit(this.checked);
+    if (this.displayData.length > 10) {
+      this.modal.promptWarningModal('Sorry. Currently version only support 10 waypoints only.', null, 'OK');
+    } else {
+      this.showMapEvent.emit(this.checked);
+    }
   }
 
   search(event): void {
