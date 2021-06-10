@@ -5,12 +5,13 @@ function requireHTTPS(req, res, next) {
   }
   next();
 }
-
+const cors = require("cors");
 const express = require('express');
 const path = require('path');
 
 const app = express();
 app.use(requireHTTPS);
+app.use(cors());
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/ddroutes-web'));
 

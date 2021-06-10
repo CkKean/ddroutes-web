@@ -34,6 +34,7 @@
     "@types/date-fns": "^2.6.0",
     "bootstrap": "^4.6.0",
     "core-js": "^3.8.2",
+    "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "date-fns": "^2.19.0",
     "enhanced-resolve": "^5.8.2",

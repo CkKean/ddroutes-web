@@ -82,6 +82,8 @@ export class CreateCourierOrderComponent implements OnInit {
           if (response.success) {
             this.shippingCost.patchValue(response.data);
             this.overviewVisible = true;
+          } else {
+            this.modal.promptErrorModal(response.message, "", "OK");
           }
           this.getShippingCostLoading = false;
         })
