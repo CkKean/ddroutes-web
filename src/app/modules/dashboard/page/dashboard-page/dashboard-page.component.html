@@ -130,6 +130,7 @@
               [nzShowTotal]="rangeTemplate"
               [nzHideOnSinglePage]="false"
               [nzScroll]="{ x:'780px' }"
+              (nzPageIndexChange)="pageIndexChange($event)"
     >
       <thead nzSingleSort (nzSortOrderChange)="sortCompanyList($event)"
              class="text-sm-p5 text-p6 font-weight-semibold text-title">
@@ -139,8 +140,9 @@
       </tr>
       </thead>
       <tbody class="text-sm-p5 text-p6 font-weight-normal text-main">
-      <tr *ngFor="let data of companyAddress.data">
-        <td class="font-weight-semibold">{{data.id }}</td>
+      <tr *ngFor="let data of companyAddress.data;let i=index">
+        <td class="font-weight-semibold">{{pageIndex > 1 ? ((pageIndex - 1) * 10 + (i + 1)) : i + 1  }}</td>
+
         <td>{{ data.address }}</td>
         <td>{{ data.postcode }}</td>
         <td>{{ data.city }}</td>

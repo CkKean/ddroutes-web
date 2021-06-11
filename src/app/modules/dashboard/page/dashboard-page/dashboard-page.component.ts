@@ -33,6 +33,7 @@ export class DashboardPageComponent implements OnInit {
   dashBoardData: DashboardModel;
   dataLoading: boolean = false;
   routeConstant = RoutesConstant;
+  pageIndex: number;
 
   orderTableHeader = [
     {title: 'Order No.', nzWidth: '100px'},
@@ -92,5 +93,9 @@ export class DashboardPageComponent implements OnInit {
 
   navigateTo(route: string): void {
     this.router.navigate([route]);
+  }
+
+  pageIndexChange(event): void {
+    this.pageIndex = event;
   }
 }

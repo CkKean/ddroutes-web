@@ -27,8 +27,15 @@
           <div class="side-nav-mobile h-100">
             <ul nz-menu nzMode="inline" class="w-100 h-100 side-menu" nzTheme="dark"
                 style="background-image: linear-gradient(to bottom,#0477C1, #001529) !important;">
-              <ng-container *ngIf="userType === 0 || userType === 1">
+              <ng-container *ngIf="userType === 1">
                 <li nz-menu-item nzMatchRouter *ngFor="let item of backOfficeMenuList" (click)="closeDrawer()">
+                  <i [class]="(item.icon)"></i>
+                  <a class="text-decoration-none" [routerLink]="item.route">{{item.title}}</a>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="userType === 0">
+                <li nz-menu-item nzMatchRouter *ngFor="let item of adminMenuList" (click)="closeDrawer()">
+                  <i [class]="(item.icon)"></i>
                   <a class="text-decoration-none" [routerLink]="item.route">{{item.title}}</a>
                 </li>
               </ng-container>

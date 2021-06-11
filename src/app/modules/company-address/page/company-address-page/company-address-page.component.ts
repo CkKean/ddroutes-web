@@ -36,6 +36,7 @@ export class CompanyAddressPageComponent implements OnInit {
   deleteLoading: boolean = false;
   isAddVisible: boolean = false;
   isEditVisible: boolean = false;
+  pageIndex:number;
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px', key: 'id'},
@@ -167,4 +168,7 @@ export class CompanyAddressPageComponent implements OnInit {
     this.displayData = this.tableService.sort(sortAttribute, this.displayData);
   }
 
+  pageIndexChange(event): void {
+    this.pageIndex = event;
+  }
 }

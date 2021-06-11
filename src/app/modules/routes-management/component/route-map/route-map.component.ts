@@ -28,7 +28,8 @@ export class RouteMapComponent implements AfterViewInit {
   orderList: CourierOrderModel[];
   departureAddress: CompanyAddressModel;
   roundTrip: boolean;
-  wayPoints: any = [];
+  wayPoints: L.LatLng[] = [];
+
 
   private map: L.Map;
 
@@ -36,6 +37,35 @@ export class RouteMapComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+
+    let x0, x1, y0, y1;
+
+    this.wayPoints.push(new L.LatLng(+this.departureAddress.latitude, +this.departureAddress.longitude));
+    for (let order of this.orderList) {
+      let wayPoint = new L.LatLng(+order.recipientLatitude, +order.recipientLongitude);
+      this.wayPoints.push(wayPoint);
+    }
+    if (this.roundTrip) {
+      this.wayPoints.push(new L.LatLng(+this.departureAddress.latitude, +this.departureAddress.longitude));
+    }
+
+    this.wayPoints.forEach(points => {
+      let latitude = points.lat;
+      let longitude = points.lng;
+
+      if (x0 == null) {
+        x0 = x1 = latitude;
+        y0 = y1 = longitude;
+      } else {
+        if (latitude > x1) x1 = latitude;
+        if (latitude < x0) x0 = latitude;
+        if (longitude > y1) y1 = longitude;
+        if (longitude < y0) y0 = longitude;
+      }
+    });
+
+    let c1 = new L.LatLng(x1, y1);
+    let c2 = new L.LatLng(x0, y0);
 
     let rt = this.roundTrip;
     let companyAddress = this.departureAddress;
@@ -52,16 +82,7 @@ export class RouteMapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     this.map.addLayer(titleLayer);
-
-    this.wayPoints.push(new L.LatLng(+this.departureAddress.latitude, +this.departureAddress.longitude));
-    for (let order of this.orderList) {
-      let wayPoint = new L.LatLng(+order.recipientLatitude, +order.recipientLongitude);
-      this.wayPoints.push(wayPoint);
-    }
-
-    if (this.roundTrip) {
-      this.wayPoints.push(new L.LatLng(+this.departureAddress.latitude, +this.departureAddress.longitude));
-    }
+    this.map.fitBounds(L.latLngBounds(c1, c2));
 
     let routeControl = L.Routing.control({
       show: false,
@@ -178,7 +199,7 @@ export class RouteMapComponent implements AfterViewInit {
           multiOptions: {},
           weight: 7,
           lineCap: 'round',
-          lineJoin:'round',
+          lineJoin: 'round',
           opacity: 0.5,
           smoothFactor: 1,
         });

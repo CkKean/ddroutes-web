@@ -27,3 +27,17 @@
     height: 530px !important;
   }
 }
+
+.custom-mobile-height {
+  ::ng-deep .slick-list {
+    height: 230px !important;
+  }
+}
+
+.shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+}
+
+.padding-right-none {
+  padding-right: unset !important;
+}

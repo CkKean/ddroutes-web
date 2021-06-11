@@ -97,7 +97,6 @@ export class WaypointsListTableComponent implements OnInit {
       this.modal.promptWarningModal('Order route is ' + this.orderRoute.status + '\n .Action denied.', null, 'OK');
       return;
     }
-    this.wayPointsListLoading = true;
     let sortList: SortModel[] = [];
     this.displayData.forEach(data => {
       let sortListModel: SortModel = {
@@ -107,8 +106,7 @@ export class WaypointsListTableComponent implements OnInit {
       };
       sortList.push(sortListModel);
     });
-
-
+    
     let optimizationModel: RouteOptimizationRequestModel = {
       sortList: sortList,
       optimizeType: this.optimizeType,
@@ -117,6 +115,7 @@ export class WaypointsListTableComponent implements OnInit {
     };
 
     if (this.optimizeType === 'Manual') {
+      this.wayPointsListLoading = true;
       this.subHandlingService.subscribe(
         this.routeManagementService.manualOptimizeRoute(optimizationModel).pipe(
           tap((response: IResponse<CourierOrderModel[]>) => {
@@ -124,13 +123,18 @@ export class WaypointsListTableComponent implements OnInit {
               this.modal.promptSuccessModal('Waypoints are updated.', null, 'OK');
               this.oriData = deepCopy(this.displayData);
               this.refreshTable.emit(this.oriData[0].routeId);
-
             }
             this.wayPointsListLoading = false;
           })
         )
       )
     } else if (this.optimizeType === 'Automatic') {
+      if (this.displayData.length > 10) {
+        this.modal.promptWarningModal('Sorry. Currently version only support 10 waypoints only. Please use manual method.', null, 'OK');
+        return;
+      }
+
+      this.wayPointsListLoading = true;
       this.subHandlingService.subscribe(
         this.routeManagementService.automaticOptimizeRoute(optimizationModel).pipe(
           tap((response: IResponse<CourierOrderModel[]>) => {
@@ -151,11 +155,7 @@ export class WaypointsListTableComponent implements OnInit {
   }
 
   showMap(): void {
-    if (this.displayData.length > 10) {
-      this.modal.promptWarningModal('Sorry. Currently version only support 10 waypoints only.', null, 'OK');
-    } else {
-      this.showMapEvent.emit(this.checked);
-    }
+    this.showMapEvent.emit(this.checked);
   }
 
   search(event): void {

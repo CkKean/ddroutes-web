@@ -34,14 +34,34 @@ export class HeaderComponent implements OnInit {
   imageUrl: string;
   imageBase64: string;
 
-  backOfficeMenuList: Array<{ route: string, title: string }> = [
-    {route: RoutesConstant.DASHBOARD, title: 'Dashboard'},
-    {route: RoutesConstant.COURIER_ORDER, title: 'Courier Order'},
-    {route: RoutesConstant.ROUTES_MANAGEMENT, title: 'Routes Management'},
-    {route: RoutesConstant.ORDER_ROUTE_REPORT, title: 'Order Route Report'},
-    {route: RoutesConstant.EMPLOYEE_RECORD, title: 'Employee Record'},
-    {route: RoutesConstant.VEHICLE_MANAGEMENT, title: 'Vehicle Management'},
-    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan'},
+  backOfficeMenuList: Array<{ route: string, title: string, icon: string }> = [
+    {route: RoutesConstant.DASHBOARD, title: 'Dashboard', icon: 'fas fa-home mr-2'},
+    {route: RoutesConstant.COURIER_ORDER, title: 'Courier Order', icon: 'fas fa-shipping-fast mr-2'},
+    {route: RoutesConstant.ROUTES_MANAGEMENT, title: 'Routes Management', icon: 'fas fa-route mr-2'},
+    {route: RoutesConstant.ORDER_ROUTE_REPORT, title: 'Order Route Report', icon: 'far fa-file-pdf mr-2'},
+    {route: RoutesConstant.VEHICLE_MANAGEMENT, title: 'Vehicle Management', icon: 'fas fa-car mr-2'},
+    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan', icon: 'fas fa-dollar-sign mr-2'},
+    {
+      route: RoutesConstant.COMPANY_ADDRESS_MANAGEMENT,
+      title: 'Company Address Management',
+      icon: 'fas fa-building mr-2'
+    },
+  ];
+
+  adminMenuList: Array<{ route: string, title: string, icon: string }> = [
+    {route: RoutesConstant.DASHBOARD, title: 'Dashboard', icon: 'fas fa-home mr-2'},
+    {route: RoutesConstant.COURIER_ORDER, title: 'Courier Order', icon: 'fas fa-shipping-fast mr-2'},
+    {route: RoutesConstant.ROUTES_MANAGEMENT, title: 'Routes Management', icon: 'fas fa-route mr-2'},
+    {route: RoutesConstant.ORDER_ROUTE_REPORT, title: 'Order Route Report', icon: 'far fa-file-pdf mr-2'},
+    {route: RoutesConstant.EMPLOYEE_RECORD, title: 'Employee Record', icon: 'fas fa-users mr-2'},
+    {route: RoutesConstant.COURIER_PERSONNEL_RECORD, title: 'Courier Personnel Record', icon: 'fas fa-running mr-2'},
+    {route: RoutesConstant.VEHICLE_MANAGEMENT, title: 'Vehicle Management', icon: 'fas fa-car mr-2'},
+    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan', icon: 'fas fa-dollar-sign mr-2'},
+    {
+      route: RoutesConstant.COMPANY_ADDRESS_MANAGEMENT,
+      title: 'Company Address Management',
+      icon: 'fas fa-building mr-2'
+    },
   ];
 
   normalUserMenuList: Array<{ route: string, title: string, }> = [
