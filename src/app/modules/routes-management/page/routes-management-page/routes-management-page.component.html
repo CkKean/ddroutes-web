@@ -1,19 +1,21 @@
 <nz-row nzType="flex" nzAlign="top" nzGutter="8">
-  <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
-    <nz-card [nzBordered]="false" [ngClass]="{'custom-height':!(isMobile$ | async),'h-100':(isMobile$ | async)}">
+
+
+  <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24">
+    <nz-card [nzBordered]="false" class="h-100">
+      <app-order-list-table [orderLoading]="orderLoading" [courierOrderList]="courierOrderList"
+                            (refreshRouteTable)="getAllOrderRoute(this.selectedRouteId)"
+                            (refreshTable)="getAllCourierOrder()">
+      </app-order-list-table>
+    </nz-card>
+  </nz-col>
+  <nz-col nzLg="24" nzMd="24" nzSm="24" nzXs="24">
+    <nz-card [nzBordered]="false" class="h-100">
       <app-route-list-table [routeList]="orderRouteList" [routeListLoading]="orderRouteLoading"
                             (refreshOrderList)="refreshOrderList()" (refreshTable)="getAllOrderRoute($event)"
                             (selectedOrderRouteEvent)="getSelectedOrderRoute($event)"
                             (deleteAndRefreshEvent)="orderListDeleted()"
       ></app-route-list-table>
-    </nz-card>
-  </nz-col>
-  <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
-    <nz-card [nzBordered]="false" [ngClass]="{'custom-height':!(isMobile$ | async),'h-100':(isMobile$ | async)}">
-      <app-order-list-table [orderLoading]="orderLoading" [courierOrderList]="courierOrderList"
-                            (refreshRouteTable)="getAllOrderRoute(this.selectedRouteId)"
-                            (refreshTable)="getAllCourierOrder()">
-      </app-order-list-table>
     </nz-card>
   </nz-col>
   <nz-col nzSpan="24">

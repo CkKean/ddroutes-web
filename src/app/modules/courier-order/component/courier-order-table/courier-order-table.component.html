@@ -22,11 +22,11 @@
             [nzShowTotal]="rangeTemplate"
             [nzHideOnSinglePage]="false"
             (nzPageIndexChange)="pageIndexChange($event)"
-            [nzScroll]="{ x:'840px' }"
+            [nzScroll]="{ x:'730px' }"
   >
     <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
     <tr>
-      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
           *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
     </tr>
     </thead>
@@ -41,9 +41,9 @@
           [tagType]="(data.orderType === orderTypeConstant?.PICK_UP && !data.isPickedUp)  ? data?.pickupOrderStatus :data.orderStatus"></app-label-tag>
       </td>
       <td>{{ data.recipientName }}</td>
-      <td>{{ data.itemWeight }}</td>
+      <td>{{ data.itemWeight }} KG</td>
       <td>{{ data.createdAt | sDate }}</td>
-      <td>
+      <td nzRight>
         <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer" (click)="navigateView(data)"></i>
         <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-2 pointer" (click)="navigateEdit(data)"></i>
         <i nz-icon nzType="delete" nzTheme="fill" class="text-danger pointer mr-2" (click)="onDeleteOrder(data)"></i>

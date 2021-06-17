@@ -1,7 +1,9 @@
 <nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
-  <nz-col nzLg="3" nzMd="3" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
+  <nz-col nzLg="4" nzMd="4" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
     <span class="text-title font-weight-semibold">
-      Waypoint
+      <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip
+         nzTooltipTitle="Optimize the orders list in manual or systematically."></i>
+      Step 3: Waypoint
     </span>
   </nz-col>
   <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24" [ngClass]="{'mb-1':(isMobile$ |async)}">
@@ -36,13 +38,13 @@
           class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
           [nzLoading]="wayPointsListLoading"
           [nzData]="displayData"
-          [nzPageSize]="10"
+          [nzPageSize]="50"
           [nzOuterBordered]="true"
           [nzShowSizeChanger]="true"
           [nzShowTotal]="rangeTemplate"
           [nzHideOnSinglePage]="false"
           [nzShowPagination]="false"
-          [nzScroll]="{ x:'850px' }"
+          [nzScroll]="{ x:'850px',y:'450px' }"
 >
   <thead class="text-sm-p5 text-p6 font-weight-semibold text-title">
   <tr>
@@ -62,7 +64,7 @@
         <td>
           <div>
             <i class="vertical-align-rem-1" style="font-size: 14px !important;" nz-icon nzType="menu"
-               nzTheme="outline"></i> {{i+1}}
+               nzTheme="outline"></i> {{i + 1}}
           </div>
         </td>
         <td>{{data.orderNo }}</td>
@@ -77,7 +79,7 @@
         <td>
           <div class="drag-handle" cdkDragHandle>
             <i class="vertical-align-rem-1" style="font-size: 14px !important;" nz-icon nzType="menu"
-               nzTheme="outline"></i> {{i+1}}
+               nzTheme="outline"></i> {{i + 1}}
           </div>
         </td>
         <td>{{data.orderNo }}</td>

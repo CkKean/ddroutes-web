@@ -22,11 +22,11 @@
             [nzShowTotal]="rangeTemplate"
             (nzPageIndexChange)="pageIndexChange($event)"
             [nzHideOnSinglePage]="false"
-            [nzScroll]="{ x:'780px' }"
+            [nzScroll]="{ x:'830px' }"
   >
     <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
     <tr>
-      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
           *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
     </tr>
     </thead>
@@ -39,7 +39,7 @@
       <td>{{ data.type }}</td>
       <td>{{ data.color }}</td>
       <td>{{ data.owner }}</td>
-      <td>
+      <td nzRight>
         <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-1 pointer" (click)="navigateView(data)"></i>
         <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-1 pointer" (click)="navigateEdit(data)"></i>
         <i nz-icon nzType="delete" nzTheme="fill" class="text-danger pointer"

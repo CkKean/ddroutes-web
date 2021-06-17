@@ -40,13 +40,13 @@ export class VehicleTableComponent implements OnInit {
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px', key: 'id'},
-    {title: 'Plate No.', nzWidth: '150px', key: 'plateNo'},
-    {title: 'Brand', nzWidth: '150px', key: 'brand'},
-    {title: 'Model', nzWidth: '150px', key: 'model'},
-    {title: 'Type', nzWidth: '150px', key: 'type'},
-    {title: 'Color', nzWidth: '150px', key: 'color'},
-    {title: 'Owner', nzWidth: '150px', key: 'owner'},
-    {title: 'Actions', nzWidth: '120px'},
+    {title: 'Plate No.', nzWidth: '120px', key: 'plateNo'},
+    {title: 'Brand', nzWidth: '110px', key: 'brand'},
+    {title: 'Model', nzWidth: '110px', key: 'model'},
+    {title: 'Type', nzWidth: '100px', key: 'type'},
+    {title: 'Color', nzWidth: '100px', key: 'color'},
+    {title: 'Owner', nzWidth: '130px', key: 'owner'},
+    {title: 'Actions', nzWidth: '100px',nzRight: true},
   ];
 
   constructor(private tableService: TableService,

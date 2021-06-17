@@ -48,7 +48,6 @@
                   <a class="text-decoration-none" [routerLink]="item.route">{{item.title}}</a>
                 </li>
               </ng-container>
-
               <li nz-menu-item (click)="logout()">
                 <a class="text-decoration-none"><i nz-icon nzType="logout"></i> Logout</a>
               </li>
@@ -64,6 +63,7 @@
            (click)="navigateToMainPage()"/>
     </nz-col>
 
+<!--     Normal User-->
     <nz-col nzXl="10" nzLg="10" nzMd="10" nzSm="6" nzXs="6"
             *ngIf="!(isMobile$ | async) && optionDisplay && userType === 2">
       <ul nz-menu nzTheme="dark" nzMode="horizontal" style="font-size: 16px;">
@@ -74,20 +74,11 @@
       </ul>
     </nz-col>
 
-
+<!--    Admin-->
     <nz-col nzSpan="10" [nzOffset]="userType === userTypeConstant.NU ? 0 : 10" *ngIf="!(isMobile$ | async)"
             style="font-size: 16px;"
             class="text-right">
-      <ng-container *ngIf="(userType === userTypeConstant.NU) || ((userType !==userTypeConstant.NU) && isMainPage)">
         <ng-container *ngTemplateOutlet="dropDownHeader"></ng-container>
-      </ng-container>
-      <!--      <ng-container *ngIf="(userType !== 2) && isMainPage">-->
-      <!--        <ng-container *ngTemplateOutlet="dropDownHeader"></ng-container>-->
-      <!--      </ng-container>-->
-      <ng-container *ngIf="(userType !== userTypeConstant.NU) && !isMainPage">
-        <span class="text-white mr-2">Hi, {{username}}</span>
-        <nz-avatar [nzSrc]="imageUrl"></nz-avatar>
-      </ng-container>
     </nz-col>
 
   </nz-row>
@@ -107,7 +98,7 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item *ngIf="userType !== userTypeConstant.NU" (click)="navigatePage(routesConstant.DASHBOARD)">
+    <li nz-menu-item *ngIf="userType !== userTypeConstant.NU && isMainPage" (click)="navigatePage(routesConstant.DASHBOARD)">
       <span class="text-p5 font-weight-normal">Dashboard</span></li>
     <li nz-menu-item (click)="logout()">
       <span class="text-p5 font-weight-normal">Sign Out</span>

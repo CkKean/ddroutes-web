@@ -15,11 +15,11 @@
             [nzShowSizeChanger]="true"
             [nzShowTotal]="rangeTemplate"
             [nzHideOnSinglePage]="true"
-            [nzScroll]="{ x:'810px' }"
+            [nzScroll]="{ x:'720px' }"
   >
     <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
     <tr>
-      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true"
+      <th [nzShowSort]="header.key" [nzColumnKey]="header.key" [nzSortFn]="true" [nzRight]="header.nzRight"
           *ngFor="let header of tableHeader" [nzWidth]="header.nzWidth">{{header.title}}</th>
     </tr>
     </thead>
@@ -52,7 +52,7 @@
         <ng-container *ngTemplateOutlet="content;context:{value:(data.createdAt | date) }"></ng-container>
       </td>
 
-      <td>
+      <td nzRight>
         <i nz-icon nzType="eye" nzTheme="fill" class="text-primary mr-2 pointer"
            (click)="navigateView(data.routeReportId)"></i>
         <i nz-icon nzType="edit" nzTheme="fill" class="text-profit mr-2 pointer"

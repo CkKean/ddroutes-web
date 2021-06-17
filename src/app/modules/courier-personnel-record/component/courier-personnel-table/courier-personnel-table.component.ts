@@ -17,7 +17,7 @@ import {ModalService} from "../../../shared/services/modal.service";
 import {ApiRoutesConstant} from "../../../../constant/apiroutes.constant";
 
 @Component({
-  selector:'app-courier-personnel-table',
+  selector: 'app-courier-personnel-table',
   templateUrl: './courier-personnel-table.component.html',
   styleUrls: ['./courier-personnel-table.component.scss'],
   providers: [SubHandlingService]
@@ -44,11 +44,11 @@ export class CourierPersonnelTableComponent implements OnInit {
     {title: 'No.', nzWidth: '60px'},
     {title: 'Full Name', nzWidth: '180px', key: 'fullName'},
     {title: 'Username', nzWidth: '150px', key: 'username'},
-    {title: 'Mobile No.', nzWidth: '150px', key: 'mobileNo'},
+    {title: 'Mobile No.', nzWidth: '120px', key: 'mobileNo'},
     {title: 'Position', nzWidth: '120px', key: 'position'},
     {title: 'State', nzWidth: '120px', key: 'state'},
     {title: 'Start Date', nzWidth: '120px', key: 'startDate'},
-    {title: 'Action', nzWidth: '120px'},
+    {title: 'Action', nzWidth: '100px', nzRight: true},
   ]
 
   constructor(private tableService: TableService,

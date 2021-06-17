@@ -43,11 +43,11 @@ export class EmployeeTableComponent implements OnInit {
     {title: 'No.', nzWidth: '60px'},
     {title: 'Full Name', nzWidth: '180px', key: 'fullName'},
     {title: 'Username', nzWidth: '150px', key: 'username'},
-    {title: 'Mobile No.', nzWidth: '150px', key: 'mobileNo'},
+    {title: 'Mobile No.', nzWidth: '120px', key: 'mobileNo'},
     {title: 'Position', nzWidth: '120px', key: 'position'},
     {title: 'State', nzWidth: '120px', key: 'state'},
     {title: 'Start Date', nzWidth: '120px', key: 'startDate'},
-    {title: 'Action', nzWidth: '120px'},
+    {title: 'Action', nzWidth: '100px',nzRight: true},
   ]
 
 

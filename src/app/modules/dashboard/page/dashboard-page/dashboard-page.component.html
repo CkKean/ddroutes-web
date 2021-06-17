@@ -5,8 +5,10 @@
                [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
 
         <nz-row nzType="flex" nzAlign="middle">
-          <nz-col nzSpan="6" class="bg-light"
-                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="6" class="text-center icon-position" style="padding:30px 0px !important;"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}">
+            <i class="fas fa-truck icon-size text-primary"></i>
+          </nz-col>
           <nz-col nzSpan="18" class="text-center">
             <span class="text-sm-p5 text-p6 font-weight-normal text-main">Today Total Orders</span><br/>
             <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalOrder}}</span>
@@ -15,11 +17,13 @@
       </nz-card>
     </nz-col>
     <nz-col nzLg="6" nzMd="6" nzSm="12" nzXs="12" [ngClass]="{'mb-2':(isMobile$ | async)}">
-      <nz-card [nzBorderless]="true" class="padding-none"
+      <nz-card [nzBorderless]="true" class="padding-none "
                [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
         <nz-row nzType="flex" nzAlign="middle">
-          <nz-col nzSpan="6" class="bg-info"
-                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="6" class="text-center icon-position"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}">
+            <i class="far fa-building icon-size text-primary"></i>
+          </nz-col>
           <nz-col nzSpan="18" class="text-center">
             <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Branches</span><br/>
             <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalBranch}}</span>
@@ -31,8 +35,10 @@
       <nz-card [nzBorderless]="true" class="padding-none"
                [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
         <nz-row nzType="flex" nzAlign="middle">
-          <nz-col nzSpan="6" class="bg-profit"
-                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="6" class=" text-center icon-position"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}">
+            <i class="fas fa-users icon-size text-primary"></i>
+          </nz-col>
           <nz-col nzSpan="18" class="text-center">
             <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Registered Users</span><br/>
             <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalUser}}</span>
@@ -44,8 +50,10 @@
       <nz-card [nzBorderless]="true" class="padding-none"
                [ngClass]="{'custom-height':(isMobile$ | async),'h-100':!(isMobile$ | async)}">
         <nz-row nzType="flex" nzAlign="middle">
-          <nz-col nzSpan="6" class="bg-primary"
-                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}"></nz-col>
+          <nz-col nzSpan="6" class=" text-center icon-position"
+                  [ngClass]="{'custom-height':(isMobile$ | async),'custom-color-height':!(isMobile$ | async)}">
+            <i class="fas fa-walking icon-size text-primary"></i>
+          </nz-col>
           <nz-col nzSpan="18" class="text-center">
             <span class="text-sm-p5 text-p6 font-weight-normal text-main">Total Courier Personnel</span><br/>
             <span class="text-sm-p3 text-p4 text-title font-weight-semibold">{{dashBoardData.totalPersonnel}}</span>

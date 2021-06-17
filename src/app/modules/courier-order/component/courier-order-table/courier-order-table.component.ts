@@ -58,14 +58,14 @@ export class CourierOrderTableComponent implements OnInit {
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px'},
-    {title: 'Order No.', nzWidth: '170px'},
-    {title: 'Tracking No.', nzWidth: '170px', key: 'trackingNo'},
-    {title: 'Type', nzWidth: '120px', key: 'orderType'},
-    {title: 'Status', nzWidth: '150px', key: 'orderStatus'},
+    {title: 'Order No.', nzWidth: '180px'},
+    {title: 'Tracking No.', nzWidth: '150px', key: 'trackingNo'},
+    {title: 'Type', nzWidth: '110px', key: 'orderType'},
+    {title: 'Status', nzWidth: '110px', key: 'orderStatus'},
     {title: 'Recipient Name', nzWidth: '150px', key: 'recipientName'},
-    {title: 'Weight (kg)', nzWidth: '120px', key: 'itemWeight'},
-    {title: 'Created At', nzWidth: '170px', key: 'createdAt'},
-    {title: 'Actions', nzWidth: '180px'},
+    {title: 'Weight', nzWidth: '120px', key: 'itemWeight'},
+    {title: 'Created At', nzWidth: '120px', key: 'createdAt'},
+    {title: 'Actions', nzWidth: '180px',nzRight: true},
   ];
 
   constructor(private tableService: TableService,

@@ -1,15 +1,16 @@
 <nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
-  <nz-col nzLg="6" nzMd="6" nzSm="24" nzXs="24">
+  <nz-col nzLg="5" nzMd="5" nzSm="24" nzXs="24">
     <span class="text-title font-weight-semibold">
          <i nz-icon nzType="reload" nzTheme="outline" class="vertical-align-rem-1 pointer" (click)="refreshRouteTable()"
             nzTooltipTitle="Refresh" nzTooltipPlacement="topLeft" nz-tooltip></i>
-      Route List
+      Step 2: Route List <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip
+                    nzTooltipTitle="Check the new created order route details."></i>
     </span>
   </nz-col>
   <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
     <input nz-input nzSize="small" placeholder="Search" (keyup)="search($event)"/>
   </nz-col>
-  <nz-col nzLg="10" nzMd="10" nzSm="24" nzXs="24"
+  <nz-col nzLg="11" nzMd="11" nzSm="24" nzXs="24"
           [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
     <button nz-button [nzSize]="'small'" nzType="outline" class="font-weight-semibold" (click)="editOrderRoute()"
             [disabled]="editDisable">Edit

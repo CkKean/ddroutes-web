@@ -39,13 +39,13 @@ export class RouteReportTableComponent implements OnInit {
   tableHeader = [
     {title: 'No.', nzWidth: '60px'},
     {title: 'Report No.', nzWidth: '150px'},
-    {title: 'Status', nzWidth: '150px', key: 'status'},
+    {title: 'Status', nzWidth: '120px', key: 'status'},
     {title: 'Personnel', nzWidth: '150px', key: 'personnel'},
     {title: 'Est. Distance.', nzWidth: '150px', key: 'calculatedDistanceTravel'},
     {title: 'Est. Petrol Cost', nzWidth: '150px', key: 'calculatedPetrolFees'},
     {title: 'Actual Petrol Cost', nzWidth: '180px', key: 'actualPetrolFees'},
-    {title: 'Created At', nzWidth: '150px', key: 'createdAt'},
-    {title: 'Actions', nzWidth: '120px'},
+    {title: 'Created At', nzWidth: '120px', key: 'createdAt'},
+    {title: 'Actions', nzWidth: '90px', nzRight: true},
   ];
 
   constructor(private tableService: TableService,

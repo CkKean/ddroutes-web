@@ -40,13 +40,13 @@ export class CompanyAddressPageComponent implements OnInit {
 
   tableHeader = [
     {title: 'No.', nzWidth: '60px', key: 'id'},
-    {title: 'Address', nzWidth: '150px', key: 'address'},
+    {title: 'Address', nzWidth: '200px', key: 'address'},
     {title: 'Postcode', nzWidth: '150px', key: 'postcode'},
     {title: 'City', nzWidth: '150px', key: 'city'},
-    {title: 'State', nzWidth: '150px', key: 'state'},
+    {title: 'State', nzWidth: '100px', key: 'state'},
     {title: 'Latitude', nzWidth: '150px', key: 'latitude'},
     {title: 'Longitude', nzWidth: '150px', key: 'longitude'},
-    {title: 'Actions', nzWidth: '120px'},
+    {title: 'Actions', nzWidth: '90px',nzRight: true},
   ];
 
   constructor(private tableService: TableService,

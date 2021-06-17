@@ -1,12 +1,17 @@
 <nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
-  <nz-col nzLg="5" nzMd="4" nzSm="24" nzXs="24">
+  <nz-col nzLg="5" nzMd="5" nzSm="24" nzXs="24">
     <span class="text-title font-weight-semibold">
-       <i nz-icon nzType="reload" nzTheme="outline" class="vertical-align-rem-1 pointer"
-          nzTooltipTitle="Refresh" nzTooltipPlacement="topLeft" nz-tooltip (click)="refreshOrderTable()"></i>
-      Order List
+     <i class="vertical-align-rem-1" nz-icon nzType="question-circle" nzTheme="outline" nz-tooltip
+        nzTooltipTitle="Select the desired order and create route."></i>
+      Step 1: Order List
+        <i nz-icon nzType="reload" nzTheme="outline" class="vertical-align-rem-1 pointer"
+           nzTooltipTitle="Refresh" nzTooltipPlacement="topLeft" nz-tooltip (click)="refreshOrderTable()"></i>
     </span>
   </nz-col>
-  <nz-col nzLg="19" nzMd="20" nzSm="24" nzXs="24"
+  <nz-col nzLg="8" nzMd="8" nzSm="24" nzXs="24">
+    <input nz-input nzSize="small" placeholder="Search" (keyup)="search($event)"/>
+  </nz-col>
+  <nz-col nzLg="11" nzMd="11" nzSm="24" nzXs="24"
           [ngClass]="{'text-right':!(isMobile$ |async),'mt-2':(isMobile$ |async)}">
     <button nz-button [nzSize]="'small'" nzType="primary" (click)="onAddToRoute()" [disabled]="createRouteDisable"
             class="font-weight-semibold">Add To Route
@@ -15,10 +20,6 @@
             class="font-weight-semibold ml-2">Create Route
     </button>
   </nz-col>
-</nz-row>
-<nz-row nzType="felx" nzAlign="middle" class="pb-3" nzGutter="8">
-  <input [ngClass]="{'w-50':!(isMobile$ |async),'w-100':(isMobile$ |async)}" nz-input nzSize="small"
-         placeholder="Search" (keyup)="search($event)"/>
 </nz-row>
 
 <nz-table #courierOrderTable
