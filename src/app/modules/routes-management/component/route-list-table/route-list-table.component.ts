@@ -67,7 +67,7 @@ export class RouteListTableComponent implements OnInit {
     {title: 'Personnel', nzWidth: '100px', key: 'personnel'},
     {title: 'Vehicle', nzWidth: '100px', key: 'vehicleInfo'},
     {title: 'Distance, KM', nzWidth: '100px', key: 'totalDistance'},
-    {title: 'Duration, min', nzWidth: '100px', key: 'timeNeeded'},
+    {title: 'Duration', nzWidth: '100px', key: 'timeNeeded'},
     {title: 'Completed', nzWidth: '100px', key: 'itemWeight'},
     {title: 'Status', nzWidth: '100px', key: 'status'},
   ];

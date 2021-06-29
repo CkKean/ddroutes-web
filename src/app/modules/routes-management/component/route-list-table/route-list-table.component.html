@@ -50,8 +50,8 @@
     <td><span nz-tooltip
               [nzTooltipTitle]="data.vehicleInfo?.plateNo">{{data.vehicleInfo ? data.vehicleInfo.type : '-'  }}</span>
     </td>
-    <td>{{data.totalDistance }}</td>
-    <td>{{data.timeNeeded | number:'2.0-0' }}</td>
+    <td>{{data.totalDistance  | number:'.2-2' }}</td>
+    <td>{{data.timeNeeded }}</td>
     <td>{{data.completed + ' / ' + (data.orderList.length)}}</td>
     <td>{{data.status }}</td>
   </tr>

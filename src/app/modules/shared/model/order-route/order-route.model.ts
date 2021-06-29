@@ -14,7 +14,7 @@ export class OrderRouteModel {
   completed?: number;
 
   status?: string;
-  timeNeeded?: number;
+  timeNeeded?: string;
   totalDistance?: number;
   vehicleId?: string;
 

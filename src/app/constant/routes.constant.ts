@@ -21,5 +21,6 @@ export class RoutesConstant {
   public static SHIPPING_ORDER = 'shipping-order';
   public static SUMMARY = 'summary';
   public static COMPANY_ADDRESS_MANAGEMENT = 'company-address-management';
+  public static TERM_CONDITION = 'terms-conditions';
 
 }

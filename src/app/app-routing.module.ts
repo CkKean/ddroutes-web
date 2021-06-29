@@ -17,7 +17,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./modules/landing/landing.module').then(m => m.LandingModule)
-      }
+      },
     ]
   },
   {
@@ -120,6 +120,11 @@ const routes: Routes = [
     path: RoutesConstant.REGISTER,
     component: PublicLayoutComponent,
     loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule)
+  },
+  {
+    path: RoutesConstant.TERM_CONDITION,
+    component: PublicLayoutComponent,
+    loadChildren: () => import('./modules/terms-conditions/terms-conditions.module').then(m => m.TermsConditionsModule)
   },
   {
     path: RoutesConstant.TRACKING,

@@ -30,7 +30,6 @@ export class RouteMapComponent implements AfterViewInit {
   roundTrip: boolean;
   wayPoints: L.LatLng[] = [];
 
-
   private map: L.Map;
 
   constructor() {
@@ -39,6 +38,8 @@ export class RouteMapComponent implements AfterViewInit {
   ngAfterViewInit() {
 
     let x0, x1, y0, y1;
+
+    let routeTimeList: number[] = [];
 
     this.wayPoints.push(new L.LatLng(+this.departureAddress.latitude, +this.departureAddress.longitude));
     for (let order of this.orderList) {
@@ -93,7 +94,6 @@ export class RouteMapComponent implements AfterViewInit {
       router: L.Routing.mapbox(environment.mapbox.accessToken),
       plan: L.Routing.plan(this.wayPoints, {
         createMarker: function (i: number, waypoint: any, n: number) {
-
           let startIcon = './assets/img/markers/icon-home.png';
           let endIcon = './assets/img/markers/icon-finish.png';
           let startEndIcon = './assets/img/markers/icon-home-finish.png';
@@ -134,8 +134,7 @@ export class RouteMapComponent implements AfterViewInit {
           const wayPointMaker = L.marker(waypoint.latLng, {
             icon: L.icon.glyph({
               prefix: '',
-              glyph: (i)
-
+              glyph: (i),
             }),
             draggable: false
           });
@@ -154,8 +153,8 @@ export class RouteMapComponent implements AfterViewInit {
                 orderStatus = wayPointList[i - 1].orderStatus;
               }
               const popupTemplate =
-                "<div class='text-p6 font-weight-semibold'>" + wayPointList[i - 1].orderType + "</div>" +
-                "<div class='text-p6 font-weight-normal'>" + orderStatus + "</div>" +
+                "<div class='text-p6 font-weight-semibold'>" + orderStatus + "</div>" +
+                "<div class='text-p6 font-weight-normal'>" + wayPointList[i - 1].orderType + "</div>" +
                 "<div class='text-p6 font-weight-normal'>" + wayPointList[i - 1].recipientAddress + ', ' + wayPointList[i - 1].recipientPostcode + ' ' + wayPointList[i - 1].recipientCity + ', ' + wayPointList[i - 1].recipientState + ', Malaysia' + "</div>";
 
               return wayPointMaker.bindPopup(popupTemplate);
@@ -195,6 +194,16 @@ export class RouteMapComponent implements AfterViewInit {
         }
       }),
       routeLine: function (route, i) {
+        let routeTime = 0;
+        for (let r of route.instructions) {
+          if (r.type !== 'WaypointReached' || r.type === 'DestinationReached') {
+            routeTime += r.time;
+          } else {
+            routeTimeList.push(routeTime)
+            routeTime = 0;
+          }
+        }
+
         let line = L.polyline(route.coordinates, {
           multiOptions: {},
           weight: 7,
@@ -222,5 +231,110 @@ export class RouteMapComponent implements AfterViewInit {
         styles: [{className: 'animate'}] // Adding animate class
       },
     }).addTo(this.map);
+    //
+    // let startIcon = './assets/img/markers/icon-home.png';
+    // let endIcon = './assets/img/markers/icon-finish.png';
+    // let startEndIcon = './assets/img/markers/icon-home-finish.png';
+    // let showIcon: string;
+    // console.log(this.routeTimeList);
+    // this.wayPoints.forEach((waypoint, i) => {
+    //   let n = this.wayPoints.length;
+    //   if (rt) {
+    //     if (i === 0 || i === n - 1) {
+    //       showIcon = startEndIcon;
+    //     }
+    //   } else {
+    //     if (i === 0) {
+    //       showIcon = startIcon;
+    //     }
+    //     if (i === (n - 1)) {
+    //       showIcon = endIcon;
+    //     }
+    //   }
+    //
+    //   const homeMarker = L.marker(waypoint.latLng, {
+    //     draggable: false,
+    //     bounceOnAdd: false,
+    //     bounceOnAddOptions: {
+    //       duration: 1000,
+    //       height: 800,
+    //       function() {
+    //       }
+    //     },
+    //     icon: L.icon({
+    //       iconUrl: showIcon,
+    //       iconSize: [32, 37],
+    //       iconAnchor: [16, 37],
+    //       popupAnchor: [-3, -40],
+    //       shadowUrl: './assets/img/markers/marker-shadow.png',
+    //       shadowSize: [33, 38],
+    //       shadowAnchor: [16, 37]
+    //     })
+    //   });
+    //
+    //   const wayPointMaker = L.marker(waypoint.latLng, {
+    //     icon: L.icon.glyph({
+    //       prefix: '',
+    //       glyph: (i),
+    //     }),
+    //     draggable: false
+    //   });
+    //
+    //   let orderStatus: string;
+    //   if (rt) {
+    //     if (i === 0 || i === n - 1) {
+    //       return homeMarker.bindPopup(
+    //         "<div>Start & End</div>" +
+    //         "<div>" + companyAddress.address + ', ' + companyAddress.postcode + ' ' + companyAddress.city + ', ' + companyAddress.state + ', Malaysia' + "</div>"
+    //       ).addTo(this.map);
+    //     } else {
+    //       if (wayPointList[i - 1].orderType === OrderTypeConstant.PICK_UP && !wayPointList[i - 1].isPickedUp) {
+    //         orderStatus = wayPointList[i - 1].pickupOrderStatus;
+    //       } else {
+    //         orderStatus = wayPointList[i - 1].orderStatus;
+    //       }
+    //       const popupTemplate =
+    //         "<div class='text-p6 font-weight-semibold'>" + orderStatus + "</div>" +
+    //         "<div class='text-p6 font-weight-normal'>" + wayPointList[i - 1].orderType + "</div>" +
+    //         "<div class='text-p6 font-weight-normal'>" + wayPointList[i - 1].recipientAddress + ', ' + wayPointList[i - 1].recipientPostcode + ' ' + wayPointList[i - 1].recipientCity + ', ' + wayPointList[i - 1].recipientState + ', Malaysia' + "</div>";
+    //       wayPointMaker.bindPopup(popupTemplate).addTo(this.map);
+    //
+    //     }
+    //   } else {
+    //     if (i === 0) {
+    //
+    //       homeMarker.bindPopup(
+    //         "<div>Start</div>" +
+    //         "<div>" + companyAddress.address + ', ' + companyAddress.postcode + ' ' + companyAddress.city + ', ' + companyAddress.state + ', Malaysia' + "</div>").addTo(this.map);
+    //
+    //     } else if (i === (n - 1)) {
+    //       if (wayPointList[i - 1].orderType === OrderTypeConstant.PICK_UP && !wayPointList[i - 1].isPickedUp) {
+    //         orderStatus = wayPointList[i - 1].pickupOrderStatus;
+    //       } else {
+    //         orderStatus = wayPointList[i - 1].orderStatus;
+    //       }
+    //       const popupTemplate =
+    //         "<div>" + wayPointList[i - 1].orderType + "</div>" +
+    //         "<div>" + orderStatus + "</div>" +
+    //         "<div>" + wayPointList[i - 1].recipientAddress + ', ' + wayPointList[i - 1].recipientPostcode + ' ' + wayPointList[i - 1].recipientCity + ', ' + wayPointList[i - 1].recipientState + ', Malaysia' + "</div>";
+    //
+    //       homeMarker.bindPopup(popupTemplate).addTo(this.map);
+    //     } else {
+    //       if (wayPointList[i - 1].orderType === OrderTypeConstant.PICK_UP && !wayPointList[i - 1].isPickedUp) {
+    //         orderStatus = wayPointList[i - 1].pickupOrderStatus;
+    //       } else {
+    //         orderStatus = wayPointList[i - 1].orderStatus;
+    //       }
+    //       const popupTemplate =
+    //         "<div>" + wayPointList[i - 1].orderType + "</div>" +
+    //         "<div>" + orderStatus + "</div>" +
+    //         "<div>" + wayPointList[i - 1].recipientAddress + ', ' + wayPointList[i - 1].recipientPostcode + ' ' + wayPointList[i - 1].recipientCity + ', ' + wayPointList[i - 1].recipientState + ', Malaysia' + "</div>";
+    //
+    //       wayPointMaker.bindPopup(popupTemplate).addTo(this.map);
+    //     }
+    //   }
+    // });
+
+
   }
 }

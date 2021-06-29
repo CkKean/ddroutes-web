@@ -159,10 +159,10 @@ export class ShippingOrderPageComponent implements OnInit {
         this.displayData = deepCopy(this.oriData.inProgressList);
         break;
       case 3:
-        this.displayData = deepCopy(this.oriData.pickedUpList);
+        this.displayData = deepCopy(this.oriData.completedList);
         break;
       case 4:
-        this.displayData = deepCopy(this.oriData.completedList);
+        this.displayData = deepCopy(this.oriData.pickedUpList);
         break;
       case 5:
         this.displayData = deepCopy(this.oriData.failedList);
