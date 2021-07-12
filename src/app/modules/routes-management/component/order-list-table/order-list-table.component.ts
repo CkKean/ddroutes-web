@@ -178,6 +178,7 @@ export class OrderListTableComponent implements AfterViewChecked, OnInit {
   }
 
   onAllChecked(checked: boolean): void {
+    this.selectedOrder = [];
     this.listOfCurrentPageData.forEach((order: CourierOrderModel) => this.updateCheckedSet(order, checked));
     this.refreshCheckedStatus();
   }
@@ -203,9 +204,14 @@ export class OrderListTableComponent implements AfterViewChecked, OnInit {
 
   refreshOrderTable(): void {
     this.refreshTable.emit();
+
   }
 
   createRoute(): void {
+    if (this.selectedOrder.length <= 0) {
+      this.modal.promptWarningModal('Please select at least one order.', null, 'OK');
+      return;
+    }
     let vehicleType: string = this.selectedOrder[0].vehicleType;
     let sameVehicle: boolean = true;
     this.selectedOrder.forEach((value: UnhandleCourierOrderModel) => {
@@ -268,9 +274,26 @@ export class OrderListTableComponent implements AfterViewChecked, OnInit {
   }
 
   onAddToRoute(): void {
+    if (this.selectedOrder.length <= 0) {
+      this.modal.promptWarningModal('Please select at least one order.', null, 'OK');
+      return;
+    }
+
     let vehicleType: string = this.selectedOrder[0].vehicleType;
-    this.getAllReadyRoutes(vehicleType);
-    this.addToRouteVisible = true;
+    let sameVehicle: boolean = true;
+    this.selectedOrder.forEach((value: UnhandleCourierOrderModel) => {
+      if (vehicleType !== value.vehicleType) {
+        sameVehicle = false;
+      }
+    })
+
+    if (!sameVehicle) {
+      this.modal.promptWarningModal('The vehicle type must be same.', null, 'OK');
+      return;
+    } else {
+      this.getAllReadyRoutes(vehicleType);
+      this.addToRouteVisible = true;
+    }
   }
 
   cancelAddToRoute(): void {

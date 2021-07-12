@@ -19,6 +19,7 @@ import {CompanyAddressModel} from "../../../shared/model/company-address/company
 import {RouteOptimizationRequestModel} from "../../../shared/model/order-route/route-optimization-request.model";
 import {ListOfOrderStatus, OrderTypeConstant} from "../../../../constant/courier-order.constant";
 import {OrderRouteStatusConstant} from "../../../../constant/order-route-status.constant";
+import {RoutesConstant} from "../../../../constant/routes.constant";
 
 @Component({
   selector: 'app-waypoints-list-table',
@@ -65,7 +66,9 @@ export class WaypointsListTableComponent implements OnInit {
   ];
 
   orderTypeConstant = OrderTypeConstant;
-  orderStatusConstant = OrderRouteStatusConstant;
+  orderRouteStatusConstant = OrderRouteStatusConstant;
+  listOfOrderStatusConstant = ListOfOrderStatus;
+  routeConstant = RoutesConstant;
 
   constructor(private tableService: TableService,
               private subHandlingService: SubHandlingService,
@@ -106,9 +109,9 @@ export class WaypointsListTableComponent implements OnInit {
       };
       sortList.push(sortListModel);
     });
-    
+
     let optimizationModel: RouteOptimizationRequestModel = {
-      sortList: sortList,
+      sortList: this.displayData,
       optimizeType: this.optimizeType,
       departurePoint: this.orderRoute.departurePoint,
       routeId: this.orderRoute.routeId

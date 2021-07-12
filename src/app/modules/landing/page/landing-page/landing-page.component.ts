@@ -15,6 +15,7 @@ export class LandingPageComponent implements OnInit {
   bannerImg3: string = './assets/img/landing_2.jpg'
 
   array = [this.bannerImg1, this.bannerImg2, this.bannerImg3];
+  readonly loginPageBg: string = './assets/img/login_bg1.jpg'
 
   constructor() {
   }

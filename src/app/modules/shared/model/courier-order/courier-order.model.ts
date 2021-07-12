@@ -56,6 +56,8 @@ export class CourierOrderModel {
 
   displayOrderStatus?: string;
   displayOrderType?: string;
+  proof?: CourierOrderProofModel;
   proofInfo?: CourierOrderProofModel;
   pickupProofInfo?: CourierOrderProofModel;
+
 }

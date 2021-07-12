@@ -40,7 +40,10 @@
           </nz-timeline-item>
           <nz-timeline-item *ngIf="(orderStatus?.orderShippedAt)"
                             [nzColor]="(orderStatus?.orderShippedAt) ? 'green' : 'red'">
-            {{orderStatus?.orderShippedAt | sDate}} - Order dispatched.
+            {{orderStatus?.orderShippedAt | sDate}} - Order
+            dispatched.
+            <span
+              class="font-weight-semibold">{{orderStatus?.orderEstShippedAt ? 'ETA: ' + (orderStatus?.orderEstShippedAt | sDateWithoutSS) : ''}}</span>
           </nz-timeline-item>
           <nz-timeline-item *ngIf="(orderStatus?.orderPickedAt) || (orderStatus?.pickupReason)"
                             [nzColor]="(orderStatus?.orderPickedAt) ? 'green' : 'red'">
@@ -54,7 +57,8 @@
           </nz-timeline-item>
           <nz-timeline-item *ngIf="(orderStatus?.orderComingAt )"
                             [nzColor]="(orderStatus?.orderComingAt) ? 'green' :'red'">
-            {{orderStatus?.orderComingAt | sDate}} - Courier dispatched.
+            {{orderStatus?.orderComingAt | sDate}} - Courier on the way.
+            <span class="font-weight-semibold">{{orderStatus?.orderEstComingAt ? 'ETA: ' + (orderStatus?.orderEstComingAt | sDateWithoutSS) : ''}}</span>
           </nz-timeline-item>
           <nz-timeline-item *ngIf="(orderStatus?.orderPlacedAt )" [nzColor]="'green'">
             {{orderStatus?.orderPlacedAt | sDate}} - Order have been paid (tracking no. : {{orderStatus?.trackingNo}})

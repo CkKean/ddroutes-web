@@ -205,6 +205,7 @@ export class EditRouteFormComponent implements OnInit {
           nzOnOk: () => {
             this.deleteOrder.emit(this.routeId.value);
             modal.close();
+            this.closeModal.emit();
           },
           nzOnCancel: () => modal.close()
         },
@@ -265,6 +266,7 @@ export class EditRouteFormComponent implements OnInit {
 
   dateSelected(): void {
     this.departureDate.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.personnel.patchValue(null);
       this.getAllVehiclePersonnel(value);
     });
   }

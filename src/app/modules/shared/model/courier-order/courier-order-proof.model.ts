@@ -12,4 +12,7 @@ export class CourierOrderProofModel {
   arrivedAt?: Date;
   createdBy?: string;
   createdAt?: Date;
+
+  deliveryPersonnel?: string;
+  pickupPersonnel?: string;
 }

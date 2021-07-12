@@ -19,6 +19,8 @@ import {ApiRoutesConstant} from "../../../../constant/apiroutes.constant";
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DateFormatPipe} from "../../../shared/pipe/dateFormat.pipe";
+import {OrderRouteStatusConstant} from "../../../../constant/order-route-status.constant";
+import {ListOfOrderStatus} from "../../../../constant/courier-order.constant";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -43,15 +45,18 @@ export class ViewRouteReportPageComponent implements OnInit {
 
   tableHeader = [
     {title: 'Order No.', nzWidth: '100px'},
+    {title: 'Tracking No.', nzWidth: '80px'},
     {title: 'Date', nzWidth: '100px', key: 'createdAt'},
-    {title: 'Type', nzWidth: '100px', key: 'orderType'},
-    {title: 'Status', nzWidth: '100px', key: 'displayOrderStatus'},
-    {title: 'Name', nzWidth: '100px', key: 'recipientName'},
+    {title: 'Type', nzWidth: '80px', key: 'orderType'},
+    {title: 'Status', nzWidth: '80px', key: 'displayOrderStatus'},
+    {title: 'Sender/Receiver', nzWidth: '100px', key: 'recipientName'},
     {title: 'Address', nzWidth: '200px', key: 'recipientAddress'},
   ];
 
   printContent: any;
   routeConstant = RoutesConstant;
+  orderRouteStatusConstant = OrderRouteStatusConstant;
+  editVisible: boolean = false;
 
   constructor(private routeReportService: RouteReportService,
               private subHandlingService: SubHandlingService,
@@ -128,6 +133,10 @@ export class ViewRouteReportPageComponent implements OnInit {
   }
 
   onDeleteRouteReport(): void {
+    if (this.routeReportData.orderRoute.status !== OrderRouteStatusConstant.READY) {
+      this.modal.promptErrorModal('Order route already started. Unable to delete.', null, 'OK');
+      return;
+    }
     const modal: NzModalRef = this.nzModal.create({
       nzContent: SharedModalContentComponent,
       nzMaskClosable: false,
@@ -135,7 +144,7 @@ export class ViewRouteReportPageComponent implements OnInit {
       nzClosable: true,
       nzComponentParams: {
         title: 'Confirm',
-        subtitle: 'Are your sure you want to delete this order route report?',
+        subtitle: 'Are your sure you want to delete this order route report? Order route record will be deleted at the same time.',
         status: 'warning',
         cancelText: 'Cancel',
         confirmText: 'Confirm',
@@ -177,6 +186,20 @@ export class ViewRouteReportPageComponent implements OnInit {
 
   sort(sortAttribute) {
     this.displayData = this.tableService.sort(sortAttribute, this.displayData);
+  }
+
+  navigateEdit(data: RouteReportModel): void {
+    if (data.orderRoute.status !== ListOfOrderStatus.COMPLETED) {
+      this.modal.promptWarningModal("The route report still have not completed yet.", null, 'OK');
+      return;
+    }
+
+    this.routeReportData = data;
+    this.editVisible = true;
+  }
+
+  cancelEdit(): void {
+    this.editVisible = false;
   }
 
   async generatePDF() {
@@ -303,7 +326,5 @@ export class ViewRouteReportPageComponent implements OnInit {
         fontSize: 10,
       }
     }
-
   }
-
 }

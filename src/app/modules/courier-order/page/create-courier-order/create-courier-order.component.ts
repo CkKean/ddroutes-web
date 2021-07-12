@@ -71,6 +71,18 @@ export class CreateCourierOrderComponent implements OnInit {
     }
 
     this.courierOrderForm.disable();
+
+    let sAddress;
+    let rAddress;
+
+    if (this.senderAddress.value.slice(-1).match(',')) {
+      sAddress = this.senderAddress.value.slice(0, -1);
+      this.senderAddress.patchValue(sAddress);
+    }
+    if (this.recipientAddress.value.slice(-1).match(',')) {
+      rAddress = this.recipientAddress.value.slice(0, -1);
+      this.recipientAddress.patchValue(rAddress);
+    }
     this.fullSenderAddress.patchValue(this.senderAddress.value + ', ' + this.senderPostcode.value + ' ' + this.senderCity.value + ', ' + this.senderState.value);
     this.fullRecipientAddress.patchValue(this.recipientAddress.value + ', ' + this.recipientPostcode.value + ' ' + this.recipientCity.value + ', ' + this.recipientState.value);
 
@@ -103,8 +115,7 @@ export class CreateCourierOrderComponent implements OnInit {
       return;
     }
     let courierOrder: CourierOrderModel = this.courierOrderForm.getRawValue();
-    courierOrder.recipientMobileNo = "60" + courierOrder.recipientMobileNo;
-    courierOrder.senderMobileNo = "60" + courierOrder.senderMobileNo;
+
     this.addFormLoading = true;
     this.subHandlingService.subscribe(
       this.courierOrderRestService.createCourierOrder(courierOrder).pipe(

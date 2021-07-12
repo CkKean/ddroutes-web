@@ -1,5 +1,21 @@
-<div class="map-container hide" >
+<div>
+  <p class="text-base font-weight-semibold text-p5">Estimated Total Duration: {{orderRoute.timeNeeded}}</p>
+  <p class="text-base font-weight-semibold text-p5">Estimated Total Distance: {{orderRoute.totalDistance}} km</p>
+</div>
+<div class="map-container hide">
   <div class="map-frame">
     <div class="hide" id="map"></div>
   </div>
+</div>
+<div class="mt-3">
+  <img [src]="makerIconPath + 'icon-home.png'" width="25" height="25"/><span
+  class="ml-1 mr-3 text-base text-p5 font-weight-normal">Start</span>
+  <img [src]="makerIconPath + 'icon-home-finish.png'" width="25" height="25"/> <span
+  class="ml-1 mr-3 text-base text-p5 font-weight-normal">Start & End</span>
+  <img [src]="makerIconPath + 'marker-icon-blue.png'" width="20" height="25"/> <span
+  class="ml-1 mr-3 text-base text-p5 font-weight-normal">Pending Order</span>
+  <img [src]="makerIconPath + 'marker-icon-red.png'" width="20" height="25"/> <span
+  class="ml-1 mr-3 text-base text-p5 font-weight-normal">Failed Order</span>
+  <img [src]="makerIconPath + 'marker-icon-green.png'" width="20" height="25"/>
+  <span class="ml-1 mr-3 text-base text-p5 font-weight-normal">Completed Order</span>
 </div>

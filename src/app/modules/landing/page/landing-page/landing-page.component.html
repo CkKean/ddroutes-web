@@ -13,43 +13,45 @@
 
   <div class="bg-white">
     <div class="container py-5 " [ngClass]="{'mt-3':!(isMobile$ | async),'padding-right-none':(isMobile$ | async)}">
-      <nz-row nzType="flex" [nzGutter]="8" [nzAlign]="'middle'">
-        <ng-container *ngIf="!(isMobile$ | async)">
-          <ng-container *ngTemplateOutlet="landingImageOne"></ng-container>
-        </ng-container>
-        <nz-col nzLg="16" nzMd="24" nzSm="24" nzXs="24">
-          <h4 class="text-primary mb-2">Who are us?</h4>
-          <p class="text-p4 font-weight-normal text-justify">
-            DD Routes is a delivery online platform that works to get all your packages and parcels delivered in a
-            reliable, timely and cost effective manner. What makes our service unique is our business model which
-            facilitates employment opportunities for community members, allowing them to earn an income that offers
-            flexibility and the provision of working in one’s own capacity.
-          </p>
-
-          <p class="text-p4 font-weight-normal text-justify">
-            DD Routes through this model not only aims to create a mutual environment where members of our community can
-            earn extra income, rather the model also facilitates our cost structure, allowing customers to benefit from
-            a
-            cost effective service that is risk-free and instantly delivers good to their desired destination.
-          </p>
-
-          <p class="text-p4 font-weight-normal text-justify">
-            Not only do we deliver goods for you, we also offer the service of picking them up for you, so that you can
-            save
-            the time and hassle of having to get into the car and reach us. Whether you are willing to send a card to
-            your
-            loved one, a birthday cake for a friend or a simple bouquet of roses for your spouse, we will save you time
-            and
-            keep your emotions and feelings fresh for you!</p>
+      <h4 class="text-primary mb-4 text-center">Why Us?</h4>
+      <nz-row nzType="flex" [nzGutter]="16" [nzAlign]="'top'" nzJustify="center" class="mt-5">
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="far fa-clock icon-size my-1"></i>
+          <p class=" text-lg-p1 text-p2 text-title my-3 font-weight-normal">Save Time</p>
+          <p class="text-lg-p4 text-p5 my-3 grey-text">Based on your convenience, we deliver packages as quickly as
+            possible, using our unique pick and drop business model.</p>
         </nz-col>
-        <ng-container *ngIf="(isMobile$ | async)">
-          <ng-container *ngTemplateOutlet="landingImageOne"></ng-container>
-        </ng-container>
-        <ng-template #landingImageOne>
-          <nz-col nzLg="8" nzMd="24" nzSm="24" nzXs="24" [ngClass]="{'text-center':(isMobile$ | async)}">
-            <img [src]="ImagePath + '/landing_2.jpg'" width="350" height="300" class="shadow"/>
-          </nz-col>
-        </ng-template>
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="fas fa-shipping-fast icon-size my-1"></i>
+          <p class="text-lg-p1 text-p2 text-title my-3 font-weight-normal">Always On Demand</p>
+          <p class="text-lg-p4 text-p5 my-3 grey-text">We do not ask our clients to book in advance or plan the delivery
+            ahead of time.</p>
+        </nz-col>
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="fas fa-user-clock  icon-size my-1"></i>
+          <p class="text-lg-p1 text-p2 text-title my-3 font-weight-normal">Extended Clock Coverage</p>
+          <p class="text-lg-p4 text-p5 my-3 grey-text">Our community workforce allows packages to be delivered even
+            after
+            working hours, providing flexibility of time.</p>
+        </nz-col>
+      </nz-row>
+      <nz-row nzType="flex" [nzGutter]="32" [nzAlign]="'top'" [nzJustify]="'center'" class="mt-5">
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="fas fa-car-side icon-size my-1"></i>
+          <p class="text-lg-p1 text-p2 text-title my-3 font-weight-normal">Multiple Delivery Options</p>
+          <p class="text-lg-p4 text-p5my-3 grey-text">You may choose various types of delivery vehicles provided from
+            our community.</p>
+        </nz-col>
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="fas fa-hourglass-start icon-size my-1"></i>
+          <p class="text-lg-p1 text-p2 text-title my-3 font-weight-normal">ETA Provided</p>
+          <p class="text-lg-p4 text-p5 my-3 grey-text">Share estimated times of arrival with customers.</p>
+        </nz-col>
+        <nz-col nzSpan="8" class="text-center gutter-row">
+          <i class="fas fa-signature icon-size my-1"></i>
+          <p class="text-lg-p1 text-p2 text-title my-3 font-weight-normal">e-Signature</p>
+          <p class="text-lg-p4 text-p5 my-3 grey-text">Provided e-Signature.</p>
+        </nz-col>
       </nz-row>
     </div>
   </div>
@@ -57,46 +59,91 @@
   <div class="bg-transparent py-5 my-5">
     <div class="container" [ngClass]="{'padding-right-none':(isMobile$ | async)}">
       <nz-row nzType="flex" [nzGutter]="16" [nzAlign]="'top'" [nzJustify]="'center'">
-        <nz-col [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="text-center">
+        <nz-col [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="text-center gutter-row">
           <i nz-icon nzType="like" nzTheme="outline" style="color:white;font-size: 70px;"></i>
-          <p class="text-p2 text-white font-weight-semibold">OUR MISSION</p>
-          <p class="text-p3 text-white text-left px-4">Our mission is to provide exclusive On-Demand Delivery service to
+          <p class="text-lg-p2 text-p3 text-white my-3 font-weight-semibold">OUR MISSION</p>
+          <p class="text-lg-p3 text-p4 text-white text-left px-4">Our mission is to provide exclusive On-Demand Delivery
+            service to
             our client. We aimed to expand our driver community coverage in our main country.</p>
         </nz-col>
-        <nz-col [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="text-center">
+        <nz-col [nzLg]="12" [nzMd]="12" [nzSm]="24" [nzXs]="24" class="text-center gutter-row">
           <i nz-icon nzType="flag" nzTheme="outline" style="color:white;font-size: 70px;"></i>
-          <p class="text-p2 text-white font-weight-semibold">OUR VISION</p>
-          <p class="text-p3 text-white text-left px-4">We aimed to be Innovative and Creative top leader in the
-            On-Demand Delivery field.</p>
+          <p class="text-lg-p2 text-p3 text-white my-3 font-weight-semibold">OUR VISION</p>
+          <p class="text-lg-p3 text-p4 text-white text-left px-4">We aimed to be Innovative and Creative top leader in
+            the On-Demand Delivery field.</p>
         </nz-col>
       </nz-row>
     </div>
   </div>
 
+
+  <div class="bg-white">
+    <div class="container py-5 " [ngClass]="{'mt-3':!(isMobile$ | async),'padding-right-none':(isMobile$ | async)}">
+      <nz-row nzType="flex" [nzGutter]="32" [nzAlign]="'middle'">
+        <ng-container *ngIf="!(isMobile$ | async)">
+          <ng-container *ngTemplateOutlet="landingImageOne"></ng-container>
+        </ng-container>
+        <nz-col nzLg="15" nzMd="15" nzSm="24" nzXs="24" class="gutter-row">
+          <h4 class="text-primary mb-4">Who are us?</h4>
+          <p class="text-lg-p3 text-md-p4 text-p5 font-weight-normal text-justify">
+            DD Routes is a delivery online platform that works to get all your packages and parcels delivered in a
+            reliable, timely and cost effective manner. What makes our service unique is our business model which
+            facilitates employment opportunities for community members, allowing them to earn an income that offers
+            flexibility and the provision of working in one’s own capacity.
+          </p>
+
+          <p class="text-lg-p3 text-md-p4 text-p5 font-weight-normal text-justify">
+            DD Routes through this model not only aims to create a mutual environment where members of our community can
+            earn extra income, rather the model also facilitates our cost structure, allowing customers to benefit from
+            a cost effective service that is risk-free and instantly delivers good to their desired destination.
+          </p>
+        </nz-col>
+        <ng-container *ngIf="(isMobile$ | async)">
+          <ng-container *ngTemplateOutlet="landingImageOne"></ng-container>
+        </ng-container>
+        <ng-template #landingImageOne>
+          <nz-col [ngClass]="{'text-center':(isMobile$ | async)}"
+                  [nzLg]="9" [nzMd]="9" [nzSm]="24" [nzXs]="24"
+                  [style.backgroundImage]="'url(' + ImagePath + '/landing_2.jpg)'"
+                  [style.background-repeat]="'no-repeat'"
+                  [style.background-position]="'right'"
+                  [style.background-size]="'cover'"
+                  class="col-image gutter-row"
+          >
+          </nz-col>
+        </ng-template>
+      </nz-row>
+    </div>
+  </div>
+
+
   <div class="bg-white">
     <div class="container py-5" [ngClass]="{'padding-right-none':(isMobile$ | async)}">
-      <nz-row nzType="flex" [nzGutter]="8" [nzAlign]="'top'">
-        <nz-col [nzLg]="16" [nzMd]="16" [nzSm]="24" [nzXs]="24">
-          <h5 class="text-primary mb-2">What Is Our Difference From Others?</h5>
-          <p class="text-p4 font-weight-normal text-justify">
+      <nz-row nzType="flex" [nzGutter]="32" [nzAlign]="'middle'">
+        <nz-col [nzLg]="15" [nzMd]="15" [nzSm]="24" [nzXs]="24" class="gutter-row">
+          <h5 class="text-primary mb-4">What Is Our Difference From Others?</h5>
+          <p class="text-lg-p3 text-md-p4 text-p5 font-weight-normal text-justify">
             Sighting the economic conditions in the world today, it is empirical that only a model that connects us with
             each other can work out in the present condition and our business model following in the same footsteps does
             just that!
           </p>
 
-          <p class="text-p4 font-weight-normal text-justify">
+          <p class="text-lg-p3 text-md-p4 text-p5 font-weight-normal text-justify">
             Members of the community can now sign in with us and offer their services at their own personal convenience.
-            Not
-            only is this an opportunity to earn yourself a living, you serve the community as well through offering
+            Not only is this an opportunity to earn yourself a living, you serve the community as well through offering
             reliable, cost-effective services. And while we ensure that every member of ours caters to the strict
-            criteria
-            of deliverers, our customers benefit from the timely and affordable delivery services always.
+            criteria of deliverers, our customers benefit from the timely and affordable delivery services always.
           </p>
         </nz-col>
-        <nz-col [nzLg]="8" [nzMd]="8" [nzSm]="24" [nzXs]="24"
+        <nz-col [nzLg]="9" [nzMd]="9" [nzSm]="24" [nzXs]="24"
+                [style.backgroundImage]="'url(' + ImagePath + '/landing_1.jpg)'"
+                [style.background-repeat]="'no-repeat'"
+                [style.background-position]="'right'"
+                [style.background-size]="'cover'"
+                class="col-image gutter-row"
                 [ngClass]="{'text-center':(isMobile$ | async),'text-right':!(isMobile$ | async)}">
-          <img [src]="ImagePath + '/landing_1.jpg'" width="350" height="300" class="shadow"/>
         </nz-col>
+
       </nz-row>
     </div>
   </div>

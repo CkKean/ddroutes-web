@@ -49,6 +49,6 @@
   }
 }
 
-.leaflet-marker-icon .xolonium {
-  color: white !important;
+::ng-deep .leaflet-marker-icon.xolonium {
+  font-weight: bold !important;
 }

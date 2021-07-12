@@ -21,14 +21,18 @@
       </nz-col>
       <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
         <p class="text-primary mb-3 text-p1 font-weight-semibold ">About Us</p>
-        <p class="text-p4 text-base text-white-50 py-2">
+        <p class="text-p4 text-lg-p3 text-base text-white-50 py-2">
           Reaching Out To Those That Mean Something To You Has Never Been As Easy As With DD Routes Today!
         </p>
-        <p class="text-p4 text-base text-white-50 py-2">
+        <p class="text-p4 text-lg-p3 text-base text-white-50 py-2">
           DD Routes
         </p>
-        <i nz-icon nzType="facebook" nzTheme="outline" class="text-p1 mr-2 text-white" ></i>
-        <i nz-icon nzType="instagram" nzTheme="outline" class="text-p1 mr-2 text-white"></i>
+
+        <div class="mt-3">
+          <i nz-icon nzType="facebook" nzTheme="outline" class="text-p1 mr-2 text-white"></i>
+          <i nz-icon nzType="instagram" nzTheme="outline" class="text-p1 mr-2 text-white"></i>
+          <span class="text-right"><img [src]="googlePlayIcon"/></span>
+        </div>
       </nz-col>
     </nz-row>
 
@@ -44,7 +48,7 @@
       <i *ngIf="awesome" [class]="icon" [ngClass]="{'text-white text-p1 vertical-align-rem-1':awesome}"></i>
     </nz-col>
     <nz-col nzSpan="21">
-      <span class="text-p4 text-base text-white-50">{{content}}</span>
+      <span class="text-p4 text-lg-p3 text-base text-white-50">{{content}}</span>
     </nz-col>
   </nz-row>
 </ng-template>

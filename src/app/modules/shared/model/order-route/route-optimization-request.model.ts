@@ -1,7 +1,7 @@
-import {SortModel} from "./sort.model";
+import {CourierOrderModel} from "../courier-order/courier-order.model";
 
 export class RouteOptimizationRequestModel {
-  sortList: SortModel[];
+  sortList: CourierOrderModel[];
   optimizeType: string;
   routeId: string;
   departurePoint: number;

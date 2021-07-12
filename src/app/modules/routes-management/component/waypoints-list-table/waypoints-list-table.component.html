@@ -15,7 +15,7 @@
         {{optimizeType}} <i class="vertical-align-rem-1" nz-icon nzType="down" nzTheme="outline"></i>
       </button>
       <button nz-button
-              [disabled]="displayData.length === 0 || !orderRoute || orderRoute.status !== orderStatusConstant.READY"
+              [disabled]="displayData.length === 0 || !orderRoute || orderRoute.status !== orderRouteStatusConstant.READY"
               (click)="optimizeRoute()">Optimize
       </button>
     </nz-button-group>
@@ -59,7 +59,7 @@
     </tr>
 
     <ng-container
-      *ngIf="orderRoute.status === orderStatusConstant.COMPLETED || orderRoute.status === orderStatusConstant.IN_PROGRESS">
+      *ngIf="orderRoute.status === orderRouteStatusConstant.COMPLETED || orderRoute.status === orderRouteStatusConstant.IN_PROGRESS">
       <tr *ngFor="let data of displayData;let i=index;let last=last">
         <td>
           <div>
@@ -67,14 +67,20 @@
                nzTheme="outline"></i> {{i + 1}}
           </div>
         </td>
-        <td>{{data.orderNo }}</td>
+
+        <td><a target="_blank"
+               [href]="routeConstant.COURIER_ORDER+'/'+ routeConstant.VIEW +'?orderNo=' + data.orderNo">{{ data.orderNo }}</a>
+        </td>
         <td>{{data.trackingNo }}</td>
         <td>{{data.displayOrderType}}</td>
         <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
-        <td>{{data.displayOrderStatus}}</td>
+        <td>
+          <ng-container
+            *ngTemplateOutlet="statusShown;context:{orderStatus:data.displayOrderStatus,proof: data.proof}"></ng-container>
+        </td>
       </tr>
     </ng-container>
-    <ng-container *ngIf="orderRoute.status === orderStatusConstant.READY">
+    <ng-container *ngIf="orderRoute.status === orderRouteStatusConstant.READY">
       <tr cdkDrag cdkDragLockAxis="y" *ngFor="let data of displayData;let i=index;let last=last">
         <td>
           <div class="drag-handle" cdkDragHandle>
@@ -82,11 +88,16 @@
                nzTheme="outline"></i> {{i + 1}}
           </div>
         </td>
-        <td>{{data.orderNo }}</td>
+        <td><a target="_blank"
+               [href]="routeConstant.COURIER_ORDER+'/'+ routeConstant.VIEW +'?orderNo=' + data.orderNo">{{ data.orderNo }}</a>
+        </td>
         <td>{{data.trackingNo }}</td>
         <td>{{data.displayOrderType}}</td>
         <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
-        <td>{{data.displayOrderStatus}}</td>
+        <td>
+          <ng-container
+            *ngTemplateOutlet="statusShown;context:{orderStatus:data.displayOrderStatus,proof: data.proof}"></ng-container>
+        </td>
       </tr>
     </ng-container>
     <tr cdkDropListSortingDisabled *ngIf="displayData&&orderRoute.roundTrip">
@@ -106,4 +117,30 @@
     <span
       class="font-weight-semibold">{{departureAddress.address + ', ' + departureAddress.postcode + ' ' + departureAddress.city + ', ' + departureAddress.state + ', Malaysia' }}</span>
   </td>
+</ng-template>
+
+<ng-template #statusShown let-orderStatus='orderStatus' let-proof='proof'>
+  <span [nzTooltipTitle]="(proof.createdAt | sDate)" nz-tooltip
+        *ngIf="((orderStatus === listOfOrderStatusConstant.COMPLETED || orderStatus === listOfOrderStatusConstant.PICKED_UP) && (proof && proof !== null))">
+            {{orderStatus}}
+    <i class="vertical-align-rem-1 text-profit" nz-icon
+       nzType="check-circle" nzTheme="outline" style="font-size: 16px !important;"></i>
+          </span>
+
+  <span nz-tooltip
+        style="font-size: 16px !important;"
+        *ngIf="((orderStatus === listOfOrderStatusConstant.FAILED) && (proof && proof !== null))"
+        [nzTooltipTitle]="toolTipsContent">{{orderStatus}}
+    <i class="vertical-align-rem-1 text-danger" nz-icon nzType="exclamation-circle" nzTheme="outline"
+       style="font-size: 16px !important;"></i>
+  </span>
+
+  <ng-template #toolTipsContent>
+    <span>
+      {{(proof.createdAt | sDate)}}<br/>
+      {{proof.reason ? proof.reason : ''}}
+    </span>
+  </ng-template>
+
+  <span *ngIf="!proof && proof === null">{{orderStatus}}</span>
 </ng-template>

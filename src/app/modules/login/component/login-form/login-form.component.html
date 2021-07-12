@@ -1,6 +1,6 @@
 <div class="w-100">
   <div class="mt-1">
-    <span class="text-p4 text-sm-p3 text-black-7 font-weight-bold">User Login</span>
+    <span class="text-p4 text-sm-p3 text-lg-p2 text-black-7 font-weight-bold">User Login</span>
   </div>
 
   <form nz-form [formGroup]="loginForm">
@@ -8,7 +8,7 @@
       <nz-form-item class="mt-2">
         <nz-form-control nzErrorTip="Please enter your username.">
           <nz-input-group [nzPrefix]="userIcon">
-            <input type="text" nz-input formControlName="username" placeholder="Username" oninput="this.value = this.value.toUpperCase()"
+            <input class="text-p5 text-sm-p4" type="text" nz-input formControlName="username" placeholder="Username" oninput="this.value = this.value.toUpperCase()"
                    (keyup.enter)="loginBtnDisable ? $event.preventDefault(): submit()"/>
           </nz-input-group>
         </nz-form-control>
@@ -17,7 +17,7 @@
       <nz-form-item class="mt-2">
         <nz-form-control nzErrorTip="Please enter your Password.">
           <nz-input-group [nzPrefix]="lockIcon" [nzSuffix]="passwordVisible ? invisible : visible">
-            <input [type]="passwordVisible ? 'text':'password'" nz-input formControlName="password"
+            <input class="text-p5 text-sm-p4" [type]="passwordVisible ? 'text':'password'" nz-input formControlName="password"
                    (keyup.enter)="loginBtnDisable ? $event.preventDefault(): submit()"
                    placeholder="Password"/>
           </nz-input-group>
@@ -25,16 +25,14 @@
       </nz-form-item>
     </div>
   </form>
-<!--  <div class="w-100 py-2 text-p6">-->
-<!--    Forgot your <span class="text-primary pointer font-weight-semibold">Password?</span>-->
-<!--  </div>-->
-  <div class="w-100 py-2 text-p6">
+
+  <div class="w-100 py-2 text-p5 text-sm-p4">
     Don't have account? <span class="text-primary pointer font-weight-semibold"
                               (click)="navigateRegister()">Register</span>
   </div>
 
   <div class="float-right">
-    <button [disabled]="loginBtnDisable" [nzLoading]="loginBtnLoading" nz-button nzType="primary" (click)="submit()">
+    <button class="text-p5 text-sm-p4"  [disabled]="loginBtnDisable" [nzLoading]="loginBtnLoading" nz-button nzType="primary" (click)="submit()">
       Login
     </button>
   </div>

@@ -52,6 +52,7 @@ import {NzCollapseModule} from "ng-zorro-antd/collapse";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import {NzBackTopModule} from "ng-zorro-antd/back-top";
 import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {DateFormatWithoutSS} from "./pipe/dateFormatWithoutSS";
 
 const imports = [
   CommonModule,
@@ -112,6 +113,7 @@ const exportsComponent = [
   FormFieldComponent,
   ConfirmationModal,
   DateFormatPipe,
+  DateFormatWithoutSS,
   AccessDeniedModalComponent,
   SessionnTimeoutModalComponent,
   OrderFormFieldComponent,
@@ -132,6 +134,7 @@ const exportsComponent = [
     ConfirmationModal,
     SharedModalContentComponent,
     DateFormatPipe,
+    DateFormatWithoutSS,
     SessionnTimeoutModalComponent,
     AccessDeniedModalComponent,
     OrderFormFieldComponent,

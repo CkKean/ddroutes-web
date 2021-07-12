@@ -17,7 +17,7 @@
 
     <app-form-field [label]="'Name'" [required]="false">{{order.senderName}}</app-form-field>
 
-    <app-form-field [label]="'Mobile Number'" [required]="false">{{order.senderMobileNo}}</app-form-field>
+    <app-form-field [label]="'Mobile Number'" [required]="false">{{'0' + order.senderMobileNo}}</app-form-field>
 
     <app-form-field [label]="'Email'"
                     [required]="false">{{order.senderEmail ? order.senderEmail : '-'}}</app-form-field>
@@ -39,7 +39,7 @@
 
     <app-form-field [label]="'Name'" [required]="false">{{order.recipientName}}</app-form-field>
 
-    <app-form-field [label]="'Mobile Number'" [required]="false">{{order.recipientMobileNo}}</app-form-field>
+    <app-form-field [label]="'Mobile Number'" [required]="false">{{'0' + order.recipientMobileNo}}</app-form-field>
 
     <app-form-field [label]="'Email'"
                     [required]="false">{{order.recipientEmail ? order.recipientEmail : '-'}}</app-form-field>
@@ -83,7 +83,7 @@
           <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
             <nz-input-group>
               <input type="text" class="text-title font-weight-semibold" nz-input [disabled]="true"
-                     [value]="order.senderAddress + ',' +order.senderPostcode + order.senderCity + ',' + order.senderState + ', Malaysia'"/>
+                     [value]="order.fullSenderAddress"/>
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
@@ -100,7 +100,7 @@
           <nz-form-control class="vertical-align-rem-1" nzValidateStatus="success" nzHasFeedback>
             <nz-input-group>
               <input type="text" class="text-title font-weight-semibold" nz-input [disabled]="true"
-                     [value]="order.recipientAddress + ',' +order.recipientPostcode + order.recipientCity + ',' + order.recipientState + ', Malaysia'"/>
+                     [value]="order.fullRecipientAddress"/>
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>

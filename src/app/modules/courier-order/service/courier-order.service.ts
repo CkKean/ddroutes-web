@@ -1,5 +1,5 @@
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {postCodeValidator} from "../../shared/validators/customvalidator.validator";
+import {noWhitespaceValidator, postCodeValidator} from "../../shared/validators/customvalidator.validator";
 import {ListOfOrderType} from "../../../constant/courier-order.constant";
 import {Injectable} from "@angular/core";
 

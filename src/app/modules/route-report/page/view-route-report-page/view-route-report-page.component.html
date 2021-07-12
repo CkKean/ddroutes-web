@@ -18,6 +18,10 @@
     </nz-row>
   </nz-card>
 
+  <nz-card [nzBorderless]="true" class="h-100">
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+  </nz-card>
+
   <nz-row nzType="flex" nzAlign="top" [nzGutter]="8">
     <nz-col nzSpan="8">
       <nz-card [nzBorderless]="true" class="h-100">
@@ -36,10 +40,6 @@
     </nz-col>
 
   </nz-row>
-
-  <nz-card [nzBorderless]="true" class="h-100">
-    <ng-container *ngTemplateOutlet="orderList"></ng-container>
-  </nz-card>
 
   <div style="overflow: hidden;height: 0" id="content">
     <ng-container *ngTemplateOutlet="orderInfo1"></ng-container>
@@ -91,7 +91,9 @@
   <ng-container
     *ngTemplateOutlet="infoField;context:{label:'Personnel',content:routeReportData?.orderRoute?.personnelInfo.fullName}"></ng-container>
   <ng-container
-    *ngTemplateOutlet="infoField;context:{label:'Completed At',content: (routeReportData?.orderRoute?.status === 'Completed')  ? routeReportData?.orderRoute?.updatedAt : null }"></ng-container>
+    *ngTemplateOutlet="infoField;context:{label:'Started At',content:routeReportData?.orderRoute?.startedAt | sDate}"></ng-container>
+  <ng-container
+    *ngTemplateOutlet="infoField;context:{label:'Completed At',content: (routeReportData?.orderRoute?.status === 'Completed')  ? ( routeReportData?.orderRoute?.updatedAt  | sDate): null }"></ng-container>
   <ng-container
     *ngTemplateOutlet="infoField;context:{label:'Created By',content:routeReportData?.orderRoute?.createdByInfo?.fullName}"></ng-container>
 </ng-template>
@@ -113,7 +115,7 @@
   <ng-container
     *ngTemplateOutlet="infoTripleField;context:{label:'Distance Travel (km)',content:routeReportData?.calculatedDistanceTravel}"></ng-container>
   <ng-container
-    *ngTemplateOutlet="infoTripleField;context:{label:'Duration (min)',content:routeReportData?.orderRoute?.timeNeeded}"></ng-container>
+    *ngTemplateOutlet="infoTripleField;context:{label:'Duration',content:routeReportData?.orderRoute?.timeNeeded}"></ng-container>
   <ng-container
     *ngTemplateOutlet="infoTripleField;context:{label:'Petrol Cost (RM)',content:routeReportData?.calculatedPetrolFees}"></ng-container>
   <ng-container
@@ -121,12 +123,28 @@
 </ng-template>
 
 <ng-template #actualFee>
-  <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Actual</p>
+
+  <nz-row nzType="flex" align="middle" nzJustify="space-between">
+    <nz-col>
+      <span class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">
+        Actual
+      </span>
+    </nz-col>
+    <nz-col *ngIf="routeReportData.orderRoute.status === orderRouteStatusConstant.COMPLETED">
+      <span class="text-right">
+         <button nz-button [nzSize]="'small'" nzType="primary" (click)="navigateEdit(routeReportData)"
+                 class="font-weight-semibold">Update Report
+      </button>
+      </span>
+    </nz-col>
+
+  </nz-row>
   <ng-container
     *ngTemplateOutlet="infoTripleField;context:{label:'Petrol Cost (RM)',content:routeReportData?.actualPetrolFees}"></ng-container>
   <ng-container
     *ngTemplateOutlet="infoTripleField;context:{label:'Latest Petrol Price (RM)',content:routeReportData?.latestPetrolPrice}"></ng-container>
-
+  <ng-container
+    *ngTemplateOutlet="infoTripleField;context:{label:'Total Duration Used',content:routeReportData?.totalTimeUsed}"></ng-container>
   <nz-row nzType="flex" nzAlign="middle" class="my-3" *ngIf="imageUrl">
     <nz-col nzLg="13" nzMd="13" nzSm="24" nzXs="24" [ngClass]="{'mb-2':(isMobile$ | async)}">
       <span class="text-main text-sm-p5 text-p6 font-weight-semibold">Statement:</span>
@@ -138,6 +156,8 @@
                nz-image
                [nzSrc]="imageUrl"
                [alt]="routeReportData.statement"
+               style="max-height:10%;"
+
           />
         <ng-template #noData>
           <span class="text-main text-sm-p5 text-p6 font-weight-normal">-</span>
@@ -158,6 +178,7 @@
             [nzShowSizeChanger]="true"
             [nzShowTotal]="rangeTemplate"
             [nzHideOnSinglePage]="true"
+            [nzScroll]="{x:'740'}"
   >
     <thead nzSingleSort (nzSortOrderChange)="sort($event)" class="text-sm-p5 text-p6 font-weight-semibold text-title">
     <tr>
@@ -170,8 +191,9 @@
       <td><a target="_blank"
              [href]="routeConstant.COURIER_ORDER+'/'+ routeConstant.VIEW +'?orderNo=' + data.orderNo">{{ data.orderNo }}</a>
       </td>
+      <td>{{ data.trackingNo }}</td>
       <td>{{ data.createdAt | sDate }}</td>
-      <td>{{ data.orderType }}</td>
+      <td>{{ data.displayOrderType }}</td>
       <td>{{ data.displayOrderStatus }}</td>
       <td>{{ data.recipientName }}</td>
       <td>{{data.recipientAddress + ', ' + data.recipientPostcode + ', ' + data.recipientCity + ', ' + data.recipientState + ', Malaysia'}}</td>
@@ -183,3 +205,6 @@
   </ng-template>
 </ng-template>
 
+<app-edit-route-report-page *ngIf="editVisible" [routeReportData]="routeReportData" [visible]="editVisible"
+                            (refreshTable)="getRouteReport()"
+                            (onCancel)="cancelEdit()"></app-edit-route-report-page>

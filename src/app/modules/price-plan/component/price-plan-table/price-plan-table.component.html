@@ -13,7 +13,7 @@
   </nz-row>
 
   <nz-table #pricePlanTable
-            class="table-anticon text-sm-p5 text-p6 font-weight-normal text-main"
+            class="table-anticon text-sm-p5 text-p6 text-main"
             [nzLoading]="pricePlanLoading"
             [nzData]="displayData"
             [nzPageSize]="10"
@@ -29,7 +29,7 @@
       <th *ngFor="let header of tableHeader" nzAlign="center"
           [nzWidth]="!(isMobile$ | async) ? null: header.mobileWidth" [nzShowSort]="header.key"
           [nzColumnKey]="header.key" [nzSortFn]="true" [colSpan]="header.columnSpan" [rowSpan]="header.rowSpan">
-        {{header.title}}
+        <span class="font-weight-semibold">{{header.title}}</span>
       </th>
     </tr>
     <tr>

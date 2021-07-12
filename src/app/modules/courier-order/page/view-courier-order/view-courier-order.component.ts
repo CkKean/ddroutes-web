@@ -57,6 +57,8 @@ export class ViewCourierOrderComponent implements OnInit {
                 this.imageUrl = ApiRoutesConstant.IMAGE_API + this.orderInfo.proofInfo?.signaturePath + '/' + this.orderInfo.proofInfo?.signature;
               }
             }
+            this.orderInfo.senderMobileNo = this.getMobileNo(this.orderInfo.senderMobileNo);
+            this.orderInfo.recipientMobileNo = this.getMobileNo(this.orderInfo.recipientMobileNo);
             if (this.orderInfo.pickupProofInfo !== null) {
               this.pickupImageUrl = ApiRoutesConstant.IMAGE_API + this.orderInfo.pickupProofInfo?.signaturePath + '/' + this.orderInfo.pickupProofInfo?.signature;
             }
@@ -73,5 +75,9 @@ export class ViewCourierOrderComponent implements OnInit {
 
   get imageApi(): string {
     return ApiRoutesConstant.IMAGE_API;
+  }
+
+  getMobileNo(mobileNo): string {
+    return mobileNo.substring(0, 2) === '60' ? mobileNo : '60' + mobileNo;
   }
 }

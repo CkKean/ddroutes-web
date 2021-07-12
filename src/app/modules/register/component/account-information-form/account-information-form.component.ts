@@ -140,7 +140,7 @@ export class AccountInformationFormComponent implements OnInit {
     let user: User = {...this.registerForm.getRawValue(), ...this.personalInfoForm.getPersonalFormRawValue()};
     user.password = CryptoJS.SHA256(user.password).toString();
     user.userType = 2;
-
+    user.mobileNo = '60' + user.mobileNo
     let status: string;
     let subTitle: string;
 

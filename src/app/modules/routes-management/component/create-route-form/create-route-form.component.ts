@@ -42,8 +42,8 @@ export class CreateRouteFormComponent implements OnInit {
     {title: 'Order No.', nzWidth: '100px'},
     {title: 'Tracking No.', nzWidth: '100px'},
     {title: 'Date', nzWidth: '100px', key: 'createdAt'},
-    {title: 'Type', nzWidth: '100px', key: 'orderType'},
-    {title: 'Status', nzWidth: '100px', key: 'orderStatus'},
+    {title: 'Type', nzWidth: '100px', key: 'displayOrderType'},
+    {title: 'Status', nzWidth: '100px', key: 'displayOrderStatus'},
     {title: 'Address', nzWidth: '200px', key: 'recipientAddress'},
   ];
 
@@ -130,6 +130,7 @@ export class CreateRouteFormComponent implements OnInit {
 
   dateSelected(): void {
     this.departureDate.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
+      this.personnel.patchValue(null);
       this.getAllVehiclePersonnel(value);
     });
   }

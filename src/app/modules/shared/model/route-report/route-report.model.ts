@@ -22,8 +22,9 @@ export class RouteReportModel {
   updatedBy?: string;
   updatedAt?: Date;
 
-  vehicle_id?:string;
+  vehicle_id?: string;
 
+  totalTimeUsed?: string;
   orderList?: CourierOrderModel[];
   orderRoute?: OrderRouteModel;
   vehicleInfo?: VehicleModel;

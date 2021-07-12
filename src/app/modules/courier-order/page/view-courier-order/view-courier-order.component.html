@@ -22,6 +22,8 @@
     </nz-col>
     <nz-col nzLg="12" nzMd="12" nzSm="24" nzXs="24">
       <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Payment Method',content:orderInfo.paymentMethod}"></ng-container>
+      <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Route ID',content:orderInfo.routeId}"></ng-container>
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Pick Up Route ID',content:orderInfo.pickupRouteId}"></ng-container>
@@ -87,33 +89,73 @@
         *ngTemplateOutlet="infoField;context:{label:'Quantity',content:orderInfo.itemQty}"></ng-container>
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Type',content:orderInfo.itemType}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="infoField;context:{label:'Vehicle Type',content:orderInfo.vehicleType}"></ng-container>
     </nz-card>
   </nz-col>
 </nz-row>
 
 <nz-row nzType="flex" [nzGutter]="16">
   <ng-container *ngIf="!orderDetailLoading;else loading">
-    <nz-col nzSpan="12" *ngIf="orderInfo.proofInfo !== null">
+    <nz-col nzSpan="12" *ngIf="orderInfo.pickupProofInfo">
+      <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
+        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Picked up Information</p>
+        <ng-container
+          *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.pickupProofInfo.status )}"></ng-container>
+
+        <ng-container
+          *ngIf="orderInfo.pickupProofInfo.status !== listOfOrderStatus.NOT_PICK_UP">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Personnel',content:(orderInfo.pickupProofInfo?.pickupPersonnel)}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Picked At',content:(orderInfo.pickupProofInfo?.pickedAt | sDate )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="imageField;context:{label:'Signature/Photo',imageLink:(imageApi + orderInfo.pickupProofInfo.signaturePath + '/' + orderInfo.pickupProofInfo.signature) }"></ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="orderInfo.pickupProofInfo.status === listOfOrderStatus.NOT_PICK_UP">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Personnel',content:(orderInfo.pickupProofInfo?.pickupPersonnel)}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Arrived At',content:(orderInfo.pickupProofInfo?.arrivedAt | sDate )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Completed At',content:(orderInfo.pickupProofInfo?.createdAt | sDate )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Reason',content:orderInfo.pickupProofInfo?.reason}"></ng-container>
+        </ng-container>
+      </nz-card>
+    </nz-col>
+  </ng-container>
+
+  <ng-container *ngIf="!orderDetailLoading;else loading">
+    <nz-col nzSpan="12" *ngIf="orderInfo.proofInfo">
       <nz-card [nzBorderless]="true" class="h-100">
         <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Delivery Information</p>
 
         <ng-container
+          *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.proofInfo?.status )}"></ng-container>
+
+        <ng-container
           *ngIf="orderInfo.proofInfo.status !== listOfOrderStatus.NOT_DELIVERED">
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Personnel',content:(orderInfo.proofInfo?.deliveryPersonnel)}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Received At',content:(orderInfo.proofInfo?.receivedAt | sDate)}"></ng-container>
           <ng-container
             *ngTemplateOutlet="infoField;context:{label:'Recipient Name',content:orderInfo.proofInfo?.recipientName}"></ng-container>
           <ng-container
             *ngTemplateOutlet="infoField;context:{label:'Recipient IC No',content:orderInfo.proofInfo?.recipientIcNo}"></ng-container>
           <ng-container
-            *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.proofInfo?.status )}"></ng-container>
-          <ng-container
-            *ngTemplateOutlet="infoField;context:{label:'Received At',content:(orderInfo.proofInfo?.receivedAt | sDate)}"></ng-container>
-          <ng-container
-            *ngTemplateOutlet="imageField;context:{label:'Signature',imageLink:(imageApi + orderInfo.proofInfo.signaturePath + '/' + orderInfo.proofInfo.signature) }"></ng-container>
+            *ngTemplateOutlet="imageField;context:{label:'Signature/Photo',imageLink:(imageApi + orderInfo.proofInfo.signaturePath + '/' + orderInfo.proofInfo.signature) }"></ng-container>
         </ng-container>
 
         <ng-container *ngIf="orderInfo.proofInfo.status === listOfOrderStatus.NOT_DELIVERED">
           <ng-container
-            *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.proofInfo?.status )}"></ng-container>
+            *ngTemplateOutlet="infoField;context:{label:'Personnel',content:(orderInfo.proofInfo?.deliveryPersonnel )}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Arrived At',content:(orderInfo.proofInfo?.arrivedAt | sDate)}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="infoField;context:{label:'Completed At',content:(orderInfo.proofInfo?.createdAt | sDate)}"></ng-container>
           <ng-container
             *ngTemplateOutlet="infoField;context:{label:'Reason',content:orderInfo.proofInfo?.reason}"></ng-container>
         </ng-container>
@@ -121,29 +163,7 @@
       </nz-card>
     </nz-col>
   </ng-container>
-  <ng-container *ngIf="!orderDetailLoading;else loading">
-    <nz-col nzSpan="12" *ngIf="orderInfo.pickupProofInfo">
-      <nz-card [nzBorderless]="true" class="h-100" *ngIf="!orderDetailLoading;else loading">
-        <p class="text-primary text-sm-p3 text-p4 font-weight-semibold text-uppercase">Picked up Information</p>
-        <ng-container
-          *ngTemplateOutlet="infoField;context:{label:'Status',content:(orderInfo.pickupProofInfo.status )}"></ng-container>
-        <ng-container
-          *ngIf="orderInfo.pickupProofInfo.status !== listOfOrderStatus.NOT_PICK_UP">
-          <ng-container
-            *ngTemplateOutlet="infoField;context:{label:'Picked At',content:(orderInfo.pickupProofInfo?.pickedAt | sDate )}"></ng-container>
-          <ng-container
-            *ngTemplateOutlet="imageField;context:{label:'Signature',imageLink:(imageApi + orderInfo.pickupProofInfo.signaturePath + '/' + orderInfo.pickupProofInfo.signature) }"></ng-container>
 
-        </ng-container>
-
-        <ng-container *ngIf="orderInfo.pickupProofInfo.status === listOfOrderStatus.NOT_PICK_UP">
-          <ng-container
-            *ngTemplateOutlet="infoField;context:{label:'Reason',content:orderInfo.pickupProofInfo?.reason}"></ng-container>
-        </ng-container>
-
-      </nz-card>
-    </nz-col>
-  </ng-container>
 
 </nz-row>
 

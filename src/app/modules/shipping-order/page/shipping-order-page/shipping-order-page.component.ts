@@ -99,8 +99,14 @@ export class ShippingOrderPageComponent implements OnInit {
   }
 
   onClickView(data): void {
+    data.senderMobileNo = this.getMobileNo(data.senderMobileNo);
+    data.recipientMobileNo = this.getMobileNo(data.recipientMobileNo);
     this.selectedOrder = data;
     this.orderDetailVisible = true;
+  }
+
+  getMobileNo(mobileNo): string {
+    return mobileNo.substring(0, 2) === '60' ? mobileNo : '60' + mobileNo;
   }
 
   closeView(): void {
