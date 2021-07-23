@@ -201,8 +201,7 @@ export class AddVehicleComponent extends BaseComponent implements OnInit {
         } else if (value === 'Motorcycle') {
           this.displayBrandList = this.motorCycleBrandList;
         }
-        this.brand.patchValue(null);
-        this.brand.markAsUntouched();
+        this.brand.reset();
       }
     });
   }

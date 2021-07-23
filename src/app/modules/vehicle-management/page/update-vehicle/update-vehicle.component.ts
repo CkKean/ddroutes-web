@@ -249,15 +249,13 @@ export class UpdateVehicleComponent extends BaseComponent implements OnInit {
 
   subscribeVehicleType(): void {
     this.type.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-
       if (value) {
         if (value === 'Car' || value === 'Truck') {
           this.displayBrandList = this.carBrandList;
         } else if (value === 'Motorcycle') {
           this.displayBrandList = this.motorCycleBrandList;
         }
-        this.brand.patchValue(null);
-        this.brand.markAsUntouched();
+        this.brand.reset();
       }
     });
   }
