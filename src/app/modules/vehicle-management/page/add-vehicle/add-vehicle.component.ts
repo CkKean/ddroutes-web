@@ -202,6 +202,7 @@ export class AddVehicleComponent extends BaseComponent implements OnInit {
           this.displayBrandList = this.motorCycleBrandList;
         }
         this.brand.patchValue(null);
+        this.brand.markAsUntouched();
       }
     });
   }
