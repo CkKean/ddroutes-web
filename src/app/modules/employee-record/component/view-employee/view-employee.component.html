@@ -27,9 +27,9 @@
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Gender',content:employeeDetail.gender === 'F' ? 'Female' : 'Male'}"></ng-container>
       <ng-container
-        *ngTemplateOutlet="infoField;context:{label:'Date of Birth',content:(employeeDetail.dob | sDate)}"></ng-container>
+        *ngTemplateOutlet="infoField;context:{label:'Date of Birth',content:(employeeDetail.dob | date)}"></ng-container>
       <ng-container
-        *ngTemplateOutlet="infoField;context:{label:'Mobile Number',content:employeeDetail.mobileNo}"></ng-container>
+        *ngTemplateOutlet="infoField;context:{label:'Mobile Number',content: '0'+employeeDetail.mobileNo}"></ng-container>
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Race',content:employeeDetail.race}"></ng-container>
       <ng-container

@@ -209,10 +209,6 @@ export class EditEmployeeFormComponent extends BaseComponent implements OnInit {
     this.profileImg.patchValue(null);
   }
 
-  disabledDate = (current: Date): boolean => {
-    return differenceInCalendarDays(current, new Date()) > 0;
-  };
-
   get mobileNo(): AbstractControl {
     return this.employeeForm.get('mobileNo');
   }

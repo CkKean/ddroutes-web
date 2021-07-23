@@ -9,7 +9,7 @@
     <app-form-field [label]="'Mobile Number'" [required]="false">{{order.senderMobileNo}}</app-form-field>
     <app-form-field [label]="'Email'"
                     [required]="false">{{order.senderEmail ? order.senderEmail : '-'}}</app-form-field>
-    <app-form-field [label]="'Address'">{{order.senderAddress}}</app-form-field>
+    <app-form-field [label]="'Address'" [required]="false">{{order.senderAddress}}</app-form-field>
     <app-form-field [label]="'City'" [required]="false">{{order.senderCity}}</app-form-field>
     <app-form-field [label]="'State'" [required]="false">{{order.senderState}}</app-form-field>
     <app-form-field [label]="'Postcode'" [required]="false">{{order.senderPostcode}}</app-form-field>
@@ -25,7 +25,7 @@
     </app-form-field>
     <app-form-field [label]="'Email'"
                     [required]="false">{{order.recipientEmail ? order.recipientEmail : '-'}}</app-form-field>
-    <app-form-field [label]="'Address'">{{order.recipientAddress}}</app-form-field>
+    <app-form-field [label]="'Address'" [required]="false">{{order.recipientAddress}}</app-form-field>
     <app-form-field [label]="'City'" [required]="false">{{order.recipientCity}}</app-form-field>
     <app-form-field [label]="'State'" [required]="false">{{order.recipientState}}</app-form-field>
     <app-form-field [label]="'Postcode'" [required]="false">{{order.recipientPostcode}}</app-form-field>

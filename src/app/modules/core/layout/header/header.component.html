@@ -5,12 +5,12 @@
       <img [src]="logo" class="logo pointer float-left" (click)="navigateToMainPage()"/>
     </nz-col>
     <nz-col nzLg="14" nzMd="14" nzSm="6" nzXs="6" *ngIf="optionDisplay">
-      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-p5 text-sm-p4">
+      <ul nz-menu nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item (click)="navigateToTrackingPage()">Tracking</li>
       </ul>
     </nz-col>
     <nz-col *ngIf="optionDisplay" nzLg="6" nzMd="6" nzSm="14" nzXs="14">
-      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right text-p5 text-sm-p4">
+      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right">
         <li nz-menu-item (click)="navigateLoginPage()">Login</li>
         <li nz-menu-item (click)="navigateRegisterPage()">Register</li>
       </ul>
@@ -66,7 +66,7 @@
     <!--     Normal User-->
     <nz-col nzXl="10" nzLg="10" nzMd="10" nzSm="6" nzXs="6"
             *ngIf="!(isMobile$ | async) && optionDisplay && userType === 2">
-      <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-p5 text-sm-p4">
+      <ul nz-menu nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item (click)="navigateToTrackingPage()">Tracking</li>
         <li nz-menu-item *ngFor="let item of normalUserMenuList" (click)="navigatePage(item.route)">
           {{item.title}}
@@ -76,7 +76,7 @@
 
     <!--    Admin-->
     <nz-col nzSpan="10" [nzOffset]="userType === userTypeConstant.NU ? 0 : 10" *ngIf="!(isMobile$ | async)"
-            class="text-right text-p5 text-sm-p4">
+            class="text-right">
       <ng-container *ngTemplateOutlet="dropDownHeader"></ng-container>
     </nz-col>
 
@@ -84,7 +84,7 @@
 </div>
 
 <ng-template #dropDownHeader>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right text-p5 text-sm-p4">
+  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right">
     <li>
       <a nz-dropdown [nzDropdownMenu]="menu" [nzClickHide]="false" [nzVisible]="false">
         <span class="text-white">{{username}} </span>
@@ -99,9 +99,9 @@
   <ul nz-menu>
     <li nz-menu-item *ngIf="userType !== userTypeConstant.NU && isMainPage"
         (click)="navigatePage(routesConstant.DASHBOARD)">
-      <span class="text-p5 text-sm-p4 font-weight-normal">Dashboard</span></li>
+      <span class="font-weight-normal">Dashboard</span></li>
     <li nz-menu-item (click)="logout()">
-      <span class="text-p5 text-sm-p4 font-weight-normal">Sign Out</span>
+      <span class="font-weight-normal">Sign Out</span>
     </li>
   </ul>
 </nz-dropdown-menu>

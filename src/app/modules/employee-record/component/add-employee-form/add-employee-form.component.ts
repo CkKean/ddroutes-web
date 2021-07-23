@@ -247,11 +247,6 @@ export class AddEmployeeFormComponent implements OnInit {
     });
   }
 
-  disabledDate = (current: Date): boolean => {
-    // Can not select days after today today
-    return differenceInCalendarDays(current, new Date()) > 0;
-  };
-
   passwordEnabled(): void {
     this.formDisable = false;
     this.employeeForm.enable();
