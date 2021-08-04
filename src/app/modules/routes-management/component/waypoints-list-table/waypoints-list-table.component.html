@@ -16,7 +16,7 @@
       </button>
       <button nz-button
               [disabled]="displayData.length === 0 || !orderRoute || orderRoute.status !== orderRouteStatusConstant.READY"
-              (click)="optimizeRoute()">Optimize
+              (click)="optimizeRoute()">Submit
       </button>
     </nz-button-group>
     <nz-dropdown-menu #optimizeTypeMenu="nzDropdownMenu">

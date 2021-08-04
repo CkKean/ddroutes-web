@@ -1,15 +1,15 @@
 <div class="fixed-top header d-flex text-center align-items-center bg-theme"
      xmlns="http://www.w3.org/1999/html">
   <nz-row *ngIf="!(isAuthenticated$ | async)" nzType="flex" nzAlign="middle" class="container header-font-size">
-    <nz-col nzLg="4" nzMd="4" nzSm="4" nzXs="4">
-      <img [src]="logo" class="logo pointer float-left" (click)="navigateToMainPage()"/>
+    <nz-col nzLg="4" nzMd="4" nzSm="6" nzXs="6">
+      <img [src]="logo" [ngClass]="{'logo-mobile':(isMobile$ | async),'logo':!(isMobile$ | async)}" class="pointer float-left" (click)="navigateToMainPage()"/>
     </nz-col>
     <nz-col nzLg="14" nzMd="14" nzSm="6" nzXs="6" *ngIf="optionDisplay">
       <ul nz-menu nzTheme="dark" nzMode="horizontal">
         <li nz-menu-item (click)="navigateToTrackingPage()">Tracking</li>
       </ul>
     </nz-col>
-    <nz-col *ngIf="optionDisplay" nzLg="6" nzMd="6" nzSm="14" nzXs="14">
+    <nz-col *ngIf="optionDisplay" nzLg="6" nzMd="6" nzSm="12" nzXs="12">
       <ul nz-menu nzTheme="dark" nzMode="horizontal" class="text-right">
         <li nz-menu-item (click)="navigateLoginPage()">Login</li>
         <li nz-menu-item (click)="navigateRegisterPage()">Register</li>

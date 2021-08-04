@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
     {route: RoutesConstant.EMPLOYEE_RECORD, title: 'Employee Record', icon: 'fas fa-users mr-2'},
     {route: RoutesConstant.COURIER_PERSONNEL_RECORD, title: 'Courier Personnel Record', icon: 'fas fa-running mr-2'},
     {route: RoutesConstant.VEHICLE_MANAGEMENT, title: 'Vehicle Management', icon: 'fas fa-car mr-2'},
-    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan', icon: 'fas fa-dollar-sign mr-2'},
+    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan Management', icon: 'fas fa-dollar-sign mr-2'},
     {
       route: RoutesConstant.COMPANY_ADDRESS_MANAGEMENT,
       title: 'Company Address Management',
@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
     {route: RoutesConstant.ROUTES_MANAGEMENT, title: 'Routes Management', icon: 'fas fa-route mr-2'},
     {route: RoutesConstant.ORDER_ROUTE_REPORT, title: 'Order Route Report', icon: 'far fa-file-pdf mr-2'},
     {route: RoutesConstant.VEHICLE_MANAGEMENT, title: 'Vehicle Management', icon: 'fas fa-car mr-2'},
-    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan', icon: 'fas fa-dollar-sign mr-2'},
+    {route: RoutesConstant.PRICE_PLAN, title: 'Price Plan Management', icon: 'fas fa-dollar-sign mr-2'},
     {
       route: RoutesConstant.COMPANY_ADDRESS_MANAGEMENT,
       title: 'Company Address Management',
