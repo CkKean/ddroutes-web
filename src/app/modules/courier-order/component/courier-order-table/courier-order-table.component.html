@@ -83,6 +83,6 @@
 <app-shared-modal *ngIf="orderShippingLabelVisible" [visible]="orderShippingLabelVisible"
                   (onSubmit)="printShippingLabel()" (onClose)="closeShippingLabel()" [titleText]="'Shipment Label'"
                   [cancelText]="'Close'"
-                  [confirmText]="'Print'">
+                  [confirmText]="'Download'">
   <app-shipment-label [orderNo]="selectedOrderNo"></app-shipment-label>
 </app-shared-modal>

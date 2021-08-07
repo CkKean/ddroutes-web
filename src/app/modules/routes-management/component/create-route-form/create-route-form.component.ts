@@ -63,6 +63,7 @@ export class CreateRouteFormComponent implements OnInit {
   companyAddressLoading: boolean = false;
 
   submitLoading: boolean = false;
+  submitClick: boolean = false;
 
   constructor(private tableService: TableService,
               private routeManagementService: RouteManagementService,
@@ -130,12 +131,15 @@ export class CreateRouteFormComponent implements OnInit {
 
   dateSelected(): void {
     this.departureDate.valueChanges.pipe(distinctUntilChanged()).subscribe(value => {
-      this.personnel.patchValue(null);
+      if (!this.submitClick) {
+        this.personnel.patchValue(null);
+      }
       this.getAllVehiclePersonnel(value);
     });
   }
 
   submitForm(): void {
+    this.submitClick = true;
     markFormGroupTouched(this.createRouteForm);
     getInvalidControls(this.createRouteForm);
 
@@ -155,6 +159,7 @@ export class CreateRouteFormComponent implements OnInit {
             this.modal.promptErrorModal(response.message, null, 'OK');
           }
           this.submitLoading = false;
+          this.submitClick = false;
           this.submitLoadingEvent.emit(false);
         })
       )

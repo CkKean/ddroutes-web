@@ -1,6 +1,6 @@
 {
   "/ddroutes-modular/*": {
-    "target": "http://localhost:3000",
+    "target": "https://ddroutes-modular.herokuapp.com/ddroutes-modular",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true,

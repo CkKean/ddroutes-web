@@ -27,7 +27,7 @@
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Gender',content:courierPersonnelInfo.gender === 'F' ? 'Female' : 'Male'}"></ng-container>
       <ng-container
-        *ngTemplateOutlet="infoField;context:{label:'Date of Birth',content:(courierPersonnelInfo.dob | sDate)}"></ng-container>
+        *ngTemplateOutlet="infoField;context:{label:'Date of Birth',content:(courierPersonnelInfo.dob | date)}"></ng-container>
       <ng-container
         *ngTemplateOutlet="infoField;context:{label:'Mobile Number',content:courierPersonnelInfo.mobileNo}"></ng-container>
       <ng-container
