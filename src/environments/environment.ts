@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://ddroutes-modular.herokuapp.com/ddroutes-modular",
+  apiUrl: "/ddroutes-modular",
   name: '',
   consoleEnabled: true,
   devMode: true,
@@ -24,3 +24,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// apiUrl: "/ddroutes-modular",
